@@ -188,3 +188,23 @@ def general_exists(table: str, values: dict) -> bool:
     conn.close()
     
     return exists
+
+def general_fetch_all(table: str) -> list:
+    """Fetches all rows from the specified table.
+    
+    Args:
+        table (str) - The name of the table to fetch from.
+        
+    Returns:
+        list: A list of all rows in the table.
+    """
+    conn = db_conn('code_samples', 'codesamples', 'codesamples_user')
+    cursor = conn.cursor()
+    
+    cursor.execute(f"""SELECT * FROM {table};""")
+    rows = cursor.fetchall()
+    
+    cursor.close()
+    conn.close()
+    
+    return rows
