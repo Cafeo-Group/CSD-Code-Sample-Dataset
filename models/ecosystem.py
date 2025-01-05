@@ -1,5 +1,5 @@
 from dataclasses import dataclass
-from utils.postgres import db_conn, general_add
+from utils.postgres import db_conn, general_add, general_exists, general_fetch_all
 
 @dataclass
 class Ecosystem:
@@ -30,16 +30,7 @@ class Ecosystem:
         Returns:
             bool: True if the ecosystem is in the database, False otherwise.
         """
-        conn = db_conn('code_samples', 'codesamples', 'codesamples_user')
-        cursor = conn.cursor()
-        
-        cursor.execute(f"""SELECT 1 FROM ecosystems WHERE eco_name = '{ecosystem.eco_name}';""")
-        exists = cursor.fetchone()
-        
-        cursor.close()
-        conn.close()
-        
-        return exists
+        general_exists('ecosystems', ecosystem.__dict__)
     
     @staticmethod
     def fetch_all_ecosystems() -> list:
@@ -48,19 +39,19 @@ class Ecosystem:
         Returns:
             list: A list of all ecosystems.
         """
-        conn = db_conn('code_samples', 'codesamples', 'codesamples_user')
-        cursor = conn.cursor()
+        return general_fetch_all('ecosystems')
         
-        cursor.execute(f"""SELECT * FROM ecosystems;""")
-        ecosystems = cursor.fetchall()
-        
-        cursor.close()
-        conn.close()
-        
-        return ecosystems
     
     @staticmethod
     def fetch_ecosystem_by_name(name: str) -> 'Ecosystem':
+        """Fetches an ecosystem from the database by name.
+        
+        Args:
+            name (str) - The name of the ecosystem to fetch.
+            
+        Returns:
+            Ecosystem: The ecosystem with the specified name.
+        """
         conn = db_conn('code_samples', 'codesamples', 'codesamples_user')
         
         cursor = conn.cursor()
