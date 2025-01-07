@@ -71,10 +71,17 @@ def initialize_db():
     
     conn.commit()
     
+    cursor.execute(f"""CREATE TABLE IF NOT EXISTS organizations (
+        org_name TEXT PRIMARY KEY,
+        eco_name TEXT,
+        url TEXT,
+        FOREIGN KEY (eco_name) REFERENCES ecosystems(eco_name)
+        );""")
+    
     cursor.execute(f"""CREATE TABLE IF NOT EXISTS repositories (
         repo_name TEXT PRIMARY KEY,
         eco_name TEXT,
-        org TEXT,
+        org_name TEXT,
         html_url TEXT,
         stars INT,
         forks INT,
@@ -105,30 +112,34 @@ def initialize_db():
         percentage_merged_prs FLOAT,
         percentage_open_prs FLOAT,
         archived BOOLEAN,
-        FOREIGN KEY (eco_name) REFERENCES ecosystems(eco_name)
+        FOREIGN KEY (eco_name) REFERENCES ecosystems(eco_name),
+        FOREIGN KEY (org_name) REFERENCES organizations(org_name)
         );""")
     
     conn.commit()
 
     cursor.execute(f"""CREATE TABLE IF NOT EXISTS commits (
-        sha TEXT PRIMARY KEY,
+        sha TEXT,
         repo_name TEXT,
-        eco_name TEXT,
-        link TEXT,
+        org_name TEXT,
+        url TEXT,
         timestamp TIMESTAMP,
         message TEXT,
+        files TEXT[],
+        PRIMARY KEY (sha, repo_name),
         FOREIGN KEY (repo_name) REFERENCES repositories(repo_name),
-        FOREIGN KEY (eco_name) REFERENCES ecosystems(eco_name)
+        FOREIGN KEY (org_name) REFERENCES organizations(org_name)
         );""")
 
     conn.commit()
     
     cursor.execute(f"""CREATE TABLE IF NOT EXISTS files (
         sha TEXT,
+        repo_name TEXT,
         name TEXT,
         type TEXT,
         PRIMARY KEY (sha, name),
-        FOREIGN KEY (sha) REFERENCES commits(sha)
+        FOREIGN KEY (sha, repo_name) REFERENCES commits(sha, repo_name)
     );""")
     
     conn.commit()
@@ -188,6 +199,29 @@ def general_exists(table: str, values: dict) -> bool:
     conn.close()
     
     return exists
+
+def general_fetch_by_unknown_args(table: str, values: dict) -> list:
+    """Fetches rows from the specified table by unknown arguments.
+    
+    Args:
+        table (str) - The name of the table to fetch from.\n
+        values (dict) - The values to fetch from the table.
+        
+    Returns:
+        list: A list of all rows in the table that match the values.
+    """
+    conn = db_conn('code_samples', 'codesamples', 'codesamples_user')
+    cursor = conn.cursor()
+    
+    columns = ' AND '.join([f'{key} = %({key})s' for key in values.keys()])
+    
+    cursor.execute(f"""SELECT * FROM {table} WHERE {columns};""", values)
+    rows = cursor.fetchone()
+    
+    cursor.close()
+    conn.close()
+    
+    return rows
 
 def general_fetch_all(table: str) -> list:
     """Fetches all rows from the specified table.
