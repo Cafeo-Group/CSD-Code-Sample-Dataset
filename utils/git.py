@@ -35,9 +35,10 @@ def download(sample: str) -> None:
         None
     '''
     gitHubUrl = f"https://github.com/{sample}.git"
-    repoDir = "repositories/"
+    repoDir = "../download/orgs/"
     isdir = path.isdir(repoDir+sample)
     if isdir:
+        print(f"Repository {sample} already downloaded")
         return
     else:
         clone(gitHubUrl, repoDir, sample)
