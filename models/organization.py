@@ -41,4 +41,4 @@ class Organization:
         Returns:
             list: A list of all organizations.
         """
-        return general_fetch_all('organizations')
+        return [Organization(*org) for org in general_fetch_all('organizations')]
