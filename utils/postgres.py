@@ -134,11 +134,12 @@ def initialize_db():
     conn.commit()
     
     cursor.execute(f"""CREATE TABLE IF NOT EXISTS files (
+        file_name TEXT,
         sha TEXT,
         repo_name TEXT,
-        name TEXT,
         type TEXT,
-        PRIMARY KEY (sha, name),
+        content TEXT,
+        PRIMARY KEY (file_name, sha, repo_name),
         FOREIGN KEY (sha, repo_name) REFERENCES commits(sha, repo_name)
     );""")
     
@@ -200,7 +201,7 @@ def general_exists(table: str, values: dict) -> bool:
     
     return exists
 
-def general_fetch_by_unknown_args(table: str, values: dict) -> list:
+def general_fetch_by_args(table: str, values: dict) -> list:
     """Fetches rows from the specified table by unknown arguments.
     
     Args:
