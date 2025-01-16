@@ -1,6 +1,6 @@
 from datetime import datetime
 from dataclasses import dataclass
-from utils.postgres import general_add, general_exists, general_fetch_all
+from utils.postgres import general_add, general_exists, general_fetch_all, general_fetch_by_args
 from io import StringIO
 import pytz
 import subprocess
@@ -81,48 +81,6 @@ class Commit:
             commit = Commit(repo_path, datetime.fromtimestamp(int(timestamp), tz=pytz.utc),
                             sha, message, "\n".join(diff_lines), ecossystem, url)
             Commit.add_commit(commit)
-
-    @staticmethod
-    def fetch_all_commits(repo_path: str, cutoff_date: datetime) -> None:
-        """Fetches the commits from a repository that were made before a certain 
-        date and adds them to the database.
-
-        Args:
-            repo_path (str) - The path to the repository to fetch commits from.\n
-            cutoff_date (datetime) - The date to fetch commits until.\n
-            
-        Returns:
-            None
-        """
-        if not path.exists(path.join(repo_path, '.git')):
-            print(f"Skipping non-Git directory: {repo_path}")
-            return
-
-        try:
-            subprocess.check_output(["git", "rev-parse", "HEAD"], cwd=repo_path)
-        except subprocess.CalledProcessError:
-            print(f"Skipping invalid Git repository: {repo_path}")
-            return
-
-        try:
-            process = subprocess.Popen(
-                ["git", "log", "--pretty=format:%H<<DELIM>>%ct<<DELIM>>%s", "--patch", f"--until={cutoff_date.timestamp()}"],
-                cwd=repo_path,
-                stdout=subprocess.PIPE,
-                stderr=subprocess.PIPE
-            )
-            stdout, stderr = process.communicate()
-
-            if process.returncode != 0:
-                print(f"Error fetching logs for {repo_path}: {stderr.decode('utf-8')}")
-                return
-
-            commit_info = stdout.decode('utf-8', errors='replace')
-            Commit.add_formatted_commit(commit_info, repo_path)
-            
-
-        except Exception as e:
-            print(f"Unexpected error processing {repo_path}: {e}")
 
     @staticmethod
     def add_all_commits_from_repo(repo_path: str, cutoff_date: datetime):
@@ -212,4 +170,17 @@ class Commit:
         Returns:
             None
         """
-        return general_fetch_all('commits')
+        return [Commit(*commit) for commit in general_fetch_all('commits')]
+    
+    @staticmethod
+    def fetch_by_commit_sha_and_repo_name(commit_sha: str, repo_name: str) -> 'Commit':
+        """Fetches a commit from the database by its sha and repository name.
+        
+        Args:
+            commit_sha (str) - The sha of the commit to fetch.\n
+            repo_name (str) - The name of the repository the commit is in.\n
+            
+        Returns:
+            Commit: The commit fetched from the database.
+        """
+        return Commit(*general_fetch_by_args('commits', {'sha': commit_sha, 'repo_name': repo_name}))
