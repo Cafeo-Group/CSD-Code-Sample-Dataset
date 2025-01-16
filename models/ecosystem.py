@@ -39,7 +39,7 @@ class Ecosystem:
         Returns:
             list: A list of all ecosystems.
         """
-        return general_fetch_all('ecosystems')
+        return [Ecosystem(*eco) for eco in general_fetch_all('ecosystems')]
         
     
     @staticmethod
