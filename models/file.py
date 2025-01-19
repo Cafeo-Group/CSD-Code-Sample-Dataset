@@ -105,7 +105,7 @@ class File:
             Exception: If there is an error unrelated to file deletion.
         """
         file_status = File.get_file_status(repo_path, commit_sha, file_path)
-        
+    
         if file_status == 'deleted':
             return 'File was deleted in this commit'
         if file_status == 'renamed':
@@ -117,8 +117,32 @@ class File:
                     cwd=repo_path,
                     stderr=subprocess.PIPE
                 )
+
+                if File.is_binary(file_content):
+                    return '<binary content>'
+                
                 return file_content.decode('utf-8', errors='replace')
+            
             except subprocess.CalledProcessError as e:
-                if "does not exist" in (e.stderr or ""):
+                if "does not exist" in e.stderr.decode():
                     return None
-                raise Exception(f"Git command failed: {e.stderr.strip()}")
+                raise Exception(f"Error occurred while retrieving file: {e.stderr.strip()}")
+                
+    @staticmethod
+    def is_binary(content: bytes) -> bool:
+        """
+        Determines if the content is binary by checking for non-printable characters.
+        Args:
+            content (bytes): The content of the file in byte form.
+        
+        Returns:
+            bool: True if the file is binary, False if it's a text file.
+        """
+        for byte in content:
+            if byte == 0:  # Null byte
+                return True
+        # Check for non-printable ASCII characters (excluding carriage return (13), newlines (10), tabs (9))
+        if (byte < 32 or byte > 126) and byte not in [9, 10, 13]:
+                    return True
+        
+        return False
