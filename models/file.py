@@ -1,4 +1,4 @@
-from utils.postgres import general_add, general_exists, general_fetch_all
+from utils.postgres import general_add, general_exists, general_fetch_all, general_add_in_batches
 from dataclasses import dataclass
 from typing import List
 import re
@@ -9,11 +9,12 @@ class File:
     file_name: str
     sha: str
     repo_name: str
+    org_name: str
     type: str
     content: List[str]
     
     def __str__(self) -> str:
-        return f"-{self.file_name} - {self.sha} - {self.repo_name} - {self.type} - {self.content}"
+        return f"-{self.file_name} - {self.sha} - {self.repo_name} - {self.org_name}"
     
     def __repr__(self) -> str:
         return self.__str__()
@@ -29,6 +30,15 @@ class File:
             None
         """
         general_add('files', file.__dict__)
+        
+    @staticmethod
+    def add_files_in_batches(files: List['File']):
+        """Adds a list of files to the database in batches.
+        
+        Args:
+            files (list) - The list of files to add.
+        """
+        general_add_in_batches('files', [file.__dict__ for file in files])
         
     @staticmethod
     def exists(file: 'File') -> bool:
@@ -88,9 +98,9 @@ class File:
             raise Exception(f"Error determining file status: {e.stderr.strip()}")
 
     @staticmethod
-    def get_file_content_by_local_git(repo_path: str, commit_sha: str, file_path: str) -> str:
+    def get_file_content(repo_path: str, commit_sha: str, file_path: str) -> str:
         """
-        Returns the content of the file as a string, handling deleted files gracefully.
+        Returns the content of the file as a string, handling deleted files and submodules.
 
         Args:
             repo_path (str): Path to the git repository.
@@ -99,17 +109,18 @@ class File:
 
         Returns:
             str: The content of the file (decoded text), '<binary content>' if it's binary,
-                or None if the file was deleted in this commit.
-
-        Raises:
-            Exception: If there is an error unrelated to file deletion.
+                'File was deleted in this commit', 'File was renamed in this commit', or 
+                'This is a submodule' if the 'file' references a submodule.
         """
+        if File.is_submodule(repo_path, commit_sha, file_path):
+            return 'This is a submodule', file_path
+
         file_status = File.get_file_status(repo_path, commit_sha, file_path)
     
         if file_status == 'deleted':
-            return 'File was deleted in this commit'
+            return 'File was deleted in this commit', file_path
         if file_status == 'renamed':
-            return 'File was renamed in this commit'
+            return 'File was renamed in this commit', file_path
         else:
             try:
                 file_content = subprocess.check_output(
@@ -119,15 +130,20 @@ class File:
                 )
 
                 if File.is_binary(file_content):
-                    return '<binary content>'
+                    return '<binary content>', file_path
                 
-                return file_content.decode('utf-8', errors='replace')
+                file_content = file_content.decode('utf-8', errors='replace')
+                
+                if not file_content.strip():
+                    return "File is empty", file_path
+                
+                return file_content, file_path
             
             except subprocess.CalledProcessError as e:
                 if "does not exist" in e.stderr.decode():
-                    return None
-                raise Exception(f"Error occurred while retrieving file: {e.stderr.strip()}")
-                
+                    return "Couldn't retrieve content", file_path
+                print(f"Error occurred while retrieving file: {e.stderr.strip()}")
+
     @staticmethod
     def is_binary(content: bytes) -> bool:
         """
@@ -141,8 +157,36 @@ class File:
         for byte in content:
             if byte == 0:  # Null byte
                 return True
-        # Check for non-printable ASCII characters (excluding carriage return (13), newlines (10), tabs (9))
-        if (byte < 32 or byte > 126) and byte not in [9, 10, 13]:
-                    return True
+            # Check for non-printable ASCII characters (excluding carriage return (13), newlines (10), tabs (9))
+            if (byte < 32 or byte > 126) and byte not in [9, 10, 13]:
+                        return True
         
         return False
+
+
+    @staticmethod
+    def is_submodule(repo_path: str, commit_sha: str, file_path: str) -> bool:
+        """Checks if a file is a Git submodule in a specific commit.
+        
+        Args:
+            repo_path (str): Path to the Git repository.
+            commit_sha (str): The commit SHA to check in.
+            file_path (str): Path of the file to check.
+
+        Returns:
+            bool: True if the file is a submodule, False otherwise.
+        """
+        try:
+            result = subprocess.check_output(
+                ['git', 'ls-tree', commit_sha, file_path],
+                cwd=repo_path,
+                stderr=subprocess.PIPE
+            ).decode().strip()
+
+            if result.startswith('160000'):
+                return True  # 160000 is the object type for submodules
+
+            return False
+
+        except subprocess.CalledProcessError:
+            return False
