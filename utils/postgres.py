@@ -204,6 +204,35 @@ def general_add_in_batches(table: str, values: list):
     cursor.close()
     conn.close()
     
+def general_exists_in_batches(table: str, values: list) -> list:
+    """Checks if rows exist in the specified table in batches.
+    
+    Args:
+        table (str) - The name of the table to check.\n
+        values (list) - The values to check for in the table.
+        
+    Returns:
+        list: A list of True/False values for each row in the batch.
+    """
+    conn = db_conn('code_samples', 'codesamples', 'codesamples_user')
+    cursor = conn.cursor()
+    
+    columns = ' AND '.join([f'{key} = %({key})s' for key in values[0].keys()])
+    
+    batch_size = 500
+    exists = []
+    
+    for i in range(0, len(values), batch_size):
+        batch = values[i:i + batch_size]
+        for row in batch:
+            cursor.execute(f"""SELECT 1 FROM {table} WHERE {columns};""", row)
+            exists.append(cursor.fetchone())
+    
+    cursor.close()
+    conn.close()
+    
+    return exists
+    
 def general_exists(table: str, values: dict) -> bool:
     """Checks if a row exists in the specified table.
     
