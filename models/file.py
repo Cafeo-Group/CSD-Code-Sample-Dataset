@@ -1,4 +1,5 @@
-from utils.postgres import general_add, general_exists, general_fetch_all, general_add_in_batches
+from utils.postgres import general_add, general_exists, general_fetch_all, \
+    general_add_in_batches, general_exists_in_batches
 from dataclasses import dataclass
 from typing import List
 import re
@@ -51,6 +52,32 @@ class File:
             bool: True if the file is in the database, False otherwise.
         """
         return general_exists('files', file.__dict__)
+    
+    @staticmethod
+    def exists_by_args(file_name: str, sha: str, repo_name: str, org_name: str) -> bool:
+        """Checks if a file is already in the database by its arguments.
+        
+        Args:
+            file_name (str) - The name of the file.\n
+            sha (str) - The commit SHA.\n
+            repo_name (str) - The name of the repository.\n
+            org_name (str) - The name of the organization.
+            
+        Returns:
+            bool: True if the file is in the database, False otherwise.
+        """
+        return general_exists('files', {'file_name': file_name, 'sha': sha, 'repo_name': repo_name, 'org_name': org_name})
+    
+    def exists_in_batches(files: List[set]) -> List[bool]:
+        """Checks if a list of files are already in the database in batches.
+        
+        Args:
+            files (list) - The list of files to check.
+            
+        Returns:
+            list: A list of booleans indicating if each file is in the database.
+        """
+        return general_exists_in_batches('files', [{'file_name': file_set[0], 'sha': file_set[1], 'repo_name': file_set[2], 'org_name': file_set[3]} for file_set in files])
     
     @staticmethod
     def fetch_all() -> List['File']:
