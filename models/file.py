@@ -86,7 +86,7 @@ class File:
         Returns:
             list: A list of all files in the database.
         """
-        return [File(**file) for file in general_fetch_all('files')]
+        return [File(*file) for file in general_fetch_all('files')]
     
     @staticmethod
     def get_file_status(repo_path: str, commit_sha: str, file_path: str) -> str:
