@@ -168,7 +168,7 @@ class Commit:
         """Fetches all commits from all repositories in the database.
         
         Returns:
-            None
+            list[Commit]: A list of all commits in the database.
         """
         return [Commit(*commit) for commit in general_fetch_all('commits')]
     
