@@ -152,8 +152,16 @@ def initialize_db():
         sha TEXT,
         repo_name TEXT,
         org_name TEXT,
-        header TEXT,
+        old_start INT,
+        new_start INT,
+        new_start INT,
+        new_length INT,
         lines TEXT[],
+        old_name TEXT,
+        new_name TEXT,
+        change_type TEXT,
+        file_mode TEXT,
+        index_info TEXT,
         FOREIGN KEY (sha, file_name, repo_name, org_name) REFERENCES files(sha, file_name, repo_name, org_name)
     );""")
 
