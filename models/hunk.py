@@ -95,7 +95,8 @@ class Hunk:
                 stdout=subprocess.PIPE,
                 stderr=subprocess.PIPE,
                 cwd=os.path.join('..', 'download', 'orgs', org_name, repo_name),
-                text=True
+                encoding='utf-8',
+                errors='replace'
             )
             
             stdout, stderr = process.communicate()
@@ -116,64 +117,67 @@ class Hunk:
             file_mode = None
             index_info = None
             
-            lines = stdout.split('\n')
-            for index in range(len(lines)):
-                if index != (len(lines) - 1):
-                    candidate_names = lines[index] + '\n'+lines[index+1]
-                    file_match = file_name_pattern.match(candidate_names)
-                    if file_match:
-                        old_name, new_name = file_match.groups()
-                
-                change_match = change_type_pattern.match(lines[index])
-                if change_match:
-                    change_type = change_match.group(1)
-                elif 'index' in lines[index]:
-                    change_type = 'modified'
-                    modified_pattern = re.compile(r'index ([0-9a-f]+)\.\.([0-9a-f]+) ([0-9]+)')
-                    modified_match = modified_pattern.match(lines[index])
-                    if modified_match:
-                        old_sha, new_sha, mode_of_file = modified_match.groups()
-                        index_info = f'index {old_sha}..{new_sha}'
-                        file_mode = mode_of_file
-                
-                file_mode_match = file_mode_pattern.search(lines[index])
-                if file_mode_match:
-                    file_mode = file_mode_match.group(1)
+            if stdout:
+                lines = stdout.split('\n')
+                for index in range(len(lines)):
+                    if index != (len(lines) - 1):
+                        candidate_names = lines[index] + '\n'+lines[index+1]
+                        file_match = file_name_pattern.match(candidate_names)
+                        if file_match:
+                            old_name, new_name = file_match.groups()
                     
-                index_info_match = index_info_pattern.match(lines[index])
-                if index_info_match:
-                    index_info = index_info_match.group(1)
-                
-                match = hunk_pattern.match(lines[index])
-                if match:
-                    if current_hunk:
-                        hunks.append(current_hunk)
+                    change_match = change_type_pattern.match(lines[index])
+                    if change_match:
+                        change_type = change_match.group(1)
+                    elif 'index' in lines[index] and change_type is None:
+                        change_type = 'modified'
+                        modified_pattern = re.compile(r'index ([0-9a-f]+)\.\.([0-9a-f]+) ([0-9]+)')
+                        modified_match = modified_pattern.match(lines[index])
+                        if modified_match:
+                            old_sha, new_sha, mode_of_file = modified_match.groups()
+                            index_info = f'index {old_sha}..{new_sha}'
+                            file_mode = mode_of_file
                     
-                    old_start, old_length, new_start, new_length = map(int, match.groups())
-                    current_hunk = Hunk(
-                        id=None,
-                        file_name=file_name,
-                        sha=sha,
-                        repo_name=repo_name,
-                        org_name=org_name,
-                        old_start=old_start,
-                        old_length=old_length,
-                        new_start=new_start,
-                        new_length=new_length,
-                        lines=[],
-                        old_name=old_name,
-                        new_name=new_name,
-                        change_type=change_type,
-                        file_mode=file_mode,
-                        index_info=index_info
-                    )
-                elif current_hunk is not None:
-                    current_hunk.lines.append(lines[index])
-            
-            if current_hunk:
-                hunks.append(current_hunk)
-            
-            return hunks
-        
+                    file_mode_match = file_mode_pattern.search(lines[index])
+                    if file_mode_match:
+                        file_mode = file_mode_match.group(1)
+                        
+                    index_info_match = index_info_pattern.match(lines[index])
+                    if index_info_match:
+                        index_info = index_info_match.group(1)
+                    
+                    match = hunk_pattern.match(lines[index])
+                    if match:
+                        if current_hunk:
+                            hunks.append(current_hunk)
+                        
+                        old_start, old_length, new_start, new_length = map(int, match.groups())
+                        current_hunk = Hunk(
+                            id=None,
+                            file_name=file_name,
+                            sha=sha,
+                            repo_name=repo_name,
+                            org_name=org_name,
+                            old_start=old_start,
+                            old_length=old_length,
+                            new_start=new_start,
+                            new_length=new_length,
+                            lines=[],
+                            old_name=old_name,
+                            new_name=new_name,
+                            change_type=change_type,
+                            file_mode=file_mode,
+                            index_info=index_info
+                        )
+                    elif current_hunk is not None:
+                        current_hunk.lines.append(lines[index])
+                
+                if current_hunk:
+                    hunks.append(current_hunk)
+                
+                return hunks
+            else:
+                print(org_name, repo_name, sha, file_name)
+                return None
         except Exception as e:
             raise RuntimeError(f"Failed to retrieve diffs: {str(e)}")
