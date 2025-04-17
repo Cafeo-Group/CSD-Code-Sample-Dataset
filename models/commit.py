@@ -15,11 +15,9 @@ class Commit:
     org_name: str
     timestamp: datetime
     message: str
-    url: str
-    files: list[str]
     
     def __str__(self) -> str:
-        return f"-{self.sha} - {self.repo_name} - {self.org_name} - {self.timestamp} - {self.message} - {self.url} - {self.files}"
+        return f"-{self.sha} - {self.repo_name} - {self.org_name} - {self.timestamp} - {self.message}"
     
     def __repr__(self) -> str:
         return self.__str__()
@@ -48,39 +46,6 @@ class Commit:
             bool: True if the commit is in the database, False otherwise.
         """
         general_exists('commits', commit)
-    
-    @staticmethod
-    def add_formatted_commit(commit_text: str, repo_path: str) -> None:
-        """Parses the diff of a commit and adds the whole commit to the database.
-
-        Args:
-            commit_text (str) - The text of the commit to parse.\n
-            repo_path (str) - The path to the repository the commit is from.\n
-            
-        Returns:
-            None
-        """
-        sha, timestamp, message, diff_lines = None, None, None, []
-
-        for line in StringIO(commit_text):
-            if "<<DELIM>>" in line:
-                if sha:
-                    ecossystem = repo_path.split('\\')[1]
-                    url = f"https://github.com/{ecossystem}/{repo_path.split('\\')[2]}/commit/{sha}"
-                    commit = Commit(repo_path, datetime.fromtimestamp(int(timestamp), tz=pytz.utc),
-                                    sha, message, "\n".join(diff_lines), ecossystem, url)
-                    Commit.add_commit(commit)
-                sha, timestamp, message = line.split("<<DELIM>>")
-                diff_lines = []
-            else:
-                diff_lines.append(line.strip())
-
-        if sha:
-            ecossystem = repo_path.split('\\')[1]
-            url = f"https://github.com/{ecossystem}/{repo_path.split('\\')[2]}/commit/{sha}"
-            commit = Commit(repo_path, datetime.fromtimestamp(int(timestamp), tz=pytz.utc),
-                            sha, message, "\n".join(diff_lines), ecossystem, url)
-            Commit.add_commit(commit)
 
     @staticmethod
     def add_all_commits_from_repo(repo_path: str, cutoff_date: datetime):
@@ -119,7 +84,7 @@ class Commit:
             print(f"Unexpected error processing {repo_path}: {e}")
        
     @staticmethod     
-    def get_commit_data(repo_path: str, repo_url: str, cutoff_date: datetime) -> List['Commit']:
+    def get_commit_data(repo_path: str, cutoff_date: datetime) -> List['Commit']:
         """Extracts commit data from the repository and stores it in a list of Commit objects.
 
         Args:
@@ -145,9 +110,6 @@ class Commit:
             sha = commit.hexsha
             timestamp = datetime.fromtimestamp(commit.committed_date)
             message = commit.message.strip()
-            url = f"{repo_url}/commit/{sha}"
-
-            files = Commit.get_file_names_from_git(repo_path, sha)
 
             commits.append(
                 Commit(
@@ -156,8 +118,6 @@ class Commit:
                     org_name=org_name,
                     timestamp=timestamp,
                     message=message,
-                    url=url,
-                    files=files,
                 )
             )
 
