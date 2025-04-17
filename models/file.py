@@ -8,14 +8,12 @@ import subprocess
 @dataclass
 class File:
     file_name: str
-    sha: str
     repo_name: str
     org_name: str
     type: str
-    content: List[str]
     
     def __str__(self) -> str:
-        return f"-{self.file_name} - {self.sha} - {self.repo_name} - {self.org_name}"
+        return f"-{self.file_name}.{self.type} - {self.repo_name} - {self.org_name}"
     
     def __repr__(self) -> str:
         return self.__str__()
@@ -68,6 +66,7 @@ class File:
         """
         return general_exists('files', {'file_name': file_name, 'sha': sha, 'repo_name': repo_name, 'org_name': org_name})
     
+    @staticmethod
     def exists_in_batches(files: List[set]) -> List[bool]:
         """Checks if a list of files are already in the database in batches.
         
