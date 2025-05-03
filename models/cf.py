@@ -181,7 +181,7 @@ class CommitFile:
                         current_metadata.lines.append(lines[index])
                 
                 if current_metadata:
-                    current_metadata.append(current_metadata)
+                    all_metadata.append(current_metadata)
                 
                 return all_metadata
             else:
