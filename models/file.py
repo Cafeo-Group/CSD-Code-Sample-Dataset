@@ -1,7 +1,7 @@
 from utils.postgres import general_add, general_exists, general_fetch_all, \
     general_add_in_batches, general_exists_in_batches
 from dataclasses import dataclass
-from typing import List
+from typing import List, Tuple
 import re
 import subprocess
 
@@ -17,6 +17,15 @@ class File:
     
     def __repr__(self) -> str:
         return self.__str__()
+    
+    def __hash__(self):
+        return hash((self.file_name, self.repo_name, self.org_name, self.type))
+    
+    def __eq__(self, other):
+        if not isinstance(other, File):
+            return NotImplemented
+        return (self.file_name, self.repo_name, self.org_name, self.type) == \
+               (other.file_name, other.repo_name, other.org_name, other.type)
     
     @staticmethod
     def add_file(file: 'File') -> None:
@@ -67,7 +76,7 @@ class File:
         return general_exists('files', {'file_name': file_name, 'sha': sha, 'repo_name': repo_name, 'org_name': org_name})
     
     @staticmethod
-    def exists_in_batches(files: List[set]) -> List[bool]:
+    def exists_in_batches(files: List['File']) -> List[bool]:
         """Checks if a list of files are already in the database in batches.
         
         Args:
@@ -76,7 +85,7 @@ class File:
         Returns:
             list: A list of booleans indicating if each file is in the database.
         """
-        return general_exists_in_batches('files', [{'file_name': file_set[0], 'sha': file_set[1], 'repo_name': file_set[2], 'org_name': file_set[3]} for file_set in files])
+        return general_exists_in_batches('files', [file.__dict__ for file in files])
     
     @staticmethod
     def fetch_all() -> List['File']:
@@ -124,7 +133,7 @@ class File:
             raise Exception(f"Error determining file status: {e.stderr.strip()}")
 
     @staticmethod
-    def get_file_content(repo_path: str, commit_sha: str, file_path: str) -> str:
+    def get_file_content(repo_path: str, commit_sha: str, file_path: str) -> Tuple[str, str]:
         """
         Returns the content of the file as a string, handling deleted files and submodules.
 
