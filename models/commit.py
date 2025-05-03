@@ -1,12 +1,10 @@
 from datetime import datetime
 from dataclasses import dataclass
-from utils.postgres import general_add, general_exists, general_fetch_all, general_fetch_by_args
-from io import StringIO
+from utils.postgres import general_add, general_exists, general_fetch_all, general_fetch_by_args, general_add_in_batches, general_exists_in_batches
 import pytz
 import subprocess
-from os import path
 from typing import List
-from git import Repo, Commit as GitCommit
+from git import Repo
 
 @dataclass
 class Commit:
@@ -22,8 +20,16 @@ class Commit:
     def __repr__(self) -> str:
         return self.__str__()
     
+    def __hash__(self):
+        return hash((self.sha, self.repo_name, self.org_name))
+    
+    def __eq__(self, other):
+        if not isinstance(other, Commit):
+            return False
+        return (self.sha, self.repo_name, self.org_name) == (other.sha, other.repo_name, other.org_name)
+    
     @staticmethod
-    def add_commit(commit: 'Commit') -> None:
+    def add_commit(commit: 'Commit') -> 'Commit':
         """Adds a commit to the database.
         
         Args:
@@ -33,6 +39,7 @@ class Commit:
             None
         """
         general_add('commits', commit.__dict__)
+        return commit
         
         
     @staticmethod
@@ -45,7 +52,7 @@ class Commit:
         Returns:
             bool: True if the commit is in the database, False otherwise.
         """
-        general_exists('commits', commit)
+        return general_exists('commits', commit.__dict__)
 
     @staticmethod
     def add_all_commits_from_repo(repo_path: str, cutoff_date: datetime):
@@ -66,7 +73,6 @@ class Commit:
         """
         try:
             process = subprocess.Popen(
-                # remove the --cc flag to remove the files not necessarily changed by the merge commit itself
                 ["git", "diff-tree", "--no-commit-id", "--name-only", "-r", "--cc", sha],
                 cwd=repo_path,
                 stdout=subprocess.PIPE,
@@ -110,16 +116,17 @@ class Commit:
             sha = commit.hexsha
             timestamp = datetime.fromtimestamp(commit.committed_date)
             message = commit.message.strip()
-
-            commits.append(
-                Commit(
+            
+            candidate = Commit(
                     sha=sha,
                     repo_name=repo_name,
                     org_name=org_name,
                     timestamp=timestamp,
                     message=message,
                 )
-            )
+            
+            if not Commit.exists(candidate):
+                commits.append(candidate )
 
         return commits
     
@@ -144,3 +151,27 @@ class Commit:
             Commit: The commit fetched from the database.
         """
         return Commit(*general_fetch_by_args('commits', {'sha': commit_sha, 'repo_name': repo_name}))
+
+    @staticmethod
+    def add_commit_in_batches(commits: List['Commit']) -> None:
+        """Adds a list of commits to the database in batches.
+        
+        Args:
+            commits (List[Commit]) - The list of commits to add.
+            
+        Returns:
+            None
+        """
+        general_add_in_batches('commits', [commit.__dict__ for commit in commits])
+        
+    @staticmethod
+    def exist_commits_in_batches(commits: List['Commit']) -> List[bool]:
+        """Checks if a list of commits exist in the database in batches.
+        
+        Args:
+            commits (List[Commit]) - The list of commits to check.
+            
+        Returns:
+            List[bool]: A list of booleans indicating if each commit exists in the database.
+        """
+        return general_exists_in_batches('commits', [commit.__dict__ for commit in commits])
