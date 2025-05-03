@@ -1,5 +1,5 @@
 from dataclasses import dataclass
-from utils.postgres import general_add, general_exists, general_fetch_all
+from utils.postgres import general_add, general_exists, general_fetch_all, general_add_in_batches
 from typing import List, Optional
 import re
 import subprocess
@@ -48,8 +48,8 @@ class Hunk:
         hunk_dict = hunk.__dict__
         if not hunk_dict["id"]: del hunk_dict['id']
         
-        general_add('hunks', hunk.__dict__)
-        
+        general_add('hunks', hunk_dict)
+
     @staticmethod
     def exists(hunk: 'Hunk') -> bool:
         """Checks if a Hunk exists in the database.
