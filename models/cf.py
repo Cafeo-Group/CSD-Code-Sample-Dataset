@@ -65,16 +65,16 @@ class CommitFile:
         return general_exists('commit_files', commit_file)
     
     @staticmethod
-    def exists_in_batches(cfs: List[set]) -> List[bool]:
-        """Checks if a list of cfs are already in the database in batches.
+    def exists_in_batches(cfs: List['CommitFile']) -> List[bool]:
+        """Checks if a list of commit files are already in the database in batches.
         
         Args:
-            cfs (list) - The list of cfs to check.
+            cfs (List[CommitFile]) - The list of commit files to check.
             
         Returns:
-            list: A list of booleans indicating if each cf is in the database.
+            List[bool]: A list of booleans indicating if each commit file is in the database.
         """
-        return general_exists_in_batches('commit_files', [{'file_name': cf_set[0], 'sha': cf_set[1], 'repo_name': cf_set[2], 'org_name': cf_set[3]} for cf_set in cfs])
+        return general_exists_in_batches('commit_files', [{'file_name': cf.file_name, 'sha': cf.sha, 'repo_name': cf.repo_name, 'org_name': cf.org_name} for cf in cfs])
     
     @staticmethod
     def add_cfs_in_batches(cfs: List['CommitFile']):
