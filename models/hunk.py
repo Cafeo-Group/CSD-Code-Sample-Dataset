@@ -49,7 +49,25 @@ class Hunk:
         if not hunk_dict["id"]: del hunk_dict['id']
         
         general_add('hunks', hunk_dict)
-
+        
+    @staticmethod
+    def add_hunks_in_batches(hunks: List['Hunk']) -> None:
+        """Adds a list of Hunks to the database in batches.
+        
+        Args:
+            hunks (list) - The list of Hunks to add to the database.
+            
+        Returns:
+            None
+        """
+        hunks_in_dict = []
+        for hunk in hunks:
+            hunk_dict = hunk.__dict__
+            del hunk_dict['id']
+            hunks_in_dict.append(hunk_dict)
+        
+        general_add_in_batches('hunks', hunks_in_dict)
+    
     @staticmethod
     def exists(hunk: 'Hunk') -> bool:
         """Checks if a Hunk exists in the database.
