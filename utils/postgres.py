@@ -1,5 +1,4 @@
 from psycopg2 import connect, extensions, extras
-from dotenv import load_dotenv
 from os import getenv
 
 def db_conn(db: str, password: str, user: str) -> extensions.connection:
@@ -20,9 +19,6 @@ def db_conn(db: str, password: str, user: str) -> extensions.connection:
         password = password,
         port = '5432'        
     )
-    
-def initialize_env():
-    load_dotenv()
     
 def initialize_db():
     DB_PASSWORD = getenv('DB_PASSWORD')
@@ -63,13 +59,12 @@ def initialize_db():
     conn.close()
 
     conn = db_conn('code_samples', 'codesamples', 'codesamples_user')
+    conn.autocommit = True
     cursor = conn.cursor()
     
     cursor.execute(f"""CREATE TABLE IF NOT EXISTS ecosystems (
         eco_name TEXT PRIMARY KEY
     );""")
-    
-    conn.commit()
     
     cursor.execute(f"""CREATE TABLE IF NOT EXISTS organizations (
         org_name TEXT PRIMARY KEY,
@@ -94,8 +89,6 @@ def initialize_db():
         FOREIGN KEY (eco_name) REFERENCES ecosystems(eco_name),
         FOREIGN KEY (org_name) REFERENCES organizations(org_name)
     );""")
-    
-    conn.commit()
 
     cursor.execute(f"""CREATE TABLE IF NOT EXISTS commits (
         sha TEXT,
@@ -106,8 +99,6 @@ def initialize_db():
         PRIMARY KEY (sha, repo_name, org_name),
         FOREIGN KEY (repo_name, org_name) REFERENCES repositories(repo_name, org_name)
     );""")
-
-    conn.commit()
     
     cursor.execute(f"""CREATE TABLE IF NOT EXISTS files (
         file_name TEXT,
@@ -117,8 +108,6 @@ def initialize_db():
         PRIMARY KEY (file_name, repo_name, org_name),
         FOREIGN KEY (repo_name, org_name) REFERENCES repositories(repo_name, org_name)
     );""")
-    
-    conn.commit()
     
     cursor.execute(f"""CREATE TABLE IF NOT EXISTS commit_files (
         repo_name TEXT,
@@ -135,6 +124,7 @@ def initialize_db():
     );""")
     
     cursor.execute(f"""CREATE TABLE IF NOT EXISTS hunks (
+        id SERIAL PRIMARY KEY,
         file_name TEXT,
         repo_name TEXT,
         org_name TEXT,
@@ -146,9 +136,10 @@ def initialize_db():
         old_name TEXT,
         new_name TEXT,
         lines TEXT[],
-        PRIMARY KEY (file_name, repo_name, org_name, sha),
+        PRIMARY KEY (id),
         FOREIGN KEY (file_name, repo_name, org_name, sha) 
             REFERENCES commit_files(file_name, repo_name, org_name, sha)
+        UNIQUE (file_name, repo_name, org_name, sha, old_start, new_start, old_length, new_length)
     );""")
 
     conn.commit()
@@ -188,11 +179,11 @@ def general_add_in_batches(table: str, values: list):
     columns = ', '.join(values[0].keys())
     placeholders = ', '.join([f'%({key})s' for key in values[0].keys()])
     
-    batch_size = 500
+    batch_size = 3000
     
     for i in range(0, len(values), batch_size):
         batch = values[i:i + batch_size]
-        extras.execute_batch(cursor, f"""INSERT INTO {table} ({columns}) VALUES ({placeholders});""", batch)
+        extras.execute_batch(cursor, f"""INSERT INTO {table} ({columns}) VALUES ({placeholders}) ON CONFLICT DO NOTHING;""", batch)
     
     conn.commit()
     cursor.close()
@@ -213,7 +204,7 @@ def general_exists_in_batches(table: str, values: list) -> list:
     
     columns = ' AND '.join([f'{key} = %({key})s' for key in values[0].keys()])
     
-    batch_size = 500
+    batch_size = 3000
     exists = []
     
     for i in range(0, len(values), batch_size):
