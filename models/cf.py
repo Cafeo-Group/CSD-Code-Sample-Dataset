@@ -35,7 +35,11 @@ class CommitFile:
     index_info: Optional[str] = None
     
     def __str__(self):
-        return f"{self.repo_name} - {self.org_name} - {self.file_name} - {self.sha}"
+        return f"""
+        {self.change_type} {self.file_mode}
+        {self.index_info} 
+        {self.repo_name} - {self.org_name} - {self.file_name} - {self.sha}
+        """
     
     def __repr__(self):
         return self.__str__()
@@ -86,7 +90,7 @@ class CommitFile:
         general_add_in_batches('commit_files', [cf.__dict__ for cf in cfs])
         
     @staticmethod
-    def get_metadata(org_name: str, repo_name: str, sha: str, file_name: str) -> List['MetadataHelper']:
+    def get_metadata(org_name: str, repo_name: str, sha: str, file_name: str, is_playground: bool = False) -> List['MetadataHelper']:
         """Fetches all Hunks from a specific commit and file using `git show`.
 
         Args:
@@ -94,16 +98,23 @@ class CommitFile:
             repo_name (str): The repository name.
             sha (str): The commit SHA to fetch the diffs from.
             file_name (str): The file name to check for in the commit.
+            is_playground (bool): If True, uses path suitable for running the code inside the playground folder.
 
         Returns:
             list[Hunk]: A list of all Hunks parsed from the git diff output.
         """
         try:
+            repo_path = None
+            if is_playground:
+                repo_path = os.path.join('download', 'orgs', org_name, repo_name)
+            else:
+                repo_path = os.path.join('..', 'download', 'orgs', org_name, repo_name)
+
             process = subprocess.Popen(
                 ['git', 'show', sha, '--', file_name],
                 stdout=subprocess.PIPE,
                 stderr=subprocess.PIPE,
-                cwd=os.path.join('..', 'download', 'orgs', org_name, repo_name),
+                cwd=repo_path,
                 encoding='utf-8',
                 errors='replace'
             )
