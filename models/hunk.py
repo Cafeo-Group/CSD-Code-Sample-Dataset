@@ -22,8 +22,6 @@ class Hunk:
     
     def __str__(self):
         return f"""
-        {self.change_type} {self.file_mode}
-        {self.index_info} 
         --- {self.old_name}
         +++ {self.new_name}
         
