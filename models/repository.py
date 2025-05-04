@@ -122,3 +122,12 @@ class Repository:
             )
         except Exception as e:
             print(e)
+            
+    def get_repo_path(self) -> str:
+        """Returns the path to the repository.
+        
+        Returns:
+            str - The path to the repository.
+        """
+        
+        return f'download\\orgs\\{self.org_name}\\{self.repo_name}'
