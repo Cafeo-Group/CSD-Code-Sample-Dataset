@@ -40,8 +40,7 @@ class Commit:
         """
         general_add('commits', commit.__dict__)
         return commit
-        
-        
+
     @staticmethod
     def exists(commit: 'Commit') -> bool:
         """Checks if a commit is already in the database.
@@ -61,7 +60,7 @@ class Commit:
             Commit.add_formatted_commit(fetch_all, repo_path)
             
     @staticmethod
-    def get_file_names_from_git(repo_path: str, sha: str) -> List[str]:
+    def get_file_names_from_commit(repo_path: str, sha: str) -> List[str]:
         """Gets the names of all the files in a commit.
         
         Args:
@@ -88,6 +87,7 @@ class Commit:
             return files
         except Exception as e:
             print(f"Unexpected error processing {repo_path}: {e}")
+            return []
        
     @staticmethod     
     def get_commit_data(repo_path: str, cutoff_date: datetime) -> List['Commit']:
@@ -95,7 +95,6 @@ class Commit:
 
         Args:
             repo_path (str) - The path to the repository to extract commit data from.\n
-            repo_url (str) - The URL of the repository.\n
             cutoff_date (datetime) - The date to fetch commits until.\n
             
         Returns:
