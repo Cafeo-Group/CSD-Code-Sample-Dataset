@@ -15,14 +15,7 @@ def clone(git_url: str, repo_dir: str, sample: str) -> None:
     repo_path = path.join(repo_dir, sample)
     makedirs(repo_path, exist_ok=True)
 
-    repo = Repo.clone_from(git_url, repo_path, multi_options=["--no-checkout"])
-
-    try:
-        repo.git.reset('--hard', 'HEAD')
-
-        repo.git.checkout('--', '.')
-    except Exception as e:
-        print(f"Error checking out files for {sample}: {e}")
+    Repo.clone_from(git_url, repo_path, multi_options=["--no-checkout"], bare=True)
         
 def download(sample: str) -> None:
     '''Download the repository. If the repository is already downloaded,

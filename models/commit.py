@@ -101,8 +101,6 @@ class Commit:
             List[Commit]: A list of Commit objects containing the commit data.
         """
         repo = Repo(repo_path)
-        if repo.bare:
-            raise ValueError("The repository is bare or invalid.")
 
         repo_name = repo_path.split("\\")[-1]
         org_name = repo_path.split("\\")[-2]
