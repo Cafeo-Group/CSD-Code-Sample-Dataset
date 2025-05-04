@@ -136,9 +136,8 @@ def initialize_db():
         old_name TEXT,
         new_name TEXT,
         lines TEXT[],
-        PRIMARY KEY (id),
         FOREIGN KEY (file_name, repo_name, org_name, sha) 
-            REFERENCES commit_files(file_name, repo_name, org_name, sha)
+            REFERENCES commit_files(file_name, repo_name, org_name, sha),
         UNIQUE (file_name, repo_name, org_name, sha, old_start, new_start, old_length, new_length)
     );""")
 
