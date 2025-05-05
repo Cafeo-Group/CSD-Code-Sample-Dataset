@@ -43,4 +43,4 @@ To create the dataset locally:
 
 ## Database Documentation
 
-[UML](https://lucid.app/lucidchart/27e83443-34d9-4538-a3d3-6065fe012db5/edit?viewport_loc=3483%2C2013%2C2422%2C1248%2C0_0&invitationId=inv_76afb91f-45b5-4d97-bb0a-fc5b6910b2cf)
+[ER Diagram](https://lucid.app/lucidchart/27e83443-34d9-4538-a3d3-6065fe012db5/edit?viewport_loc=3483%2C2013%2C2422%2C1248%2C0_0&invitationId=inv_76afb91f-45b5-4d97-bb0a-fc5b6910b2cf)
