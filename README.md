@@ -1,6 +1,6 @@
 # [CSD-Code-Sample-Dataset](https://github.com/Cafeo-Group/MCSCMD-Multi-Code-Sample-Commit-Message-Dataset)
 
-This repository provides a complete pipeline to collect and store data from  **345 curated code sample repositories** . By executing the Jupyter notebooks provided in the `notebook/` directory, you can store structured data locally in a **PostgreSQL** database, enabling analysis and research on the evolution of code samples software.
+This repository provides a complete pipeline to collect and store data from  **345 curated code sample repositories**. By executing the Jupyter notebooks provided in the `notebook/` directory, you can store structured data locally in a **PostgreSQL** database, enabling analysis and research on the evolution of code samples software.
 
 ## Dataset Overview
 
@@ -10,7 +10,7 @@ The collected data is organized across the following relational tables:
 * **Organizations** – GitHub organizations owning the repositories.
 * **Repositories** – Basic data of each repository.
 * **Commits** – Data such as sha, message and timestamp.
-* File - General data of files of repositories, such as name and type.
+* **Files** - General data of files of repositories, such as name and type.
 * **Commit Files** – File's data that is from specific commits
 * **Hunks** – Code-level changes (diffs) between commit versions.
 
@@ -18,7 +18,7 @@ The collected data is organized across the following relational tables:
 
 To create the dataset locally:
 
-1. Intall PostgreSQL in your machine.
+1. Install PostgreSQL in your machine.
 2. Clone this repository.
 3. Insert your local postgres database password in a `.env` (see `.env.example`).
 4. Navigate to the `notebook/` folder.
@@ -36,7 +36,7 @@ To create the dataset locally:
 
 ## Notes
 
-* To extract the data repositories are cloned in *bare* mode, reducing storage the needed.
+* In order to extract the data, repositories are cloned in *bare* mode, reducing storage the needed.
 * The resulting database is approximately **1.5 GB** in size.
 * Most of the Jupyter notebook files use 100% of CPU resources for optimized multi-threading.
 * You can customize the `playground.py` file to get data from repositories without processing the full dataset.
