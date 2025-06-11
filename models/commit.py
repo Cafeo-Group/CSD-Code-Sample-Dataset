@@ -90,7 +90,7 @@ class Commit:
             return []
        
     @staticmethod     
-    def get_commit_data(repo_path: str, cutoff_date: datetime) -> List['Commit']:
+    def get_commit_data(repo_path: str, cutoff_date: datetime, playground: bool = False) -> List['Commit']:
         """Extracts commit data from the repository and stores it in a list of Commit objects.
 
         Args:
@@ -122,8 +122,11 @@ class Commit:
                     message=message,
                 )
             
-            if not Commit.exists(candidate):
-                commits.append(candidate )
+            if not playground:
+                if not Commit.exists(candidate):
+                    commits.append(candidate)
+            else:
+                commits.append(candidate)
 
         return commits
     

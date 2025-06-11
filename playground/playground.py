@@ -25,7 +25,7 @@ for index, row in repos.iterrows():
         repo = Repository.csv_row_to_Repository(row)
 
 
-commits = Commit.get_commit_data(repo.get_repo_path(), datetime.now(pytz.timezone("UTC")))
+commits = Commit.get_commit_data(repo.get_repo_path(), datetime.now(pytz.timezone("UTC")), True)
 print(f"Fetched {len(commits)} commits from {repo.get_repo_path()}")
 
 com = commits[1]
