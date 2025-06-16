@@ -1,0 +1,72 @@
+﻿Definition of Maintainability
+Degree of effectiveness and efficiency with which a product or system can be modified
+Note 1: Modifications can include corrections, improvements or adaptation of the software to changes in environment, and in requirements and functional specifications.
+Note 2: Maintainability includes installation of updates and upgrades.
+Note 3: Maintainability can be interpreted as either an inherent capability of the product or system to facilitate maintenance activities, or the quality in use experienced by the maintainers for the goal of maintaining the product or system.
+________________
+
+
+
+
+MODIFICATION REQUEST CLASSIFICATION
+ENHANCEMENT
+— Software change that addresses and implements a new requirement.
+Note: An enhancement is never a software correction.
+
+
+Correction
+— Software change that addresses and implements problem resolutions to recover gaps and to make software operational enough to meet defined operational requirements.
+Note: An enhancement is never a software enhancement.
+________________
+
+
+
+
+MAINTENANCE TYPES
+
+
+ADDITIVE
+Modification request: enhancement
+Modification of a software product performed after delivery to add functionality or features to enhance the usage of the product.
+Note: “Additive maintenance” type is distinguished from “perfective maintenance” type and recognized as a different maintenance type to be able to:
+* — provide additional new functions or features to improve software usability, performance, maintainability, or other software attributes for the future;
+* — add functionality or features with relatively large additions or changes on software for improving software attributes after delivery with identified opportunities to negotiate any of additions or changes on maintenance strategy, methods, resources, agreements, or service levels between suppliers and acquirers.
+Key difference: Expands what the software can do.
+PERFECTIVE
+Modification request: enhancement
+
+
+Modification of a software product to provide enhancements for users, improvements of information for users, and recording to improve software performance, maintainability or other software attributes
+Examples: Improving the usability or security of a system, or implementing new quality of service (QOS) requirements.
+Key difference: Focuses on quality improvements, expanding maintainability and performance.
+
+
+CORRECTIVE
+Modification request: correction
+Modification of a software product performed after delivery to correct discovered problems
+Note: The modification repairs the software product to satisfy defined system requirements.
+Examples: Bug reports and faults in the system.
+Key difference: Reactive—it addresses existing issues, not future or environmental ones.
+
+
+PREVENTIVE
+Modification request: correction
+Modification of a software product after delivery to correct latent faults in the software product before they occur in the live system.
+Examples: Improving software understandability and maintainability, addressing the accumulated technical debt, eliminating performance bottlenecks, or making parts of the system reusable.
+Key difference: Proactive—no bug is observed yet, but the change prevents future ones.
+
+
+ADAPTIVE
+Modification request: enhancement/correction
+Modification of a software product, performed after delivery, to keep a software product usable in a changed or changing environment.
+Note: Adaptive maintenance provides enhancements necessary to accommodate changes in the environment in which a software product operates. These changes help keep pace with the changing environment, e.g. an upgrade to the operating system results in changes in the applications.
+Examples: Changes in the operating system, hardware, or dependencies. Adaptive changes can also include changes reflected by organizational policies and rules.
+Key difference: Driven by external factors, not internal bugs or improvements.
+
+
+________________
+
+
+
+
+MODIFICATION REQUEST PROCESS DIAGRAM
