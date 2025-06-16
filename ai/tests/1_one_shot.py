@@ -5,9 +5,7 @@ import time
 from tqdm import tqdm
 from typing import Optional
 
-print("Current working directory:", os.getcwd())
-
-from openUiClient import OpenUiClient
+from client.openUiClient import OpenUiClient
 
 client = OpenUiClient()
 models = ['deepseek-r1:14b',
