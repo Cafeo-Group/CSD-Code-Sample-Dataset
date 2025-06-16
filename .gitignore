@@ -164,5 +164,6 @@ cython_debug/
 # Ignore repos
 download/orgs/
 
-# Ignore csv file that gives random commits for testing
+# Ignore files that gives random commits for testing
 random_commits.csv
+random_commits.json
