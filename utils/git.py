@@ -1,5 +1,6 @@
 from os import path, makedirs
 from git import Repo
+import subprocess
 
 def clone(git_url: str, repo_dir: str, sample: str) -> None:
     '''Clone a git repository and checkout all files in the repository
@@ -35,3 +36,35 @@ def download(sample: str) -> None:
         return
     else:
         clone(gitHubUrl, repoDir, sample)
+
+def is_merge_commit(repo_path: str, sha: str) -> bool:
+    """Check if a commit is a merge commit.
+    
+    Args:
+        repo_path (str): The path to the repository.
+        sha (str): The commit SHA to check.
+        
+    Returns:
+        bool: True if the commit is a merge commit, False otherwise.
+    """
+    try:
+        process = subprocess.Popen(
+            ["git", "rev-list", "--parents", "-n", "1", sha],
+            cwd=repo_path,
+            stdout=subprocess.PIPE,
+            stderr=subprocess.PIPE,
+            encoding='utf-8',
+            errors='replace'
+        )
+        stdout, stderr = process.communicate()
+        
+        if stderr:
+            raise Exception(f"Error checking commit: {stderr.strip()}")
+        
+        if process.returncode != 0:
+            return False
+            
+        parents = stdout.strip().split()
+        return len(parents) > 2  # Commit SHA + at least 2 parents
+    except Exception:
+        return False

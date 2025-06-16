@@ -1,6 +1,7 @@
 from dataclasses import dataclass
 from utils.postgres import general_add, general_exists,\
     general_exists_in_batches, general_add_in_batches
+from utils.git import is_merge_commit
 from typing import List, Optional
 import re
 import subprocess
@@ -110,8 +111,14 @@ class CommitFile:
             else:
                 repo_path = os.path.join('..', 'download', 'orgs', org_name, repo_name)
 
+            git_cmd = ['git', 'show', sha, '--', file_name]
+            
+            is_merge = is_merge_commit(repo_path, sha)
+            if is_merge:
+                git_cmd.insert(2, '-m')
+            
             process = subprocess.Popen(
-                ['git', 'show', sha, '--', file_name],
+                git_cmd,
                 stdout=subprocess.PIPE,
                 stderr=subprocess.PIPE,
                 cwd=repo_path,

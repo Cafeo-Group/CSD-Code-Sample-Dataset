@@ -1,6 +1,7 @@
 from datetime import datetime
 from dataclasses import dataclass
 from utils.postgres import general_add, general_exists, general_fetch_all, general_fetch_by_args, general_add_in_batches, general_exists_in_batches
+from utils.git import is_merge_commit
 import pytz
 import subprocess
 from typing import List
@@ -58,7 +59,7 @@ class Commit:
         fetch_all = Commit.fetch_all_commits(repo_path, cutoff_date)
         if fetch_all:
             Commit.add_formatted_commit(fetch_all, repo_path)
-            
+
     @staticmethod
     def get_file_names_from_commit(repo_path: str, sha: str) -> List[str]:
         """Gets the names of all the files in a commit.
@@ -71,8 +72,15 @@ class Commit:
             List[str]: A list of the names of all the files in the commit.
         """
         try:
+            cmd = ["git", "diff-tree", "--no-commit-id", "--name-only", "-r"]
+            
+            if is_merge_commit(repo_path, sha):
+                cmd.extend(["-m", "--first-parent", sha])
+            else:
+                cmd.extend(["--cc", sha])
+
             process = subprocess.Popen(
-                ["git", "diff-tree", "--no-commit-id", "--name-only", "-r", "--cc", sha],
+                cmd,
                 cwd=repo_path,
                 stdout=subprocess.PIPE,
                 stderr=subprocess.PIPE
@@ -84,7 +92,9 @@ class Commit:
                 return
 
             files = stdout.decode('utf-8', errors='replace').splitlines()
-            return files
+
+            seen = set()
+            return [f for f in files if not (f in seen or seen.add(f))]
         except Exception as e:
             print(f"Unexpected error processing {repo_path}: {e}")
             return []
