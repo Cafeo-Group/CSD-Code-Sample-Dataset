@@ -1,0 +1,160 @@
+Model: llama3.1:8b
+Response: Modification Request Classification: enhancement
+Maintenance Type: perfective
+
+Model: llama3.1:8b
+Response: Modification Request Classification: enhancement
+Maintenance Type: additive
+
+Model: llama3.1:8b
+Response: Modification Request Classification: enhancement
+Maintenance Type: adaptive
+
+Model: llama3.1:8b
+Response: Modification Request Classification: enhancement
+Maintenance Type: additive
+
+Model: llama3.1:8b
+Response: Modification Request Classification: enhancement
+Maintenance Type: adaptive
+
+Model: llama3.1:8b
+Response: Modification Request Classification: enhancement
+Maintenance Type: perfective
+
+Model: llama3.1:8b
+Response: Modification Request Classification: enhancement
+Maintenance Type: perfective
+
+Model: llama3.1:8b
+Response: Modification Request Classification: enhancement
+Maintenance Type: perfective
+
+Model: llama3.1:8b
+Response: Modification Request Classification: correction
+Maintenance Type: corrective
+
+Model: llama3.1:8b
+Response: Modification Request Classification: enhancement
+Maintenance Type: additive
+
+Model: llama3.1:8b
+Response: Modification Request Classification: enhancement
+Maintenance Type: perfective
+
+Model: llama3.1:8b
+Response: Modification Request Classification: enhancement
+Maintenance Type: additive
+
+Model: llama3.1:8b
+Response: Modification Request Classification: enhancement
+Maintenance Type: preventive
+
+Model: llama3.1:8b
+Response: Modification Request Classification: enhancement
+Maintenance Type: adaptive
+
+Model: llama3.1:8b
+Response: Modification Request Classification: correction
+Maintenance Type: corrective
+
+Model: llama3.1:8b
+Response: Modification Request Classification: enhancement
+Maintenance Type: perfective
+
+Model: llama3.1:8b
+Response: Modification Request Classification: enhancement
+Maintenance Type: perfective
+
+Model: llama3.1:8b
+Response: Modification Request Classification: enhancement
+Maintenance Type: perfective
+
+Model: llama3.1:8b
+Response: Modification Request Classification: enhancement
+Maintenance Type: perfective
+
+Model: llama3.1:8b
+Response: Modification Request Classification: enhancement
+Maintenance Type: perfective
+
+Model: llama3.1:8b
+Response: Modification Request Classification: correction
+Maintenance Type: corrective
+
+Model: llama3.1:8b
+Response: Modification Request Classification: enhancement
+Maintenance Type: perfective
+
+Model: llama3.1:8b
+Response: Modification Request Classification: enhancement
+Maintenance Type: adaptive
+
+Model: llama3.1:8b
+Response: Modification Request Classification: enhancement
+Maintenance Type: adaptive
+
+Model: llama3.1:8b
+Response: Modification Request Classification: Enhancement
+Maintenance Type: Additive
+
+Model: llama3.1:8b
+Response: Modification Request Classification: enhancement
+Maintenance Type: additive
+
+Model: llama3.1:8b
+Response: Modification Request Classification: enhancement
+Maintenance Type: corrective
+
+Model: llama3.1:8b
+Response: Modification Request Classification: enhancement
+Maintenance Type: additive
+
+Model: llama3.1:8b
+Response: Modification Request Classification: enhancement
+Maintenance Type: perfective
+
+Model: llama3.1:8b
+Response: Modification Request Classification: enhancement
+Maintenance Type: adaptive
+
+Model: llama3.1:8b
+Response: Modification Request Classification: enhancement
+Maintenance Type: perfective
+
+Model: llama3.1:8b
+Response: Modification Request Classification: enhancement
+Maintenance Type: perfective
+
+Model: llama3.1:8b
+Response: Modification Request Classification: correction
+Maintenance Type: corrective
+
+Model: llama3.1:8b
+Response: Modification Request Classification: enhancement
+Maintenance Type: perfective
+
+Model: llama3.1:8b
+Response: Modification Request Classification: correction
+Maintenance Type: corrective
+
+Model: llama3.1:8b
+Response: Modification Request Classification: enhancement
+Maintenance Type: additive
+
+Model: llama3.1:8b
+Response: Modification Request Classification: enhancement
+Maintenance Type: perfective
+
+Model: llama3.1:8b
+Response: Modification Request Classification: enhancement
+Maintenance Type: perfective
+
+Model: llama3.1:8b
+Response: Modification Request Classification: enhancement
+Maintenance Type: additive
+
+Model: llama3.1:8b
+Response: Modification Request Classification: enhancement
+Maintenance Type: perfective
+
