@@ -1,0 +1,2943 @@
+repo_name,org_name,sha,link,message,opinion_1,opinion_2,opinion_3,hunks
+tut-spring-boot-kotlin,spring-guides,6bf4f5e34d7fed318eb0edcc8afb9f177c5448b9,https://github.com/spring-guides/tut-spring-boot-kotlin/commit/6bf4f5e34d7fed318eb0edcc8afb9f177c5448b9,Remove unneeded header,Preventive,,,"[
+        --- a/src/main/kotlin/blog/MarkdownConverter.kt
+        +++ b/src/main/kotlin/blog/MarkdownConverter.kt
+        
+        @@ -1,18 +1,3 @@
+        
+        -/*
+- * Copyright 2002-2017 the original author or authors.
+- *
+- * Licensed under the Apache License, Version 2.0 (the ""License"");
+- * you may not use this file except in compliance with the License.
+- * You may obtain a copy of the License at
+- *
+- *      http://www.apache.org/licenses/LICENSE-2.0
+- *
+- * Unless required by applicable law or agreed to in writing, software
+- * distributed under the License is distributed on an ""AS IS"" BASIS,
+- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+- * See the License for the specific language governing permissions and
+- * limitations under the License.
+- */
+ package blog
+ 
+ import org.commonmark.ext.autolink.AutolinkExtension
+
+        ]"
+tut-spring-boot-kotlin,spring-guides,e0990f9d1f7a2881ba154512662536d04a738fa4,https://github.com/spring-guides/tut-spring-boot-kotlin/commit/e0990f9d1f7a2881ba154512662536d04a738fa4,Update start.spring.io and change package,Adaptive,,,"[
+        --- a/README.adoc
+        +++ b/README.adoc
+        
+        @@ -23,15 +23,14 @@
+        
+         
+ Visit https://start.spring.io and choose the Kotlin language. Or visit https://start.spring.io/#!language=kotlin to preselect Kotlin.
+ 
+-	. let the default ""Maven Project"" or select ""Gradle Project"" depending on which build topl you want to use
+-	. Click ""Switch to the full version"" and enter the following artifact coordinates:
+-		- **Artifact:** `blog`
+-		- **Package Name:** `blog`
++	. Let the default ""Maven Project"" or select ""Gradle Project"" depending on which build tool you want to use
++	. Enter the following artifact coordinates: `blog`
+ 	. Add the following dependencies:
+ 		- Web
+ 		- Mustache
+ 		- JPA
+ 		- H2
++		- Devtools
+ 	. Click ""Generate Project"".
+ 
+ image::./images/initializr.png[]
+        , 
+        --- a/README.adoc
+        +++ b/README.adoc
+        
+        @@ -46,7 +45,7 @@
+        
+         [source]
+ ----
+ $ mkdir blog && cd blog
+-$ curl https://start.spring.io/starter.zip -d language=kotlin -d style=web,mustache,jpa,h2 -d packageName=blog -d name=Blog -o blog.zip
++$ curl https://start.spring.io/starter.zip -d language=kotlin -d style=web,mustache,jpa,h2,devtools -d packageName=com.example.blog -d name=Blog -o blog.zip
+ ----
+ 
+ Add `-d type=gradle-project` if you want to use Gradle.
+        , 
+        --- a/README.adoc
+        +++ b/README.adoc
+        
+        @@ -60,12 +59,11 @@
+        
+         
+ Follow the steps of the wizard to use the following parameters:
+ 
+- - Package name: ""blog""
+  - Artifact: ""blog""
+  - Type: Maven project or Gradle Project
+  - Language: Kotlin
+  - Name: ""Blog""
+- - Dependencies: ""Web"", ""Mustache"", JPA"" and ""H2""
++ - Dependencies: ""Web"", ""Mustache"", JPA"", ""H2"" and ""Devtool""
+ 
+ [[reveal-gradle]]
+ [.reveal-gradle]
+        , 
+        --- a/README.adoc
+        +++ b/README.adoc
+        
+        @@ -142,6 +140,7 @@
+        
+         	implementation 'com.fasterxml.jackson.module:jackson-module-kotlin'
+ 	implementation 'org.jetbrains.kotlin:kotlin-reflect'
+ 	implementation 'org.jetbrains.kotlin:kotlin-stdlib-jdk8'
++	runtimeOnly 'org.springframework.boot:spring-boot-devtools'
+ 	runtimeOnly 'com.h2database:h2'
+ 	testImplementation 'org.springframework.boot:spring-boot-starter-test'
+ }
+        , 
+        --- a/README.adoc
+        +++ b/README.adoc
+        
+        @@ -248,6 +247,11 @@
+        
+         		<artifactId>kotlin-stdlib-jdk8</artifactId>
+ 	</dependency>
+ 
++	<dependency>
++		<groupId>org.springframework.boot</groupId>
++		<artifactId>spring-boot-devtools</artifactId>
++		<scope>runtime</scope>
++	</dependency>
+ 	<dependency>
+ 		<groupId>com.h2database</groupId>
+ 		<artifactId>h2</artifactId>
+        , 
+        --- a/README.adoc
+        +++ b/README.adoc
+        
+        @@ -266,7 +270,7 @@
+        
+         `src/main/kotlin/blog/BlogApplication.kt`
+ [source,kotlin]
+ ----
+-package blog
++package com.example.blog
+ 
+ import org.springframework.boot.autoconfigure.SpringBootApplication
+ import org.springframework.boot.runApplication
+        , 
+        --- a/README.adoc
+        +++ b/README.adoc
+        
+        @@ -298,7 +302,7 @@
+        
+         `src/main/kotlin/blog/HtmlController.kt`
+ [source,kotlin]
+ ----
+-package blog
++package com.example.blog
+ 
+ import org.springframework.stereotype.Controller
+ import org.springframework.ui.Model
+
+        , 
+        --- a/build.gradle
+        +++ b/build.gradle
+        
+        @@ -57,7 +57,8 @@
+        
+         	implementation 'com.fasterxml.jackson.module:jackson-module-kotlin'
+ 	implementation 'org.jetbrains.kotlin:kotlin-stdlib-jdk8'
+ 	implementation 'org.jetbrains.kotlin:kotlin-reflect'
+-	runtime 'com.h2database:h2'
++	runtimeOnly 'org.springframework.boot:spring-boot-devtools'
++	runtimeOnly 'com.h2database:h2'
+ 	kapt 'org.springframework.boot:spring-boot-configuration-processor'
+ 	testImplementation('org.springframework.boot:spring-boot-starter-test') {
+ 		exclude module: 'junit'
+
+        , 
+        --- a/pom.xml
+        +++ b/pom.xml
+        
+        @@ -50,12 +50,17 @@
+        
+         			<groupId>org.jetbrains.kotlin</groupId>
+ 			<artifactId>kotlin-reflect</artifactId>
+ 		</dependency>
++
++		<dependency>
++			<groupId>org.springframework.boot</groupId>
++			<artifactId>spring-boot-devtools</artifactId>
++			<scope>runtime</scope>
++		</dependency>
+ 		<dependency>
+ 			<groupId>com.h2database</groupId>
+ 			<artifactId>h2</artifactId>
+ 			<scope>runtime</scope>
+ 		</dependency>
+-
+ 		<dependency>
+ 			<groupId>org.springframework.boot</groupId>
+ 			<artifactId>spring-boot-starter-test</artifactId>
+
+        , 
+        --- a/src/main/kotlin/blog/BlogApplication.kt
+        +++ /dev/null
+        
+        @@ -1,13 +0,0 @@
+        
+        -package blog
+-
+-import org.springframework.boot.autoconfigure.SpringBootApplication
+-import org.springframework.boot.context.properties.EnableConfigurationProperties
+-import org.springframework.boot.runApplication
+-
+-@SpringBootApplication
+-@EnableConfigurationProperties(BlogProperties::class)
+-class BlogApplication
+-
+-fun main(args: Array<String>) {
+-	runApplication<BlogApplication>(*args)
+-}
+
+        , 
+        --- a/src/main/kotlin/blog/BlogConfiguration.kt
+        +++ /dev/null
+        
+        @@ -1,28 +0,0 @@
+        
+        -package blog
+-
+-import org.springframework.boot.ApplicationRunner
+-import org.springframework.context.annotation.Bean
+-import org.springframework.context.annotation.Configuration
+-
+-@Configuration
+-class BlogConfiguration {
+-
+-    @Bean
+-    fun databaseInitializer(userRepository: UserRepository,
+-                            articleRepository: ArticleRepository) = ApplicationRunner {
+-
+-        val smaldini = userRepository.save(User(""smaldini"", ""Stéphane"", ""Maldini""))
+-        articleRepository.save(Article(
+-                title = ""Reactor Bismuth is out"",
+-                headline = ""Lorem ipsum"",
+-                content = ""dolor sit amet"",
+-                author = smaldini
+-        ))
+-        articleRepository.save(Article(
+-                title = ""Reactor Aluminium has landed"",
+-                headline = ""Lorem ipsum"",
+-                content = ""dolor sit amet"",
+-                author = smaldini
+-        ))
+-    }
+-}
+
+        , 
+        --- a/src/main/kotlin/blog/BlogProperties.kt
+        +++ /dev/null
+        
+        @@ -1,17 +0,0 @@
+        
+        -package blog
+-
+-import org.springframework.boot.context.properties.ConfigurationProperties
+-
+-// TODO Use ""val"" instead of ""lateinit var"" when spring-boot#8762 will be fixed
+-@ConfigurationProperties(""blog"")
+-class BlogProperties {
+-
+-	lateinit var title: String
+-	val banner = Banner()
+-
+-	class Banner {
+-		var title: String? = null
+-		lateinit var content: String
+-	}
+-
+-}
+
+        , 
+        --- a/src/main/kotlin/blog/Entities.kt
+        +++ /dev/null
+        
+        @@ -1,22 +0,0 @@
+        
+        -package blog
+-
+-import java.time.LocalDateTime
+-import javax.persistence.*
+-
+-@Entity
+-class Article(
+-		var title: String,
+-		var headline: String,
+-		var content: String,
+-		@ManyToOne var author: User,
+-		var slug: String = title.toSlug(),
+-		var addedAt: LocalDateTime = LocalDateTime.now(),
+-		@Id @GeneratedValue var id: Long? = null)
+-
+-@Entity
+-class User(
+-		var login: String,
+-		var firstname: String,
+-		var lastname: String,
+-		var description: String? = null,
+-		@Id @GeneratedValue var id: Long? = null)
+
+        , 
+        --- a/src/main/kotlin/blog/Extensions.kt
+        +++ /dev/null
+        
+        @@ -1,33 +0,0 @@
+        
+        -package blog
+-
+-import java.time.LocalDateTime
+-import java.time.format.DateTimeFormatterBuilder
+-import java.time.temporal.ChronoField
+-import java.util.*
+-
+-fun LocalDateTime.format() = this.format(englishDateFormatter)
+-
+-private val daysLookup = (1..31).associate { it.toLong() to getOrdinal(it) }
+-
+-private val englishDateFormatter = DateTimeFormatterBuilder()
+-		.appendPattern(""yyyy-MM-dd"")
+-		.appendLiteral("" "")
+-		.appendText(ChronoField.DAY_OF_MONTH, daysLookup)
+-		.appendLiteral("" "")
+-		.appendPattern(""yyyy"")
+-		.toFormatter(Locale.ENGLISH)
+-
+-private fun getOrdinal(n: Int) = when {
+-	n in 11..13 -> ""${n}th""
+-	n % 10 == 1 -> ""${n}st""
+-	n % 10 == 2 -> ""${n}nd""
+-	n % 10 == 3 -> ""${n}rd""
+-	else -> ""${n}th""
+-}
+-
+-fun String.toSlug() = toLowerCase()
+-		.replace(""\n"", "" "")
+-		.replace(""[^a-z\\d\\s]"".toRegex(), "" "")
+-		.split("" "")
+-		.joinToString(""-"")
+-		.replace(""-+"".toRegex(), ""-"")
+
+        , 
+        --- a/src/main/kotlin/blog/HtmlController.kt
+        +++ /dev/null
+        
+        @@ -1,49 +0,0 @@
+        
+        -package blog
+-
+-import org.springframework.stereotype.Controller
+-import org.springframework.ui.Model
+-import org.springframework.ui.set
+-import org.springframework.web.bind.annotation.GetMapping
+-import org.springframework.web.bind.annotation.PathVariable
+-
+-@Controller
+-class HtmlController(private val repository: ArticleRepository,
+-					 private val properties: BlogProperties) {
+-
+-	@GetMapping(""/"")
+-	fun blog(model: Model): String {
+-		model[""title""] = properties.title
+-		model[""banner""] = properties.banner
+-		model[""articles""] = repository.findAllByOrderByAddedAtDesc().map { it.render() }
+-		return ""blog""
+-	}
+-
+-	@GetMapping(""/article/{slug}"")
+-	fun article(@PathVariable slug: String, model: Model): String {
+-		val article = repository
+-				.findBySlug(slug)
+-				?.render()
+-				?: throw IllegalArgumentException(""Wrong article slug provided"")
+-		model[""title""] = article.title
+-		model[""article""] = article
+-		return ""article""
+-	}
+-
+-	fun Article.render() = RenderedArticle(
+-			slug,
+-			title,
+-			headline,
+-			content,
+-			author,
+-			addedAt.format()
+-	)
+-
+-	data class RenderedArticle(
+-			val slug: String,
+-			val title: String,
+-			val headline: String,
+-			val content: String,
+-			val author: User,
+-			val addedAt: String)
+-
+-}
+
+        , 
+        --- a/src/main/kotlin/blog/HttpControllers.kt
+        +++ /dev/null
+        
+        @@ -1,27 +0,0 @@
+        
+        -package blog
+-
+-import org.springframework.web.bind.annotation.*
+-
+-@RestController
+-@RequestMapping(""/api/article"")
+-class ArticleController(private val repository: ArticleRepository) {
+-
+-	@GetMapping(""/"")
+-	fun findAll() = repository.findAllByOrderByAddedAtDesc()
+-
+-	@GetMapping(""/{slug}"")
+-	fun findOne(@PathVariable slug: String) =
+-			repository.findBySlug(slug) ?: throw IllegalArgumentException(""Wrong article slug provided"")
+-
+-}
+-
+-@RestController
+-@RequestMapping(""/api/user"")
+-class UserController(private val repository: UserRepository) {
+-
+-	@GetMapping(""/"")
+-	fun findAll() = repository.findAll()
+-
+-	@GetMapping(""/{login}"")
+-	fun findOne(@PathVariable login: String) = repository.findByLogin(login)
+-}
+
+        , 
+        --- a/src/main/kotlin/blog/Repositories.kt
+        +++ /dev/null
+        
+        @@ -1,13 +0,0 @@
+        
+        -package blog
+-
+-import org.springframework.data.repository.CrudRepository
+-
+-interface ArticleRepository : CrudRepository<Article, Long> {
+-	fun findBySlug(slug: String): Article?
+-	fun findAllByOrderByAddedAtDesc(): Iterable<Article>
+-}
+-
+-interface UserRepository : CrudRepository<User, Long> {
+-	fun findByLogin(login: String): User
+-}
+-
+
+        , 
+        --- /dev/null
+        +++ b/src/main/kotlin/com/example/blog/BlogApplication.kt
+        
+        @@ -0,0 +1,13 @@
+        
+        +package com.example.blog
++
++import org.springframework.boot.autoconfigure.SpringBootApplication
++import org.springframework.boot.context.properties.EnableConfigurationProperties
++import org.springframework.boot.runApplication
++
++@SpringBootApplication
++@EnableConfigurationProperties(BlogProperties::class)
++class BlogApplication
++
++fun main(args: Array<String>) {
++	runApplication<BlogApplication>(*args)
++}
+
+        , 
+        --- /dev/null
+        +++ b/src/main/kotlin/com/example/blog/BlogConfiguration.kt
+        
+        @@ -0,0 +1,28 @@
+        
+        +package com.example.blog
++
++import org.springframework.boot.ApplicationRunner
++import org.springframework.context.annotation.Bean
++import org.springframework.context.annotation.Configuration
++
++@Configuration
++class BlogConfiguration {
++
++    @Bean
++    fun databaseInitializer(userRepository: UserRepository,
++							articleRepository: ArticleRepository) = ApplicationRunner {
++
++        val smaldini = userRepository.save(User(""smaldini"", ""Stéphane"", ""Maldini""))
++        articleRepository.save(Article(
++				title = ""Reactor Bismuth is out"",
++				headline = ""Lorem ipsum"",
++				content = ""dolor sit amet"",
++				author = smaldini
++		))
++        articleRepository.save(Article(
++				title = ""Reactor Aluminium has landed"",
++				headline = ""Lorem ipsum"",
++				content = ""dolor sit amet"",
++				author = smaldini
++		))
++    }
++}
+
+        , 
+        --- /dev/null
+        +++ b/src/main/kotlin/com/example/blog/BlogProperties.kt
+        
+        @@ -0,0 +1,17 @@
+        
+        +package com.example.blog
++
++import org.springframework.boot.context.properties.ConfigurationProperties
++
++// TODO Use ""val"" instead of ""lateinit var"" when spring-boot#8762 will be fixed
++@ConfigurationProperties(""blog"")
++class BlogProperties {
++
++	lateinit var title: String
++	val banner = Banner()
++
++	class Banner {
++		var title: String? = null
++		lateinit var content: String
++	}
++
++}
+
+        , 
+        --- /dev/null
+        +++ b/src/main/kotlin/com/example/blog/Entities.kt
+        
+        @@ -0,0 +1,22 @@
+        
+        +package com.example.blog
++
++import java.time.LocalDateTime
++import javax.persistence.*
++
++@Entity
++class Article(
++		var title: String,
++		var headline: String,
++		var content: String,
++		@ManyToOne var author: User,
++		var slug: String = title.toSlug(),
++		var addedAt: LocalDateTime = LocalDateTime.now(),
++		@Id @GeneratedValue var id: Long? = null)
++
++@Entity
++class User(
++		var login: String,
++		var firstname: String,
++		var lastname: String,
++		var description: String? = null,
++		@Id @GeneratedValue var id: Long? = null)
+
+        , 
+        --- /dev/null
+        +++ b/src/main/kotlin/com/example/blog/Extensions.kt
+        
+        @@ -0,0 +1,33 @@
+        
+        +package com.example.blog
++
++import java.time.LocalDateTime
++import java.time.format.DateTimeFormatterBuilder
++import java.time.temporal.ChronoField
++import java.util.*
++
++fun LocalDateTime.format() = this.format(englishDateFormatter)
++
++private val daysLookup = (1..31).associate { it.toLong() to getOrdinal(it) }
++
++private val englishDateFormatter = DateTimeFormatterBuilder()
++		.appendPattern(""yyyy-MM-dd"")
++		.appendLiteral("" "")
++		.appendText(ChronoField.DAY_OF_MONTH, daysLookup)
++		.appendLiteral("" "")
++		.appendPattern(""yyyy"")
++		.toFormatter(Locale.ENGLISH)
++
++private fun getOrdinal(n: Int) = when {
++	n in 11..13 -> ""${n}th""
++	n % 10 == 1 -> ""${n}st""
++	n % 10 == 2 -> ""${n}nd""
++	n % 10 == 3 -> ""${n}rd""
++	else -> ""${n}th""
++}
++
++fun String.toSlug() = toLowerCase()
++		.replace(""\n"", "" "")
++		.replace(""[^a-z\\d\\s]"".toRegex(), "" "")
++		.split("" "")
++		.joinToString(""-"")
++		.replace(""-+"".toRegex(), ""-"")
+
+        , 
+        --- /dev/null
+        +++ b/src/main/kotlin/com/example/blog/HtmlController.kt
+        
+        @@ -0,0 +1,49 @@
+        
+        +package com.example.blog
++
++import org.springframework.stereotype.Controller
++import org.springframework.ui.Model
++import org.springframework.ui.set
++import org.springframework.web.bind.annotation.GetMapping
++import org.springframework.web.bind.annotation.PathVariable
++
++@Controller
++class HtmlController(private val repository: ArticleRepository,
++					 private val properties: BlogProperties) {
++
++	@GetMapping(""/"")
++	fun blog(model: Model): String {
++		model[""title""] = properties.title
++		model[""banner""] = properties.banner
++		model[""articles""] = repository.findAllByOrderByAddedAtDesc().map { it.render() }
++		return ""blog""
++	}
++
++	@GetMapping(""/article/{slug}"")
++	fun article(@PathVariable slug: String, model: Model): String {
++		val article = repository
++				.findBySlug(slug)
++				?.render()
++				?: throw IllegalArgumentException(""Wrong article slug provided"")
++		model[""title""] = article.title
++		model[""article""] = article
++		return ""article""
++	}
++
++	fun Article.render() = RenderedArticle(
++			slug,
++			title,
++			headline,
++			content,
++			author,
++			addedAt.format()
++	)
++
++	data class RenderedArticle(
++			val slug: String,
++			val title: String,
++			val headline: String,
++			val content: String,
++			val author: User,
++			val addedAt: String)
++
++}
+
+        , 
+        --- /dev/null
+        +++ b/src/main/kotlin/com/example/blog/HttpControllers.kt
+        
+        @@ -0,0 +1,27 @@
+        
+        +package com.example.blog
++
++import org.springframework.web.bind.annotation.*
++
++@RestController
++@RequestMapping(""/api/article"")
++class ArticleController(private val repository: ArticleRepository) {
++
++	@GetMapping(""/"")
++	fun findAll() = repository.findAllByOrderByAddedAtDesc()
++
++	@GetMapping(""/{slug}"")
++	fun findOne(@PathVariable slug: String) =
++			repository.findBySlug(slug) ?: throw IllegalArgumentException(""Wrong article slug provided"")
++
++}
++
++@RestController
++@RequestMapping(""/api/user"")
++class UserController(private val repository: UserRepository) {
++
++	@GetMapping(""/"")
++	fun findAll() = repository.findAll()
++
++	@GetMapping(""/{login}"")
++	fun findOne(@PathVariable login: String) = repository.findByLogin(login)
++}
+
+        , 
+        --- /dev/null
+        +++ b/src/main/kotlin/com/example/blog/Repositories.kt
+        
+        @@ -0,0 +1,13 @@
+        
+        +package com.example.blog
++
++import org.springframework.data.repository.CrudRepository
++
++interface ArticleRepository : CrudRepository<Article, Long> {
++	fun findBySlug(slug: String): Article?
++	fun findAllByOrderByAddedAtDesc(): Iterable<Article>
++}
++
++interface UserRepository : CrudRepository<User, Long> {
++	fun findByLogin(login: String): User
++}
++
+
+        , 
+        --- a/src/test/kotlin/blog/BlogApplicationTests.kt
+        +++ /dev/null
+        
+        @@ -1,13 +0,0 @@
+        
+        -package blog
+-
+-import org.junit.jupiter.api.Test
+-import org.springframework.boot.test.context.SpringBootTest
+-
+-@SpringBootTest
+-class BlogApplicationTests {
+-
+-	@Test
+-	fun contextLoads() {
+-	}
+-
+-}
+
+        , 
+        --- a/src/test/kotlin/blog/HttpControllersTests.kt
+        +++ /dev/null
+        
+        @@ -1,48 +0,0 @@
+        
+        -package blog
+-
+-import com.ninjasquad.springmockk.MockkBean
+-import io.mockk.every
+-import org.junit.jupiter.api.Test
+-import org.springframework.beans.factory.annotation.Autowired
+-import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest
+-import org.springframework.test.web.servlet.MockMvc
+-import org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get
+-import org.springframework.http.MediaType
+-import org.springframework.test.web.servlet.result.MockMvcResultMatchers.*
+-
+-@WebMvcTest
+-class HttpControllersTests(@Autowired val mockMvc: MockMvc) {
+-
+-	@MockkBean
+-	lateinit var userRepository: UserRepository
+-
+-	@MockkBean
+-	lateinit var articleRepository: ArticleRepository
+-
+-	@Test
+-	fun `List articles`() {
+-		val juergen = User(""springjuergen"", ""Juergen"", ""Hoeller"")
+-		val spring5Article = Article(""Spring Framework 5.0 goes GA"", ""Dear Spring community ..."", ""Lorem ipsum"", juergen)
+-		val spring43Article = Article(""Spring Framework 4.3 goes GA"", ""Dear Spring community ..."", ""Lorem ipsum"", juergen)
+-		every { articleRepository.findAllByOrderByAddedAtDesc() } returns listOf(spring5Article, spring43Article)
+-		mockMvc.perform(get(""/api/article/"").accept(MediaType.APPLICATION_JSON))
+-				.andExpect(status().isOk)
+-				.andExpect(content().contentType(MediaType.APPLICATION_JSON_UTF8))
+-				.andExpect(jsonPath(""\$.[0].author.login"").value(juergen.login))
+-				.andExpect(jsonPath(""\$.[0].slug"").value(spring5Article.slug))
+-				.andExpect(jsonPath(""\$.[1].author.login"").value(juergen.login))
+-				.andExpect(jsonPath(""\$.[1].slug"").value(spring43Article.slug))
+-	}
+-
+-	@Test
+-	fun `List users`() {
+-		val juergen = User(""springjuergen"", ""Juergen"", ""Hoeller"")
+-		val smaldini = User(""smaldini"", ""Stéphane"", ""Maldini"")
+-		every { userRepository.findAll() } returns listOf(juergen, smaldini)
+-		mockMvc.perform(get(""/api/user/"").accept(MediaType.APPLICATION_JSON))
+-				.andExpect(status().isOk)
+-				.andExpect(content().contentType(MediaType.APPLICATION_JSON_UTF8))
+-				.andExpect(jsonPath(""\$.[0].login"").value(juergen.login))
+-				.andExpect(jsonPath(""\$.[1].login"").value(smaldini.login))
+-	}
+-}
+
+        , 
+        --- a/src/test/kotlin/blog/IntegrationTests.kt
+        +++ /dev/null
+        
+        @@ -1,43 +0,0 @@
+        
+        -package blog
+-
+-import org.assertj.core.api.Assertions.*
+-import org.junit.jupiter.api.AfterAll
+-import org.junit.jupiter.api.BeforeAll
+-import org.junit.jupiter.api.Test
+-import org.springframework.beans.factory.annotation.Autowired
+-import org.springframework.boot.test.context.SpringBootTest
+-import org.springframework.boot.test.web.client.TestRestTemplate
+-import org.springframework.boot.test.web.client.getForEntity
+-import org.springframework.http.HttpStatus
+-
+-@SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
+-class IntegrationTests(@Autowired val restTemplate: TestRestTemplate) {
+-
+-	@BeforeAll
+-	fun setup() {
+-		println("">> Setup"")
+-	}
+-
+-	@Test
+-	fun `Assert blog page title, content and status code`() {
+-		println("">> Assert blog page title, content and status code"")
+-		val entity = restTemplate.getForEntity<String>(""/"")
+-		assertThat(entity.statusCode).isEqualTo(HttpStatus.OK)
+-		assertThat(entity.body).contains(""<h1>Blog</h1>"", ""Reactor"")
+-	}
+-
+-	@Test
+-	fun `Assert article page title, content and status code`() {
+-		println("">> Assert article page title, content and status code"")
+-		val title = ""Reactor Aluminium has landed""
+-		val entity = restTemplate.getForEntity<String>(""/article/${title.toSlug()}"")
+-		assertThat(entity.statusCode).isEqualTo(HttpStatus.OK)
+-		assertThat(entity.body).contains(title, ""Lorem ipsum"", ""dolor sit amet"")
+-	}
+-
+-	@AfterAll
+-	fun teardown() {
+-		println("">> Tear down"")
+-	}
+-
+-}
+\ No newline at end of file
+
+        , 
+        --- a/src/test/kotlin/blog/RepositoriesTests.kt
+        +++ /dev/null
+        
+        @@ -1,35 +0,0 @@
+        
+        -package blog
+-
+-import org.assertj.core.api.Assertions.assertThat
+-import org.junit.jupiter.api.Test
+-import org.springframework.beans.factory.annotation.Autowired
+-import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest
+-import org.springframework.boot.test.autoconfigure.orm.jpa.TestEntityManager
+-import org.springframework.data.repository.findByIdOrNull
+-
+-@DataJpaTest
+-class RepositoriesTests @Autowired constructor(
+-		val entityManager: TestEntityManager,
+-		val userRepository: UserRepository,
+-		val articleRepository: ArticleRepository) {
+-
+-	@Test
+-	fun `When findByIdOrNull then return Article`() {
+-		val juergen = User(""springjuergen"", ""Juergen"", ""Hoeller"")
+-		entityManager.persist(juergen)
+-		val article = Article(""Spring Framework 5.0 goes GA"", ""Dear Spring community ..."", ""Lorem ipsum"", juergen)
+-		entityManager.persist(article)
+-		entityManager.flush()
+-		val found = articleRepository.findByIdOrNull(article.id!!)
+-		assertThat(found).isEqualTo(article)
+-	}
+-
+-	@Test
+-	fun `When findByLogin then return User`() {
+-		val juergen = User(""springjuergen"", ""Juergen"", ""Hoeller"")
+-		entityManager.persist(juergen)
+-		entityManager.flush()
+-		val user = userRepository.findByLogin(juergen.login)
+-		assertThat(user).isEqualTo(juergen)
+-	}
+-}
+
+        , 
+        --- /dev/null
+        +++ b/src/test/kotlin/com/example/blog/BlogApplicationTests.kt
+        
+        @@ -0,0 +1,13 @@
+        
+        +package com.example.blog
++
++import org.junit.jupiter.api.Test
++import org.springframework.boot.test.context.SpringBootTest
++
++@SpringBootTest
++class BlogApplicationTests {
++
++	@Test
++	fun contextLoads() {
++	}
++
++}
+
+        , 
+        --- /dev/null
+        +++ b/src/test/kotlin/com/example/blog/HttpControllersTests.kt
+        
+        @@ -0,0 +1,48 @@
+        
+        +package com.example.blog
++
++import com.ninjasquad.springmockk.MockkBean
++import io.mockk.every
++import org.junit.jupiter.api.Test
++import org.springframework.beans.factory.annotation.Autowired
++import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest
++import org.springframework.test.web.servlet.MockMvc
++import org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get
++import org.springframework.http.MediaType
++import org.springframework.test.web.servlet.result.MockMvcResultMatchers.*
++
++@WebMvcTest
++class HttpControllersTests(@Autowired val mockMvc: MockMvc) {
++
++	@MockkBean
++	lateinit var userRepository: UserRepository
++
++	@MockkBean
++	lateinit var articleRepository: ArticleRepository
++
++	@Test
++	fun `List articles`() {
++		val juergen = User(""springjuergen"", ""Juergen"", ""Hoeller"")
++		val spring5Article = Article(""Spring Framework 5.0 goes GA"", ""Dear Spring community ..."", ""Lorem ipsum"", juergen)
++		val spring43Article = Article(""Spring Framework 4.3 goes GA"", ""Dear Spring community ..."", ""Lorem ipsum"", juergen)
++		every { articleRepository.findAllByOrderByAddedAtDesc() } returns listOf(spring5Article, spring43Article)
++		mockMvc.perform(get(""/api/article/"").accept(MediaType.APPLICATION_JSON))
++				.andExpect(status().isOk)
++				.andExpect(content().contentType(MediaType.APPLICATION_JSON_UTF8))
++				.andExpect(jsonPath(""\$.[0].author.login"").value(juergen.login))
++				.andExpect(jsonPath(""\$.[0].slug"").value(spring5Article.slug))
++				.andExpect(jsonPath(""\$.[1].author.login"").value(juergen.login))
++				.andExpect(jsonPath(""\$.[1].slug"").value(spring43Article.slug))
++	}
++
++	@Test
++	fun `List users`() {
++		val juergen = User(""springjuergen"", ""Juergen"", ""Hoeller"")
++		val smaldini = User(""smaldini"", ""Stéphane"", ""Maldini"")
++		every { userRepository.findAll() } returns listOf(juergen, smaldini)
++		mockMvc.perform(get(""/api/user/"").accept(MediaType.APPLICATION_JSON))
++				.andExpect(status().isOk)
++				.andExpect(content().contentType(MediaType.APPLICATION_JSON_UTF8))
++				.andExpect(jsonPath(""\$.[0].login"").value(juergen.login))
++				.andExpect(jsonPath(""\$.[1].login"").value(smaldini.login))
++	}
++}
+
+        , 
+        --- /dev/null
+        +++ b/src/test/kotlin/com/example/blog/IntegrationTests.kt
+        
+        @@ -0,0 +1,43 @@
+        
+        +package com.example.blog
++
++import org.assertj.core.api.Assertions.*
++import org.junit.jupiter.api.AfterAll
++import org.junit.jupiter.api.BeforeAll
++import org.junit.jupiter.api.Test
++import org.springframework.beans.factory.annotation.Autowired
++import org.springframework.boot.test.context.SpringBootTest
++import org.springframework.boot.test.web.client.TestRestTemplate
++import org.springframework.boot.test.web.client.getForEntity
++import org.springframework.http.HttpStatus
++
++@SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
++class IntegrationTests(@Autowired val restTemplate: TestRestTemplate) {
++
++	@BeforeAll
++	fun setup() {
++		println("">> Setup"")
++	}
++
++	@Test
++	fun `Assert blog page title, content and status code`() {
++		println("">> Assert blog page title, content and status code"")
++		val entity = restTemplate.getForEntity<String>(""/"")
++		assertThat(entity.statusCode).isEqualTo(HttpStatus.OK)
++		assertThat(entity.body).contains(""<h1>Blog</h1>"", ""Reactor"")
++	}
++
++	@Test
++	fun `Assert article page title, content and status code`() {
++		println("">> Assert article page title, content and status code"")
++		val title = ""Reactor Aluminium has landed""
++		val entity = restTemplate.getForEntity<String>(""/article/${title.toSlug()}"")
++		assertThat(entity.statusCode).isEqualTo(HttpStatus.OK)
++		assertThat(entity.body).contains(title, ""Lorem ipsum"", ""dolor sit amet"")
++	}
++
++	@AfterAll
++	fun teardown() {
++		println("">> Tear down"")
++	}
++
++}
+\ No newline at end of file
+
+        , 
+        --- /dev/null
+        +++ b/src/test/kotlin/com/example/blog/RepositoriesTests.kt
+        
+        @@ -0,0 +1,35 @@
+        
+        +package com.example.blog
++
++import org.assertj.core.api.Assertions.assertThat
++import org.junit.jupiter.api.Test
++import org.springframework.beans.factory.annotation.Autowired
++import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest
++import org.springframework.boot.test.autoconfigure.orm.jpa.TestEntityManager
++import org.springframework.data.repository.findByIdOrNull
++
++@DataJpaTest
++class RepositoriesTests @Autowired constructor(
++		val entityManager: TestEntityManager,
++		val userRepository: UserRepository,
++		val articleRepository: ArticleRepository) {
++
++	@Test
++	fun `When findByIdOrNull then return Article`() {
++		val juergen = User(""springjuergen"", ""Juergen"", ""Hoeller"")
++		entityManager.persist(juergen)
++		val article = Article(""Spring Framework 5.0 goes GA"", ""Dear Spring community ..."", ""Lorem ipsum"", juergen)
++		entityManager.persist(article)
++		entityManager.flush()
++		val found = articleRepository.findByIdOrNull(article.id!!)
++		assertThat(found).isEqualTo(article)
++	}
++
++	@Test
++	fun `When findByLogin then return User`() {
++		val juergen = User(""springjuergen"", ""Juergen"", ""Hoeller"")
++		entityManager.persist(juergen)
++		entityManager.flush()
++		val user = userRepository.findByLogin(juergen.login)
++		assertThat(user).isEqualTo(juergen)
++	}
++}
+
+        ]"
+tut-spring-boot-kotlin,spring-guides,9a4d7411c9b0cb3b4885cb862bcec1ba5249069b,https://github.com/spring-guides/tut-spring-boot-kotlin/commit/9a4d7411c9b0cb3b4885cb862bcec1ba5249069b,Fix broken Spring Initializr command line support link,Corrective,,,"[
+        --- a/README.adoc
+        +++ b/README.adoc
+        
+        @@ -38,7 +38,7 @@
+        
+         [[using-command-line]]
+ === Using command line
+ 
+-You can use the Initializr HTTP API https://docs.spring.io/initializr/docs/current/reference/htmlsingle/#command-line[from the command line] with, for example, curl on a UN*X like system:
++You can use the Initializr HTTP API https://docs.spring.io/initializr/docs/current/reference/html/#command-line[from the command line] with, for example, curl on a UN*X like system:
+ 
+ [source]
+ ----
+
+        ]"
+tut-spring-boot-kotlin,spring-guides,3d4b305b04bb7ff064140b0b5c088585ae6d79fe,https://github.com/spring-guides/tut-spring-boot-kotlin/commit/3d4b305b04bb7ff064140b0b5c088585ae6d79fe,"Update README.adoc (#32)
+Obvious Fix. ""properties.title"" is not accessible on this step. It should be updated in the end of the guide when ""private val properties: BlogProperties"" is defined for HtmlController class.",Corrective,,,"[
+        --- a/README.adoc
+        +++ b/README.adoc
+        
+        @@ -711,7 +711,7 @@
+        
+         
+         @GetMapping(""/"")
+         fun blog(model: Model): String {
+-                model[""title""] = properties.title
++                model[""title""] = ""Blog""
+                 model[""articles""] = repository.findAllByOrderByAddedAtDesc().map { it.render() }
+                 return ""blog""
+         }
+
+        ]"
+tut-spring-boot-kotlin,spring-guides,b8b31b2000f616a87f60ceacea688537d773aad2,https://github.com/spring-guides/tut-spring-boot-kotlin/commit/b8b31b2000f616a87f60ceacea688537d773aad2,"Update README.adoc
+typo fix",Corrective,,,"[
+        --- a/README.adoc
+        +++ b/README.adoc
+        
+        @@ -390,7 +390,7 @@
+        
+         
+ Optional parameters with default values are defined at the last position in order to make it possible to omit them when using positional arguments (Kotlin also supports https://kotlinlang.org/docs/reference/functions.html#named-arguments[named arguments]). Notice that in Kotlin it is not unusual to group concise class declarations in the same file.
+ 
+-We also declares our Spring Data JPA repositories as following.
++We also declare our Spring Data JPA repositories as following.
+ 
+ `src/main/kotlin/blog/Repositories.kt`
+ [source,kotlin]
+
+        ]"
+tut-spring-boot-kotlin,spring-guides,388c3958406b748f4a06d614a46d924133588819,https://github.com/spring-guides/tut-spring-boot-kotlin/commit/388c3958406b748f4a06d614a46d924133588819,Upgrade dependencies,Adaptive,,,"[
+        --- a/README.adoc
+        +++ b/README.adoc
+        
+        @@ -85,11 +85,11 @@
+        
+         import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
+ 
+ plugins {
+-	kotlin(""plugin.jpa"") version ""1.3.61""
+-	id(""org.springframework.boot"") version ""2.2.2.RELEASE""
++	kotlin(""plugin.jpa"") version ""1.4.32""
++	id(""org.springframework.boot"") version ""2.4.4""
+ 	id(""io.spring.dependency-management"") version ""1.0.8.RELEASE""
+-	kotlin(""jvm"") version ""1.3.61""
+-	kotlin(""plugin.spring"") version ""1.3.61""
++	kotlin(""jvm"") version ""1.4.32""
++	kotlin(""plugin.spring"") version ""1.4.32""
+ }
+ ----
+ 
+        , 
+        --- a/README.adoc
+        +++ b/README.adoc
+        
+        @@ -469,7 +469,7 @@
+        
+         ----
+ plugins {
+ 	...
+-	kotlin(""plugin.allopen"") version ""1.3.61""
++	kotlin(""plugin.allopen"") version ""1.4.32""
+ }
+ 
+ allOpen {
+        , 
+        --- a/README.adoc
+        +++ b/README.adoc
+        
+        @@ -800,7 +800,7 @@
+        
+         }
+ testImplementation(""org.junit.jupiter:junit-jupiter-api"")
+ testRuntimeOnly(""org.junit.jupiter:junit-jupiter-engine"")
+-testImplementation(""com.ninja-squad:springmockk:1.1.3"")
++testImplementation(""com.ninja-squad:springmockk:3.0.1"")
+ ----
+ 
+ Or with Maven:
+        , 
+        --- a/README.adoc
+        +++ b/README.adoc
+        
+        @@ -831,7 +831,7 @@
+        
+         <dependency>
+ 	<groupId>com.ninja-squad</groupId>
+ 	<artifactId>springmockk</artifactId>
+-	<version>1.1.3</version>
++	<version>3.0.1</version>
+ 	<scope>test</scope>
+ </dependency>
+ ----
+        , 
+        --- a/README.adoc
+        +++ b/README.adoc
+        
+        @@ -913,7 +913,7 @@
+        
+         ----
+ plugins {
+ 	...
+-	kotlin(""kapt"") version ""1.3.61""
++	kotlin(""kapt"") version ""1.4.32""
+ }
+ 
+ dependencies {
+
+        , 
+        --- a/build.gradle.kts
+        +++ b/build.gradle.kts
+        
+        @@ -1,13 +1,13 @@
+        
+         import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
+ 
+ plugins {
+-	id(""org.springframework.boot"") version ""2.2.2.RELEASE""
+-	id(""io.spring.dependency-management"") version ""1.0.8.RELEASE""
+-	kotlin(""jvm"") version ""1.3.61""
+-	kotlin(""plugin.spring"") version ""1.3.61""
+-	kotlin(""plugin.allopen"") version ""1.3.61""
+-	kotlin(""plugin.jpa"") version ""1.3.61""
+-	kotlin(""kapt"") version ""1.3.61""
++	id(""org.springframework.boot"") version ""2.4.4""
++	id(""io.spring.dependency-management"") version ""1.0.11.RELEASE""
++	kotlin(""jvm"") version ""1.4.32""
++	kotlin(""plugin.spring"") version ""1.4.32""
++	kotlin(""plugin.allopen"") version ""1.4.32""
++	kotlin(""plugin.jpa"") version ""1.4.32""
++	kotlin(""kapt"") version ""1.4.32""
+ }
+ 
+ group = ""com.example""
+        , 
+        --- a/build.gradle.kts
+        +++ b/build.gradle.kts
+        
+        @@ -34,7 +34,7 @@
+        
+         	}
+ 	testImplementation(""org.junit.jupiter:junit-jupiter-api"")
+ 	testRuntimeOnly(""org.junit.jupiter:junit-jupiter-engine"")
+-	testImplementation(""com.ninja-squad:springmockk:1.1.3"")
++	testImplementation(""com.ninja-squad:springmockk:3.0.1"")
+ }
+ 
+ tasks.withType<KotlinCompile> {
+
+        , 
+        --- a/gradle/wrapper/gradle-wrapper.properties
+        +++ b/gradle/wrapper/gradle-wrapper.properties
+        
+        @@ -1,5 +1,5 @@
+        
+         distributionBase=GRADLE_USER_HOME
+ distributionPath=wrapper/dists
+-distributionUrl=https\://services.gradle.org/distributions/gradle-5.6.4-bin.zip
++distributionUrl=https\://services.gradle.org/distributions/gradle-6.8.3-bin.zip
+ zipStoreBase=GRADLE_USER_HOME
+ zipStorePath=wrapper/dists
+
+        , 
+        --- a/pom.xml
+        +++ b/pom.xml
+        
+        @@ -14,7 +14,7 @@
+        
+         	<parent>
+ 		<groupId>org.springframework.boot</groupId>
+ 		<artifactId>spring-boot-starter-parent</artifactId>
+-		<version>2.2.2.RELEASE</version>
++		<version>2.4.4</version>
+ 		<relativePath/> <!-- lookup parent from repository -->
+ 	</parent>
+ 
+        , 
+        --- a/pom.xml
+        +++ b/pom.xml
+        
+        @@ -22,7 +22,7 @@
+        
+         		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+ 		<project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
+ 		<java.version>1.8</java.version>
+-		<kotlin.version>1.3.61</kotlin.version>
++		<kotlin.version>1.4.32</kotlin.version>
+ 	</properties>
+ 
+ 	<dependencies>
+        , 
+        --- a/pom.xml
+        +++ b/pom.xml
+        
+        @@ -84,7 +84,7 @@
+        
+         		<dependency>
+ 			<groupId>com.ninja-squad</groupId>
+ 			<artifactId>springmockk</artifactId>
+-			<version>1.1.3</version>
++			<version>3.0.1</version>
+ 			<scope>test</scope>
+ 		</dependency>
+ 	</dependencies>
+
+        ]"
+tut-spring-boot-kotlin,spring-guides,a25d4ef81458d7b0a1a05cc87bb9195b89404efb,https://github.com/spring-guides/tut-spring-boot-kotlin/commit/a25d4ef81458d7b0a1a05cc87bb9195b89404efb,"Fix images location
+",Corrective,,,"[
+        --- a/README.adoc
+        +++ b/README.adoc
+        
+        @@ -2,9 +2,10 @@
+        
+         :icons: font
+ :source-highlighter: prettify
+ :project_id: tut-spring-boot-kotlin
++:images: https://raw.githubusercontent.com/spring-guides/tut-spring-boot-kotlin/master/images
+ :tabsize: 2
+ 
+-This tutorial shows you how to build efficiently a sample blog application by combining the power of https://projects.spring.io/spring-boot/[Spring Boot] and https://kotlinlang.org/[Kotlin].
++This tutorial shows you how to build efficiently a sample blog application by combining the power of https://spring.io/projects/spring-boot/[Spring Boot] and https://kotlinlang.org/[Kotlin].
+ 
+ If you are starting with Kotlin, you can learn the language by reading the https://kotlinlang.org/docs/reference/[reference documentation], following the online https://play.kotlinlang.org/[Kotlin Koans tutorial] or just using https://docs.spring.io/spring/docs/current/spring-framework-reference/[Spring Framework reference documentation] which now provides code samples in Kotlin.
+ 
+        , 
+        --- a/README.adoc
+        +++ b/README.adoc
+        
+        @@ -31,7 +32,7 @@
+        
+         		- Spring Boot DevTools
+ 	. Click ""Generate Project"".
+ 
+-image::./images/initializr.png[]
++image::{images}/initializr.png[]
+ 
+ The .zip file contains a standard project in the root directory, so you might want to create an empty directory before you unpack it.
+ 
+
+        ]"
+tut-spring-boot-kotlin,spring-guides,4fc16001420797eef32ec69f33b898007f632806,https://github.com/spring-guides/tut-spring-boot-kotlin/commit/4fc16001420797eef32ec69f33b898007f632806,Clarify initializer settings and update image,Preventive,,,"[
+        --- a/README.adoc
+        +++ b/README.adoc
+        
+        @@ -21,11 +21,20 @@
+        
+         [[using-the-initializr-website]]
+ === Using the Initializr Website
+ 
+-Go to https://start.spring.io and choose Kotlin language. You can also directly go to https://start.spring.io/#!language=kotlin in order to get Kotlin preselected.
+-
+-Then choose Gradle build system, ""blog"" artifact, ""blog"" package name (in advanced settings) and also add ""Web"", ""Mustache"", ""JPA"" and ""H2"" dependencies as starting points, then click on ""Generate Project"".
+-
+-image::https://github.com/spring-guides/tut-spring-boot-kotlin/raw/master/images/initializr.png[]
++Visit https://start.spring.io and choose the Kotlin language. Or visit https://start.spring.io/#!language=kotlin to preselect Kotlin.
++
++	. Select ""Gradle Project"" as the build tool
++	. Click ""Switch to the full version"" and enter the following artifact coordinates:
++		- **Artifact:** `blog`
++		- **Package Name:** `blog`
++	. Add the following dependencies:
++		- Web
++		- Mustache
++		- JPA
++		- H2
++	. Click ""Generate Project"".
++
++image::./images/initializr.png[]
+ 
+ The .zip file contains a standard Gradle project in the root directory, so you might want to create an empty directory before you unpack it.
+ 
+
+        ]"
+tut-spring-boot-kotlin,spring-guides,afcffbae5ae185ebd921f3de3a04a42329d04e5a,https://github.com/spring-guides/tut-spring-boot-kotlin/commit/afcffbae5ae185ebd921f3de3a04a42329d04e5a,"URL Cleanup
+This commit updates URLs to prefer the https protocol. Redirects are not followed to avoid accidentally expanding intentionally shortened URLs (i.e. if using a URL shortener).
+
+# Fixed URLs
+
+## Fixed Success
+These URLs were switched to an https URL with a 2xx status. While the status was successful, your review is still recommended.
+
+* http://www.apache.org/licenses/LICENSE-2.0 migrated to:
+  https://www.apache.org/licenses/LICENSE-2.0 ([https](https://www.apache.org/licenses/LICENSE-2.0) result 200).
+
+# Ignored
+These URLs were intentionally ignored.
+
+* http://maven.apache.org/POM/4.0.0
+* http://maven.apache.org/xsd/maven-4.0.0.xsd
+* http://www.w3.org/2001/XMLSchema-instance",Preventive,,,"[
+        --- a/mvnw
+        +++ b/mvnw
+        
+        @@ -8,7 +8,7 @@
+        
+         # ""License""); you may not use this file except in compliance
+ # with the License.  You may obtain a copy of the License at
+ #
+-#    http://www.apache.org/licenses/LICENSE-2.0
++#    https://www.apache.org/licenses/LICENSE-2.0
+ #
+ # Unless required by applicable law or agreed to in writing,
+ # software distributed under the License is distributed on an
+
+        , 
+        --- a/mvnw.cmd
+        +++ b/mvnw.cmd
+        
+        @@ -7,7 +7,7 @@
+        
+         @REM ""License""); you may not use this file except in compliance
+ @REM with the License.  You may obtain a copy of the License at
+ @REM
+-@REM    http://www.apache.org/licenses/LICENSE-2.0
++@REM    https://www.apache.org/licenses/LICENSE-2.0
+ @REM
+ @REM Unless required by applicable law or agreed to in writing,
+ @REM software distributed under the License is distributed on an
+
+        ]"
+tut-spring-boot-kotlin,spring-guides,a71b0c1fb27bb68049efeee7514781372198fc56,https://github.com/spring-guides/tut-spring-boot-kotlin/commit/a71b0c1fb27bb68049efeee7514781372198fc56,Removed extra spaces around application.properties code snippet to maintain consistent formatting,Preventive,,,"[
+        --- a/README.adoc
+        +++ b/README.adoc
+        
+        @@ -134,7 +134,7 @@
+        
+         [source,properties]
+ ----
+ spring.jpa.properties.hibernate.globally_quoted_identifiers=true
+-spring.jpa.properties.hibernate.globally_quoted_identifiers_skip_column_definitions = true
++spring.jpa.properties.hibernate.globally_quoted_identifiers_skip_column_definitions=true
+ ----
+ 
+ Spring Boot Gradle plugin automatically uses the Kotlin version declared via the Kotlin Gradle plugin.
+
+        ]"
+android-custom-lint-rules,googlesamples,499d2b30a38f85c6679786dc6804cf001074b564,https://github.com/googlesamples/android-custom-lint-rules/commit/499d2b30a38f85c6679786dc6804cf001074b564,"Polishing custom lint rules sample naming, comments, and use of LintUtils.
+- Using Collections.singleton(List) where appropriate
+- Clarify meaning of 'main activity'
+- Use LintUtils
+- Formatting
+
+Change-Id: Iab1a82f619e103cf6401f68c36704402f6c87252",Perfective,,,"[
+        --- a/README.md
+        +++ b/README.md
+        
+        @@ -4,7 +4,7 @@
+        
+         The [Android `lint` tool](http://developer.android.com/tools/help/lint.html) is a static code
+  analysis tool that checks your Android project source files for potential bugs and optimization
+  improvements for correctness, security, performance, usability, accessibility, and
+- internationalization. Lint comes with over 100 checks, however it can be extended with additional
++ internationalization. Lint comes with over 200 checks, however it can be extended with additional
+  custom rules.
+ 
+ **NOTE: The lint API is not a final API; if you rely on this be prepared
+        , 
+        --- a/README.md
+        +++ b/README.md
+        
+        @@ -42,7 +42,7 @@
+        
+         
+ ##### Run lint
+ 
+-`lint`
++`./gradlew lint`
+ 
+ > Note: If you can't run `lint` directly, you may want to include android tools `PATH` in your
+  `~/.bash_profile`.
+
+        , 
+        --- a/gradle/wrapper/gradle-wrapper.properties
+        +++ b/gradle/wrapper/gradle-wrapper.properties
+        
+        @@ -1,6 +1,6 @@
+        
+        -#Wed Apr 10 15:27:10 PDT 2013
++#Fri Aug 21 14:39:26 PDT 2015
+ distributionBase=GRADLE_USER_HOME
+ distributionPath=wrapper/dists
+ zipStoreBase=GRADLE_USER_HOME
+ zipStorePath=wrapper/dists
+-distributionUrl=https\://services.gradle.org/distributions/gradle-2.2.1-all.zip
++distributionUrl=https\://services.gradle.org/distributions/gradle-2.4-all.zip
+
+        , 
+        --- a/src/main/java/com/example/google/lint/MainActivityDetector.java
+        +++ b/src/main/java/com/example/google/lint/MainActivityDetector.java
+        
+        @@ -22,6 +22,7 @@
+        
+         import com.android.tools.lint.detector.api.Detector;
+ import com.android.tools.lint.detector.api.Implementation;
+ import com.android.tools.lint.detector.api.Issue;
++import com.android.tools.lint.detector.api.LintUtils;
+ import com.android.tools.lint.detector.api.Location;
+ import com.android.tools.lint.detector.api.ResourceXmlDetector;
+ import com.android.tools.lint.detector.api.Scope;
+        , 
+        --- a/src/main/java/com/example/google/lint/MainActivityDetector.java
+        +++ b/src/main/java/com/example/google/lint/MainActivityDetector.java
+        
+        @@ -30,10 +31,10 @@
+        
+         
+ import org.w3c.dom.Element;
+ import org.w3c.dom.Node;
+-import org.w3c.dom.NodeList;
+ 
+-import java.util.Arrays;
++import java.io.File;
+ import java.util.Collection;
++import java.util.Collections;
+ import java.util.EnumSet;
+ 
+ import static com.android.SdkConstants.ANDROID_MANIFEST_XML;
+        , 
+        --- a/src/main/java/com/example/google/lint/MainActivityDetector.java
+        +++ b/src/main/java/com/example/google/lint/MainActivityDetector.java
+        
+        @@ -44,9 +45,11 @@
+        
+         import static com.android.SdkConstants.TAG_INTENT_FILTER;
+ import static com.android.xml.AndroidManifest.NODE_ACTION;
+ import static com.android.xml.AndroidManifest.NODE_CATEGORY;
++import static com.example.google.lint.ManifestConstants.ACTION_NAME_MAIN;
++import static com.example.google.lint.ManifestConstants.CATEGORY_NAME_LAUNCHER;
+ 
+ /**
+- * Checks for a main activity in <code>AndroidManifest.xml</code>.
++ * Checks for an activity with a launcher intent in <code>AndroidManifest.xml</code>.
+  * <p/>
+  * <b>NOTE: This is not a final API; if you rely on this be prepared
+  * to adjust your code for the next tools release.</b>
+        , 
+        --- a/src/main/java/com/example/google/lint/MainActivityDetector.java
+        +++ b/src/main/java/com/example/google/lint/MainActivityDetector.java
+        
+        @@ -54,8 +57,8 @@
+        
+         public class MainActivityDetector extends ResourceXmlDetector implements Detector.XmlScanner {
+     public static final Issue ISSUE = Issue.create(
+             ""MainActivityDetector"",
+-            ""Checks for a main activity"",
+-            ""This app should have a main launcher activity."",
++            ""Missing Launcher Activities"",
++            ""This app should have an activity with a launcher intent."",
+             Category.CORRECTNESS,
+             8,
+             Severity.ERROR,
+        , 
+        --- a/src/main/java/com/example/google/lint/MainActivityDetector.java
+        +++ b/src/main/java/com/example/google/lint/MainActivityDetector.java
+        
+        @@ -64,76 +67,84 @@
+        
+                             EnumSet.of(Scope.MANIFEST)));
+ 
+     /**
+-     * Will be <code>true</code> if the current file we're checking has at least one activity.
++     * This will be <code>true</code> if the current file we're checking has at least one activity.
+      */
+     private boolean mHasActivity;
+     /**
+-     * Will be <code>true</code> if the file has a main activity.
++     * This will be <code>true</code> if the file has an activity with a launcher intent.
+      */
+-    private boolean mHasMainActivity;
++    private boolean mHasLauncherActivity;
++    /**
++     * The manifest file location for the main project, <code>null</code> if there is no manifest.
++     */
++    private Location mManifestLocation;
++
++    /**
++     * No-args constructor used by the lint framework to instantiate the detector.
++     */
++    public MainActivityDetector() {
++    }
+ 
+     @Override
+     public Collection<String> getApplicableElements() {
+-        return Arrays.asList(
+-                TAG_ACTIVITY
+-        );
++        return Collections.singleton(TAG_ACTIVITY);
+     }
+ 
+     @Override
+-    public void beforeCheckFile(@NonNull Context context) {
++    public void beforeCheckProject(@NonNull Context context) {
+         mHasActivity = false;
+-        mHasMainActivity = false;
++        mHasLauncherActivity = false;
++        mManifestLocation = null;
++    }
++
++    @Override
++    public void afterCheckProject(@NonNull Context context) {
++        // Don't report issues on libraries that may not have a launcher activity
++        if (context.getProject() == context.getMainProject()
++                && !context.getMainProject().isLibrary()
++                && mManifestLocation != null) {
++            if (!mHasActivity) {
++                context.report(ISSUE, mManifestLocation,
++                        ""Expecting "" + ANDROID_MANIFEST_XML + "" to have an <"" + TAG_APPLICATION +
++                                ""> tag."");
++            } else if (!mHasLauncherActivity) {
++                // Report the issue if the manifest file has no activity with a launcher intent.
++                context.report(ISSUE, mManifestLocation,
++                        ""Expecting "" + ANDROID_MANIFEST_XML +
++                                "" to have an activity with a launcher intent."");
++            }
++        }
+     }
+ 
+     @Override
+     public void afterCheckFile(@NonNull Context context) {
+-        // Report an error if there are no <application> tags to check.
+-        // We assume the application tag is in the right place (i.e. have correct parent elements).
+-        Location location = Location.create(context.file);
+-        if (!mHasActivity) {
+-            context.report(ISSUE, location,
+-                    ""Expecting "" + ANDROID_MANIFEST_XML + "" to have an <"" + TAG_APPLICATION +
+-                            ""> tag."");
+-        } else if (!mHasMainActivity) {
+-            // Report the issue if the manifest file has no main activity.
+-            context.report(ISSUE, location,
+-                    ""Expecting "" + ANDROID_MANIFEST_XML + "" to have a main activity."");
++        // Store a reference to the manifest file in case we need to report it's location.
++        if (context.getProject() == context.getMainProject()) {
++            mManifestLocation = Location.create(context.file);
+         }
+     }
+ 
+     @Override
+     public void visitElement(XmlContext context, Element activityElement) {
+-        // Checks every activity under the <application> element and reports an error if there is
+-        // no main activity.
++        // Checks every activity and reports an error if there is no activity with a launcher
++        // intent.
+         mHasActivity = true;
+         if (isMainActivity(activityElement)) {
+-            mHasMainActivity = true;
++            mHasLauncherActivity = true;
+         }
+     }
+ 
+     /**
+-     * Returns true if the XML node is a main activity.
+-     * <p/>
+-     * A main activity is an <code>&lt;activity&gt;</code> node with an <code>&lt;
+-     * intent-filter&gt;</code> that contains the following tags:
+-     * <p/>
+-     * <pre>
+-     *   <category android:name=""android.intent.category.LAUNCHER"" />
+-     *   <action android:name=""android.intent.action.MAIN"" />
+-     * </pre>
++     * Returns true if the XML node is an activity with a launcher intent.
+      *
+      * @param activityNode The node to check.
+-     * @return <code>true</code> if the node is a main activity.
++     * @return <code>true</code> if the node is an activity with a launcher intent.
+      */
+     private boolean isMainActivity(Node activityNode) {
+         if (TAG_ACTIVITY.equals(activityNode.getNodeName())) {
+             // Loop through all <intent-filter> tags
+-            NodeList activityChildren = activityNode.getChildNodes();
+-            for (int i = 0; i < activityChildren.getLength(); ++i) {
+-                Node activityChild = activityChildren.item(i);
++            for (Element activityChild : LintUtils.getChildren(activityNode)) {
+                 if (TAG_INTENT_FILTER.equals(activityChild.getNodeName())) {
+-                    NodeList intentFilterChildren = activityChild.getChildNodes();
+-
+                     // Check for these children nodes:
+                     //
+                     // <category android:name=""android.intent.category.LAUNCHER"" />
+        , 
+        --- a/src/main/java/com/example/google/lint/MainActivityDetector.java
+        +++ b/src/main/java/com/example/google/lint/MainActivityDetector.java
+        
+        @@ -141,25 +152,18 @@
+        
+                             boolean hasLauncherCategory = false;
+                     boolean hasMainAction = false;
+ 
+-                    for (int j = 0; j < intentFilterChildren.getLength(); ++j) {
+-                        Node intentFilterChild = intentFilterChildren.item(j);
+-                        // Check for category tag
+-                        if (NODE_CATEGORY.equals(intentFilterChild.getNodeName())) {
+-                            Node categoryName = intentFilterChild.getAttributes()
+-                                    .getNamedItemNS(ANDROID_URI, ATTR_NAME);
+-                            if (categoryName != null && categoryName.getNodeValue().equals(
+-                                    ManifestConstants.CATEGORY_NAME_LAUNCHER)) {
+-                                hasLauncherCategory = true;
+-                            }
++                    for (Element intentFilterChild : LintUtils.getChildren(activityChild)) {
++                        // Check for category tag)
++                        if (NODE_CATEGORY.equals(intentFilterChild.getNodeName())
++                                && CATEGORY_NAME_LAUNCHER.equals(
++                                intentFilterChild.getAttributeNS(ANDROID_URI, ATTR_NAME))) {
++                            hasLauncherCategory = true;
+                         }
+                         // Check for action tag
+-                        if (NODE_ACTION.equals(intentFilterChild.getNodeName())) {
+-                            Node actionName = intentFilterChild.getAttributes()
+-                                    .getNamedItemNS(ANDROID_URI, ATTR_NAME);
+-                            if (actionName != null && actionName.getNodeValue().equals(
+-                                    ManifestConstants.ACTION_NAME_MAIN)) {
+-                                hasMainAction = true;
+-                            }
++                        if (NODE_ACTION.equals(intentFilterChild.getNodeName())
++                                && ACTION_NAME_MAIN.equals(
++                                intentFilterChild.getAttributeNS(ANDROID_URI, ATTR_NAME))) {
++                            hasMainAction = true;
+                         }
+                     }
+ 
+
+        , 
+        --- a/src/main/java/com/example/google/lint/MyIssueRegistry.java
+        +++ b/src/main/java/com/example/google/lint/MyIssueRegistry.java
+        
+        @@ -29,8 +29,6 @@
+        
+         public class MyIssueRegistry extends IssueRegistry {
+     @Override
+     public List<Issue> getIssues() {
+-        return Collections.singletonList(
+-                MainActivityDetector.ISSUE
+-        );
++        return Collections.singletonList(MainActivityDetector.ISSUE);
+     }
+ }
+
+        , 
+        --- a/src/test/java/com/example/google/lint/MainActivityDetectorTest.java
+        +++ b/src/test/java/com/example/google/lint/MainActivityDetectorTest.java
+        
+        @@ -23,7 +23,6 @@
+        
+         import com.android.tools.lint.detector.api.Issue;
+ import com.android.tools.lint.detector.api.Project;
+ 
+-import java.util.Arrays;
+ import java.util.Collections;
+ import java.util.HashSet;
+ import java.util.List;
+        , 
+        --- a/src/test/java/com/example/google/lint/MainActivityDetectorTest.java
+        +++ b/src/test/java/com/example/google/lint/MainActivityDetectorTest.java
+        
+        @@ -48,9 +47,7 @@
+        
+         
+     @Override
+     protected List<Issue> getIssues() {
+-        return Arrays.asList(
+-                MainActivityDetector.ISSUE
+-        );
++        return Collections.singletonList(MainActivityDetector.ISSUE);
+     }
+ 
+     /**
+        , 
+        --- a/src/test/java/com/example/google/lint/MainActivityDetectorTest.java
+        +++ b/src/test/java/com/example/google/lint/MainActivityDetectorTest.java
+        
+        @@ -68,7 +65,7 @@
+        
+             }
+ 
+     /**
+-     * Test that a manifest with a main activity has no warnings.
++     * Test that a manifest with an activity with a launcher intent has no warnings.
+      */
+     public void testHasMainActivity() throws Exception {
+         mEnabled = Collections.singleton(MainActivityDetector.ISSUE);
+        , 
+        --- a/src/test/java/com/example/google/lint/MainActivityDetectorTest.java
+        +++ b/src/test/java/com/example/google/lint/MainActivityDetectorTest.java
+        
+        @@ -95,12 +92,12 @@
+        
+             }
+ 
+     /**
+-     * Test that a manifest <em>without</em> a main activity reports an error.
++     * Test that a manifest <em>without</em> an activity with a launcher intent reports an error.
+      */
+     public void testMissingMainActivity() throws Exception {
+         mEnabled = Collections.singleton(MainActivityDetector.ISSUE);
+-        String expected = ""AndroidManifest.xml: Error: Expecting AndroidManifest.xml to have a "" +
+-                ""main activity. [MainActivityDetector]\n"" +
++        String expected = ""AndroidManifest.xml: Error: Expecting AndroidManifest.xml to have an "" +
++                ""activity with a launcher intent. [MainActivityDetector]\n"" +
+                 ""1 errors, 0 warnings\n"";
+         String result = lintProject(xml(FN_ANDROID_MANIFEST_XML, """" +
+                 ""<?xml version=\""1.0\"" encoding=\""utf-8\""?>\n"" +
+
+        ]"
+android-custom-lint-rules,googlesamples,af20a35ea03ad10798626c330d9e4e22a1c637a9,https://github.com/googlesamples/android-custom-lint-rules/commit/af20a35ea03ad10798626c330d9e4e22a1c637a9,Added dependency descriptions to the README and a note in each build.gradle to reference the README.,Additive,,,"[
+        --- a/README.md
+        +++ b/README.md
+        
+        @@ -36,6 +36,32 @@
+        
+         For Android Studio 3.x and above, use the sample in `android-studio-3`.
+ If you are targeting Android Studio 2.x and older, use the sample in `android-studio-2`.
+ 
++##### Lint Dependencies
++
++When building your own rules, you will likely want to know which dependencies you should bring into your own project. 
++The below descriptions of the dependencies included within this project serve to help you make that decision:
++
++Source Dependencies
++
++- **com.android.tools.lint:lint-api**: The most important one; it contains things like `LintClient`, the `Detector` 
++base class, the `Issue` class, and everything else that Lint checks rely on in the Lint framework.
++- **com.android.tools.lint:lint-checks**: Contains the built-in checks that are developed internally. Also contains 
++utilities that are sometimes useful for other lint checks, such as the `VersionChecks` class (which figures out whether 
++a given UAST element is known to only be called at a given API level, either by surrounding `if >= SDK-version` checks or 
++`if < SDK-version` early returns in the method).
++
++Test Dependencies
++
++- **com.android.tools.lint:lint-tests**: Contains useful utilities for writing unit tests for Lint checks, 
++including the `LintDetectorTest` base class.
++- **com.android.tools:testutils**: It's unlikely that you need to depend on this directly. The test infrastructure 
++depends on it indirectly though (the methods we use there were mostly for the older lint test infrastructure, 
++not the newer one).  
++- **com.android.tools.lint:lint**: Lint checks don't need to depend on this. It's a separate artifact used by tools 
++that want to integrate lint with the command line, such as the Gradle integration of lint. This is where things like 
++terminal output, HTML reporting, command line parsing etc is handled.
++
++
+ Support
+ -------
+ 
+
+        , 
+        --- a/android-studio-2/build.gradle
+        +++ b/android-studio-2/build.gradle
+        
+        @@ -26,6 +26,7 @@
+        
+         }
+ 
+ dependencies {
++    // For a description of the below dependencies, see the main project README
+     compile ""com.android.tools.lint:lint-api:$lintVersion""
+     compile ""com.android.tools.lint:lint-checks:$lintVersion""
+     testCompile ""junit:junit:4.11""
+
+        , 
+        --- a/android-studio-3/checks/build.gradle
+        +++ b/android-studio-3/checks/build.gradle
+        
+        @@ -1,6 +1,7 @@
+        
+         apply plugin: 'java-library'
+ 
+ dependencies {
++    // For a description of the below dependencies, see the main project README
+     compileOnly ""com.android.tools.lint:lint-api:$lintVersion""
+     compileOnly ""com.android.tools.lint:lint-checks:$lintVersion""
+     testCompile ""junit:junit:4.12""
+
+        ]"
+android-custom-lint-rules,googlesamples,bfcb1f2f01460e2cb3a3aa5f1f36fa3d52eff069,https://github.com/googlesamples/android-custom-lint-rules/commit/bfcb1f2f01460e2cb3a3aa5f1f36fa3d52eff069,"Removes unused import.
+Change-Id: I6e90be2217be00e5c823f6d70bc0791cc583e266",Preventive,,,"[
+        --- a/src/main/java/com/example/google/lint/MainActivityDetector.java
+        +++ b/src/main/java/com/example/google/lint/MainActivityDetector.java
+        
+        @@ -32,7 +32,6 @@
+        
+         import org.w3c.dom.Element;
+ import org.w3c.dom.Node;
+ 
+-import java.io.File;
+ import java.util.Collection;
+ import java.util.Collections;
+ import java.util.EnumSet;
+
+        ]"
+android-custom-lint-rules,googlesamples,12f29057b5d68c9169a5728597764fc009ad4589,https://github.com/googlesamples/android-custom-lint-rules/commit/12f29057b5d68c9169a5728597764fc009ad4589,Fix typos in docs,Corrective,,,"[
+        --- a/docs/api-guide.html
+        +++ b/docs/api-guide.html
+        
+        @@ -3132,7 +3132,7 @@
+        
+         
+ </p><ol start=""1"">
+ <li class=""number"">Local analysis which doesn't depend on anything else. For example, a
+-   lint check check which flags typos can report incidents immediately.
++   lint check which flags typos can report incidents immediately.
+    Lint calls these “definite incidents”.
+ 
+ <p></p><p>
+
+        , 
+        --- a/docs/api-guide/partial-analysis.md.html
+        +++ b/docs/api-guide/partial-analysis.md.html
+        
+        @@ -69,8 +69,8 @@
+        
+         categories will be explained in subsequent sessions) :
+ 
+ 1. Local analysis which doesn't depend on anything else. For example, a
+-   lint check check which flags typos can report incidents immediately.
+-   Lint calls these “definite incidents”.
++   lint check which flags typos can report incidents immediately. Lint
++   calls these “definite incidents”.
+ 
+ 2. Local analysis which depends on a few, common conditions. For
+    example, in Android, a check may only apply if the `minSdkVersion <
+
+        ]"
+android-custom-lint-rules,googlesamples,9f855da4801e58ed6f78476e37b8318c5e15ea91,https://github.com/spring-guides/tut-spring-boot-kotlin/commit/aa4f2fafa4705be497ddb4c6f55b13db76fee4ee,Upgrade Maven build to Spring Boot 2.1.2 as well,Adaptive,,,"{
+                            ""name"": "".gitignore"",
+                            ""content"": {
+                                ""current"": ""#built application files\n*.apk\n*.ap_\n\n# files for the dex VM\n*.dex\n\n# Java class files\n*.class\n\n# generated files\nbin/\ngen/\n\n# Local configuration file (sdk path, etc)\nlocal.properties\n\n# Windows thumbnail db\nThumbs.db\n\n# OSX files\n.DS_Store\n\n# Eclipse project files\n.classpath\n.project\n\n# Android Studio\n.idea\n*.iml\n\n#.idea/workspace.xml - remove # and delete .idea if it better suit your needs.\n.gradle\nbuild/\n"",
+                                ""diffs"": [
+                                    [
+                                        ""+#built application files"",
+                                        ""+*.apk"",
+                                        ""+*.ap_"",
+                                        ""+"",
+                                        ""+# files for the dex VM"",
+                                        ""+*.dex"",
+                                        ""+"",
+                                        ""+# Java class files"",
+                                        ""+*.class"",
+                                        ""+"",
+                                        ""+# generated files"",
+                                        ""+bin/"",
+                                        ""+gen/"",
+                                        ""+"",
+                                        ""+# Local configuration file (sdk path, etc)"",
+                                        ""+local.properties"",
+                                        ""+"",
+                                        ""+# Windows thumbnail db"",
+                                        ""+Thumbs.db"",
+                                        ""+"",
+                                        ""+# OSX files"",
+                                        ""+.DS_Store"",
+                                        ""+"",
+                                        ""+# Eclipse project files"",
+                                        ""+.classpath"",
+                                        ""+.project"",
+                                        ""+"",
+                                        ""+# Android Studio"",
+                                        ""+.idea"",
+                                        ""+*.iml"",
+                                        ""+"",
+                                        ""+#.idea/workspace.xml - remove # and delete .idea if it better suit your needs."",
+                                        ""+.gradle"",
+                                        ""+build/"",
+                                        """"
+                                    ]
+                                ]
+                            }
+                        }"
+android-custom-lint-rules,googlesamples,e01536a9676fa5e2ac13d5315c71688a9b38314b,https://github.com/googlesamples/android-custom-lint-rules/commit/e01536a9676fa5e2ac13d5315c71688a9b38314b,"Add sample for Android Studio 3.x
+As of 3.0 beta 5, we finally have support for automatically packaging
+and running lint checks in your project, such that you don't have to
+add your own local jar copy tasks anymore (or worse, dropping it in
+~/.android/lint as the current version of this sample describes).
+
+This CL moves the current sample into an android-studio-2 folder,
+and adds a new adnroid-studio-3 folder with a project showing the
+new project layout.",Adaptive,,,
+android-custom-lint-rules,googlesamples,ed5fc41bf6f040e56c4b4c729c9e575f89c2b3ff,https://github.com/googlesamples/android-custom-lint-rules/commit/ed5fc41bf6f040e56c4b4c729c9e575f89c2b3ff,"Merge pull request #85 from googlesamples/kts
+Update build files to KTS and version catalogs (and latest AGP)",Adaptive,,,
+android-custom-lint-rules,googlesamples,95a20e4c3fd3b61ad23c8dd8c0a2e5ccafdc0282,https://github.com/googlesamples/android-custom-lint-rules/commit/95a20e4c3fd3b61ad23c8dd8c0a2e5ccafdc0282,"Update lint to latest versions of AGP.
+Also cleans up a few other things and updates the
+documentation snapshot.",Adaptive,,,
+android-custom-lint-rules,googlesamples,07b0ddc1f429c9729ef3b401e826bec5757c84e2,https://github.com/googlesamples/android-custom-lint-rules/commit/07b0ddc1f429c9729ef3b401e826bec5757c84e,"Merge pull request #37 from tnorbye/main
+Add github pages to serve documentation",Additive,,,
+android-custom-lint-rules,googlesamples,5e5e6e8fa25c4f003d9b66bc9de92e7a0517bc88,https://github.com/googlesamples/android-custom-lint-rules/commit/5e5e6e8fa25c4f003d9b66bc9de92e7a0517bc88,Fix typo in changes.md,Corrective,,,
+aws-marketplace-serverless-saas-integration,aws-samples,b76fb7c3ef021558dbeb9a3b790aa114deb378df,https://github.com/aws-samples/aws-marketplace-serverless-saas-integration/commit/b76fb7c3ef021558dbeb9a3b790aa114deb378df,removed stack name dependency and replaced with unique ID segment from stack arn instead,Perfective,,,"[
+        --- a/template.yaml
+        +++ b/template.yaml
+        
+        @@ -472,8 +472,32 @@
+        
+             Type: ""AWS::CloudFront::OriginAccessControl""
+     Properties: 
+       OriginAccessControlConfig: 
+-        Description: !Sub ""Origin Access Control for static website - ${AWS::StackName}""
+-        Name: !Sub ""OAC - ${AWS::StackName}""
++        Description:
++         !Join
++          - '-'
++          - - 'Origin Access Control for static website'
++            - !Select 
++              - 0
++              - !Split 
++                - ""-""
++                - !Select
++                  - 2
++                  - !Split
++                    - ""/""
++                    - !Ref AWS::StackId
++        Name:
++         !Join
++          - '-'
++          - - 'OAC'
++            - !Select 
++              - 0
++              - !Split 
++                - ""-""
++                - !Select
++                  - 2
++                  - !Split
++                    - ""/""
++                    - !Ref AWS::StackId
+         OriginAccessControlOriginType: ""s3""
+         SigningBehavior: ""always""
+         SigningProtocol: ""sigv4""
+        , 
+        --- a/template.yaml
+        +++ b/template.yaml
+        
+        @@ -485,7 +509,19 @@
+        
+             DependsOn: ServerlessApi
+     Properties:
+       DistributionConfig:
+-        Comment: !Sub ""Cloudfront distribution for serverless website - ${AWS::StackName}""
++        Comment:
++         !Join
++          - '-'
++          - - 'Cloudfront distribution for serverless website'
++            - !Select 
++              - 0
++              - !Split 
++                - ""-""
++                - !Select
++                  - 2
++                  - !Split
++                    - ""/""
++                    - !Ref AWS::StackId
+         DefaultRootObject: ""index.html""
+         Enabled: true
+         HttpVersion: http2
+
+        ]"
+aws-marketplace-serverless-saas-integration,aws-samples,67488b67f0e7c8413276e02e4ef48d322b70e0d4,https://github.com/aws-samples/aws-marketplace-serverless-saas-integration/commit/67488b67f0e7c8413276e02e4ef48d322b70e0d4,parameterized the sns topics account id and region,Additive,,,"[
+        --- a/template.yaml
+        +++ b/template.yaml
+        
+        @@ -1,7 +1,6 @@
+        
+         AWSTemplateFormatVersion: ""2010-09-09""
+ Transform: AWS::Serverless-2016-10-31
+-Description: >
+-  AWS Marketplace Serverless SaaS Integration Application
++Description: ""AWS Marketplace Serverless SaaS Integration Application""
+ Globals:
+   Function:
+     Timeout: 15
+        , 
+        --- a/template.yaml
+        +++ b/template.yaml
+        
+        @@ -38,6 +37,19 @@
+        
+               - contracts
+       - subscriptions
+ 
++  SNSAccountID:
++    Type: String
++    Default: ""287250355862""
++    Description: ""This is the AWS account hosting the SNS Entitlement and Subscription topics for your product.""
++    AllowedValues:
++      - ""287250355862""
++
++  SNSRegion:
++      Type: String
++      Default: ""us-east-1""
++      Description: ""This is the AWS region of the SNS Entitlement and Subscription topics for your product.""
++      AllowedValues: 
++        - us-east-1
+   ProductCode:
+     Type: String
+     AllowedPattern: "".*""
+        , 
+        --- a/template.yaml
+        +++ b/template.yaml
+        
+        @@ -250,8 +262,8 @@
+        
+                 MySQSEvent:
+           Type: SNS
+           Properties:
+-            Topic:  {""Fn::Join"" : ["""", [""arn:aws:sns:us-east-1:287250355862:aws-mp-entitlement-notification-"", !Ref ProductCode]]}
+-            Region: us-east-1
++            Topic:  !Sub 'arn:aws:sns:${SNSRegion}:${SNSAccountID}:aws-mp-entitlement-notification-${ProductCode}'
++            Region: !Sub '${SNSRegion}'
+             SqsSubscription:
+               BatchSize: 1
+               QueueArn: !GetAtt EntitlementSQSQueue.Arn
+        , 
+        --- a/template.yaml
+        +++ b/template.yaml
+        
+        @@ -281,8 +293,8 @@
+        
+                   Type: SNS
+           Properties:
+             #Topic: !Ref SubscriptionSNSTopic
+-            Topic: {""Fn::Join"" : ["""", [""arn:aws:sns:us-east-1:287250355862:aws-mp-subscription-notification-"", !Ref ProductCode]]}
+-            Region: us-east-1
++            Topic:  !Sub 'arn:aws:sns:${SNSRegion}:${SNSAccountID}:aws-mp-subscription-notification-${ProductCode}'
++            Region: !Sub '${SNSRegion}'
+             SqsSubscription: true
+ 
+   SupportSNSTopic:
+
+        ]"
+aws-marketplace-serverless-saas-integration,aws-samples,b2de6bd851f7c55db8567d12c86c8b9c19d470dc,https://github.com/aws-samples/aws-marketplace-serverless-saas-integration/commit/b2de6bd851f7c55db8567d12c86c8b9c19d470dc,Update readme to cover approving SNS and adding CNAME record,Additive,,,"[
+        --- a/README.md
+        +++ b/README.md
+        
+        @@ -152,9 +152,15 @@
+        
+         ParameterKey=SubscriptionSNSTopic,ParameterValue=<MARKETPLACE_SUBSCRIPTION_SNS_TOPIC> \
+ ParameterKey=MarketplaceTechAdminEmail,ParameterValue=<MARKETPLACE_TECH_ADMIN_EMAIL> \
+ 
++#Check the accoutn for <MARKETPLACE_TECH_ADMIN_EMAIL> and approve the subscription to SNS
++
+ #Replace the baseUrl in web/script.js with the API Gateway endpoint URL 
+ 
+ aws s3 cp ./web/ s3://<WEBSITE_BUCKET_NAME>/ --recursive
++
++#add a CNAME record to your DNS to route the url you put on your offering to the cloudformation endpoint
++
++#add the domain used for your maretplace URL to the CNAME on the cloudformation config
+ ```
+ ### List of parameters
+ 
+
+        ]"
+aws-marketplace-serverless-saas-integration,aws-samples,32e465a27b518a8bb04df4262ba4500fa34b987a,https://github.com/aws-samples/aws-marketplace-serverless-saas-integration/commit/32e465a27b518a8bb04df4262ba4500fa34b987a,removed sam package command and modified sam deploy to remove --template-file,Perfective,,,"[
+        --- a/buildspec.yaml
+        +++ b/buildspec.yaml
+        
+        @@ -25,9 +25,8 @@
+        
+             commands:
+       - echo Build started
+       - sam build
+-      - sam package --output-template-file packaged.yaml --s3-bucket saas-artifact-1 --region us-east-1
+       - |
+-        sam deploy --template-file packaged.yaml --stack-name saas-serverless-${CODEBUILD_BUILD_NUMBER} --capabilities CAPABILITY_IAM \
++        sam deploy --stack-name saas-serverless-${CODEBUILD_BUILD_NUMBER} --capabilities CAPABILITY_IAM \
+         --region us-east-1 \
+         --parameter-overrides \
+ 
+
+        ]"
+aws-marketplace-serverless-saas-integration,aws-samples,c31ca403783ea5e360bb677d28fc2e35ee974851,https://github.com/aws-samples/aws-marketplace-serverless-saas-integration/commit/c31ca403783ea5e360bb677d28fc2e35ee974851,Parameter was added to control fulfilment page url update. Scoped down Customer Resource's Policy,Additive,,,"[
+        --- a/template.yaml
+        +++ b/template.yaml
+        
+        @@ -88,6 +88,14 @@
+        
+               - ""true""
+       - ""false""
+ 
++  UpdateFulfillmentURL:
++    Default: ""false""
++    Type: String
++    Description: ""WARNING: This will update your product's fulfillment URL automatically. Be careful if your product is already public""
++    AllowedValues:
++      - ""true""
++      - ""false""
++
+ Conditions:
+   CreateEntitlementLogic:
+     Fn::Or:
+        , 
+        --- a/template.yaml
+        +++ b/template.yaml
+        
+        @@ -102,7 +110,7 @@
+        
+           CreateWeb: !Equals [!Ref CreateRegistrationWebPage, true]
+   Buyernotificationemail: !Not [!Equals [!Ref MarketplaceSellerEmail, """"]]
+   CreateCrossAccount: !Equals [!Ref CreateCrossAccountRole, true]
+-
++  UpdateFulfillment: !Equals [!Ref UpdateFulfillmentURL, true]
+ 
+ Resources:
+ 
+        , 
+        --- a/template.yaml
+        +++ b/template.yaml
+        
+        @@ -1078,14 +1086,25 @@
+        
+                       - 'sts:AssumeRole'
+       ManagedPolicyArns:
+         - arn:aws:iam::aws:policy/service-role/AWSLambdaBasicExecutionRole
+-        - arn:aws:iam::aws:policy/AWSMarketplaceSellerFullAccess
++      Policies:
++        - PolicyName: manage-products
++          PolicyDocument:
++            Version: 2012-10-17
++            Statement:
++              - Effect: Allow
++                Action:
++                  - ""aws-marketplace:StartChangeSet""
++                  - ""aws-marketplace:DescribeEntity""
++                Resource:
++                  - !Sub ""arn:${AWS::Partition}:aws-marketplace:us-east-1:${AWS::AccountId}:AWSMarketplace/SaaSProduct/${ProductId}""
++                  - !Sub ""arn:${AWS::Partition}:aws-marketplace:us-east-1:${AWS::AccountId}:AWSMarketplace/ChangeSet/*""
+ 
+-  UpdateFulfillmentURL:
++  FulfillmentURL:
+     Type: Custom::Lambda
++    Condition: UpdateFulfillment
+     Properties:
+       ServiceToken: !GetAtt UpdateFulfillmentURLCustomResource.Arn
+       ProductId: !Ref ProductId
+-      # FulfillmentUrl: 'https://cachicamo.org'
+       FulfillmentUrl: !If [
+                         CreateWeb,
+                         !Sub ""https://${CloudfrontDistribution.DomainName}/redirectmarketplacetoken"",
+        , 
+        --- a/template.yaml
+        +++ b/template.yaml
+        
+        @@ -1170,7 +1189,6 @@
+        
+                     }
+           };
+           
+-          
+ Outputs:
+ 
+   CrossAccountRole:
+        , 
+        --- a/template.yaml
+        +++ b/template.yaml
+        
+        @@ -1181,6 +1199,7 @@
+        
+                 !GetAtt CrossAccountRoleForSaaSIntegration.Arn,
+         ""N/A""
+       ]
++
+   WebsiteS3Bucket:
+     Description: S3 bucket for hosting the static site. You can retrieve the files at https://github.com/aws-samples/aws-marketplace-serverless-saas-integration/tree/master/web.
+     Value: 
+
+        ]"
+aws-marketplace-serverless-saas-integration,aws-samples,45bce421453542e9eef6e57af8dd6d03cbf55883,https://github.com/aws-samples/aws-marketplace-serverless-saas-integration/commit/45bce421453542e9eef6e57af8dd6d03cbf55883,fixed numbering,Perfective,,,"[
+        --- a/README.md
+        +++ b/README.md
+        
+        @@ -200,23 +200,23 @@
+        
+         
+ 1. Follow the SAM guided experience to configure the deployment. Reference the following table for solution parameters.
+  
+-Parameter name | Description
+------------- | -------------
+-Stack Name | Name of the resulting CloudFormation stack.
+-AWS Region | Name of the region that the solution is being deployed in. Default value: us-east-1
+-WebsiteS3BucketName | S3 bucket to store the HTML files; Mandatory if CreateRegistrationWebPage is set to true; will be created
+-NewSubscribersTableName | Name for the New Subscribers Table; Default value: AWSMarketplaceSubscribers
+-AWSMarketplaceMeteringRecordsTableName | Name for the Metering Records Table; Default value: AWSMarketplaceMeteringRecords
+-TypeOfSaaSListing | allowed values: contracts_with_subscription, contracts, subscriptions; Default value: contracts_with_subscription
+-ProductCode | Product code provided from AWS Marketplace
+-MarketplaceTechAdminEmail | Email to be notified on changes requiring action
+-MarketplaceSellerEmail | (Optional) Seller email address, verified in SES and in 'Production' mode. See [Verify an email address](https://docs.aws.amazon.com/ses/latest/DeveloperGuide/verify-email-addresses-procedure.html) for instruction to verify email addresses.
+-SNSAccountID | AWS account ID hosting the Entitlements and Subscriptions SNS topics. Leave as default.
+-SNSRegion | AWS region that the Entitlements and Subscriptions SNS topics are hosted in. Leave as default.
+-CreateCrossAccountRole | Creates a cross-account role granting access to the NewSubscribersTableName and AWSMarketplaceMeteringRecordsTableName tables. Default value: false.
+-CrossAccountId | (Optional) AWS account ID for the cross-account role.
+-CrossAccountRoleName |  (Optional) Role name for the cross-account role.
+-CreateRegistrationWebPage | Creates a registration page. Default value: true
++    Parameter name | Description
++    ------------ | -------------
++    Stack Name | Name of the resulting CloudFormation stack.
++    AWS Region | Name of the region that the solution is being deployed in. Default value: us-east-1
++    WebsiteS3BucketName | S3 bucket to store the HTML files; Mandatory if CreateRegistrationWebPage is set to true; will be created
++    NewSubscribersTableName | Name for the New Subscribers Table; Default value: AWSMarketplaceSubscribers
++    AWSMarketplaceMeteringRecordsTableName | Name for the Metering Records Table; Default value: AWSMarketplaceMeteringRecords
++    TypeOfSaaSListing | allowed values: contracts_with_subscription, contracts, subscriptions; Default value: contracts_with_subscription
++    ProductCode | Product code provided from AWS Marketplace
++    MarketplaceTechAdminEmail | Email to be notified on changes requiring action
++    MarketplaceSellerEmail | (Optional) Seller email address, verified in SES and in 'Production' mode. See [Verify an email address](https://docs.aws.amazon.com/ses/latest/DeveloperGuide/verify-email-addresses-procedure.html) for instruction to verify email addresses.
++    SNSAccountID | AWS account ID hosting the Entitlements and Subscriptions SNS topics. Leave as default.
++    SNSRegion | AWS region that the Entitlements and Subscriptions SNS topics are hosted in. Leave as default.
++    CreateCrossAccountRole | Creates a cross-account role granting access to the NewSubscribersTableName and AWSMarketplaceMeteringRecordsTableName tables. Default value: false.
++    CrossAccountId | (Optional) AWS account ID for the cross-account role.
++    CrossAccountRoleName |  (Optional) Role name for the cross-account role.
++    CreateRegistrationWebPage | Creates a registration page. Default value: true
+ 
+ 1. Wait for the stack to complete successfully.
+ 
+
+        ]"
+aws-marketplace-serverless-saas-integration,aws-samples,276cd9a481e26d023eb03720c1e9978f0c8cc56c,https://github.com/aws-samples/aws-marketplace-serverless-saas-integration/commit/276cd9a481e26d023eb03720c1e9978f0c8cc56c,Spelling updates,Corrective,,,
+aws-marketplace-serverless-saas-integration,aws-samples,e1905bf112a184a0941f1cc212e5d4105462a589,https://github.com/aws-samples/aws-marketplace-serverless-saas-integration/commit/e1905bf112a184a0941f1cc212e5d4105462a589,Fixing DDBWritePolicy SID Type for Issue #32 (#35),Corrective,,,
+aws-marketplace-serverless-saas-integration,aws-samples,9f0fc059a11641164984496c517555fb8674840e,https://github.com/aws-samples/aws-marketplace-serverless-saas-integration/commit/9f0fc059a11641164984496c517555fb8674840e,Lambda functions updated to node18,Adaptive,,,
+aws-marketplace-serverless-saas-integration,aws-samples,e66fd3be328fc0cac95737aacc37eeff0ac00658,https://github.com/aws-samples/aws-marketplace-serverless-saas-integration/commit/e66fd3be328fc0cac95737aacc37eeff0ac00658,"Adding wording that SES email must be in production mode, not sandbox mode",Corrective,,,
+azure-search-python-samples,Azure-Samples,c9473ba9a9072283f48782f82d6f34d0c66187de,https://github.com/Azure-Samples/azure-search-python-samples/commit/c9473ba9a9072283f48782f82d6f34d0c66187de,edits,Additive,,,"[
+        --- /dev/null
+        +++ b/search-website/bulk-upload/.devcontainer/Dockerfile
+        
+        @@ -0,0 +1,22 @@
+        
+        +# See here for image contents: https://github.com/microsoft/vscode-dev-containers/tree/v0.163.1/containers/python-3/.devcontainer/base.Dockerfile
++
++# [Choice] Python version: 3, 3.9, 3.8, 3.7, 3.6
++ARG VARIANT=""3""
++FROM mcr.microsoft.com/vscode/devcontainers/python:0-${VARIANT}
++
++# [Option] Install Node.js
++ARG INSTALL_NODE=""true""
++ARG NODE_VERSION=""lts/*""
++RUN if [ ""${INSTALL_NODE}"" = ""true"" ]; then su vscode -c ""umask 0002 && . /usr/local/share/nvm/nvm.sh && nvm install ${NODE_VERSION} 2>&1""; fi
++
++# [Optional] If your pip requirements rarely change, uncomment this section to add them to the image.
++# COPY requirements.txt /tmp/pip-tmp/
++# RUN pip3 --disable-pip-version-check --no-cache-dir install -r /tmp/pip-tmp/requirements.txt \
++#    && rm -rf /tmp/pip-tmp
++
++# [Optional] Uncomment this section to install additional OS packages.
++# RUN apt-get update && export DEBIAN_FRONTEND=noninteractive \
++#     && apt-get -y install --no-install-recommends <your-package-list-here>
++
++# [Optional] Uncomment this line to install global node packages.
++# RUN su vscode -c ""source /usr/local/share/nvm/nvm.sh && npm install -g <your-package-here>"" 2>&1
+\ No newline at end of file
+
+        , 
+        --- /dev/null
+        +++ b/search-website/bulk-upload/.devcontainer/devcontainer.json
+        
+        @@ -0,0 +1,47 @@
+        
+        +// For format details, see https://aka.ms/devcontainer.json. For config options, see the README at:
++// https://github.com/microsoft/vscode-dev-containers/tree/v0.163.1/containers/python-3
++{
++        ""name"": ""Python 3"",
++        ""build"": {
++                ""dockerfile"": ""Dockerfile"",
++                ""context"": "".."",
++                ""args"": { 
++                        // Update 'VARIANT' to pick a Python version: 3, 3.6, 3.7, 3.8, 3.9
++                        ""VARIANT"": ""3.9"",
++                        // Options
++                        ""INSTALL_NODE"": ""false"",
++                        ""NODE_VERSION"": ""lts/*""
++                }
++        },
++
++        // Set *default* container specific settings.json values on container create.
++        ""settings"": { 
++                ""terminal.integrated.shell.linux"": ""/bin/bash"",
++                ""python.pythonPath"": ""/usr/local/bin/python"",
++                ""python.linting.enabled"": true,
++                ""python.linting.pylintEnabled"": true,
++                ""python.formatting.autopep8Path"": ""/usr/local/py-utils/bin/autopep8"",
++                ""python.formatting.blackPath"": ""/usr/local/py-utils/bin/black"",
++                ""python.formatting.yapfPath"": ""/usr/local/py-utils/bin/yapf"",
++                ""python.linting.banditPath"": ""/usr/local/py-utils/bin/bandit"",
++                ""python.linting.flake8Path"": ""/usr/local/py-utils/bin/flake8"",
++                ""python.linting.mypyPath"": ""/usr/local/py-utils/bin/mypy"",
++                ""python.linting.pycodestylePath"": ""/usr/local/py-utils/bin/pycodestyle"",
++                ""python.linting.pydocstylePath"": ""/usr/local/py-utils/bin/pydocstyle"",
++                ""python.linting.pylintPath"": ""/usr/local/py-utils/bin/pylint""
++        },
++
++        // Add the IDs of extensions you want installed when the container is created.
++        ""extensions"": [
++                ""ms-python.python""
++        ],
++
++        // Use 'forwardPorts' to make a list of ports inside the container available locally.
++        // ""forwardPorts"": [],
++
++        // Use 'postCreateCommand' to run commands after the container is created.
++        // ""postCreateCommand"": ""pip3 install --user -r requirements.txt"",
++
++        // Comment out connect as root instead. More info: https://aka.ms/vscode-remote/containers/non-root.
++        ""remoteUser"": ""vscode""
++}
+
+        , 
+        --- a/search-website/bulk-upload/bulk-upload.py
+        +++ b/search-website/bulk-upload/bulk-upload.py
+        
+        @@ -8,14 +8,17 @@
+        
+         
+ 
+ # Get the service endpoint and API key from the environment
+-endpoint = 'YOUR-ENDPOINT-URL'
+-key = 'YOUR-KEY'
++endpoint = 'https://YOUR-SEARCH-RESOURCE-NAME.search.windows.net'
++key = 'YOUR-SEARCH-ADMIN-KEY'
+ 
+ 
+ # Give your index a name
+ # You can also supply this at runtime in __main__
+-index_name = 'YOUR-INDEX-NAME'
++index_name = 'good-books'
+ 
++# Books catalog
++books_url = ""https://raw.githubusercontent.com/zygmuntz/goodbooks-10k/master/books.csv"";
++batch_size = 1000
+ 
+ # Instantiate a client
+ class CreateClient(object):
+        , 
+        --- a/search-website/bulk-upload/bulk-upload.py
+        +++ b/search-website/bulk-upload/bulk-upload.py
+        
+        @@ -70,7 +73,6 @@
+        
+         # Batch your uploads to Azure Search
+ def batch_upload_json_data_to_index(json_file, client):
+     batch_array = []
+-    batch_size = 1000
+     count = 0
+     batch_counter = 0
+     for i in json_file:
+        , 
+        --- a/search-website/bulk-upload/bulk-upload.py
+        +++ b/search-website/bulk-upload/bulk-upload.py
+        
+        @@ -126,7 +128,7 @@
+        
+                 './good-books-index.json',
+         index_name,
+         admin_client,
+-        url=True)
+-    books_data = convert_csv_to_json(
+-        'https://raw.githubusercontent.com/Azure-Samples/js-e2e/main/search/bulk-insert-books-from-csv/books.csv')
++        url=False)
++    books_data = convert_csv_to_json(books_url)
+     batch_upload = batch_upload_json_data_to_index(books_data, search_client)
++    print('Upload complete')
+
+        , 
+        --- /dev/null
+        +++ b/search-website/bulk-upload/readme.md
+        
+        @@ -0,0 +1,8 @@
+        
+        +# Bulk insert from CSV to Cognitive Search
++
++## Run program
++
++```bash
++pip install -r requirements.txt && \
++python bulk-upload.py
++```
+\ No newline at end of file
+
+        ]"
+azure-search-python-samples,Azure-Samples,60c948ac8334e35cee97e1ace8065b4226815202,https://github.com/Azure-Samples/azure-search-python-samples/commit/60c948ac8334e35cee97e1ace8065b4226815202,Commit made from VS Code Azure Static Web Apps,Preventive,,,"[
+        --- a/search-website-functions-v4/README.md
+        +++ b/search-website-functions-v4/README.md
+        
+        @@ -81,8 +81,6 @@
+        
+              * Search service name (short name)
+      * Admin API key ([find the key in the portal](https://docs.microsoft.com/azure/search/search-security-api-keys#find-existing-keys))
+ 
+-   * Set the Python interpreter to your virtual environment. Ctrl+Shift+P > Python: Select Interpreter, choosing your .venv environment. Refresh the list if you don't see a .venv option.
+-
+    * Install Python libraries and load the data. At the PS command line:
+ 
+      * `cd \bulk-upload`  
+
+        ]"
+azure-search-python-samples,Azure-Samples,8728dd278f41b55b2ad17b6b5878d0bba5ce8690,https://github.com/Azure-Samples/azure-search-python-samples/commit/8728dd278f41b55b2ad17b6b5878d0bba5ce8690,added the merge skill back in,Additive,,,"[
+        --- a/Image-Processing/BFR_Sample_Rest.ipynb
+        +++ b/Image-Processing/BFR_Sample_Rest.ipynb
+        
+        @@ -80,7 +80,7 @@
+        
+             ""# This sample assumes you will use the same storage account for the datasource, knowledge store and indexer cache. The knowledge store will contain the projected images\n"",
+     ""know_store_cache = STORAGECONNSTRING\n"",
+     ""# Contaimer where the sliced images will be projected to\n"",
+-    ""know_store_container = \""slices\""\n"",
++    ""know_store_container = \""obfuscated\""\n"",
+     ""skill_uri = \""https://<skillname>.azurewebsites.net/api/SplitImage?code=CODE\""""
+    ]
+   },
+        , 
+        --- a/Image-Processing/BFR_Sample_Rest.ipynb
+        +++ b/Image-Processing/BFR_Sample_Rest.ipynb
+        
+        @@ -196,7 +196,7 @@
+        
+             ""        {\n"",
+     ""          \""@odata.type\"": \""#Microsoft.Skills.Text.PIIDetectionSkill\"",\n"",
+     ""          \""name\"": \""#1\"",\n"",
+-    ""          \""description\"": null,\n"",
++    ""          \""description\"": \""\"",\n"",
+     ""          \""context\"": \""/document/merged_content\"",\n"",
+     ""          \""defaultLanguageCode\"": \""en\"",\n"",
+     ""          \""minimumPrecision\"": 0.5,\n"",
+        , 
+        --- a/Image-Processing/BFR_Sample_Rest.ipynb
+        +++ b/Image-Processing/BFR_Sample_Rest.ipynb
+        
+        @@ -254,6 +254,34 @@
+        
+             ""            }\n"",
+     ""          ],\n"",
+     ""          \""httpHeaders\"": {}\n"",
++    ""        },\n"",
++    ""        {\n"",
++    ""          \""@odata.type\"": \""#Microsoft.Skills.Text.MergeSkill\"",\n"",
++    ""          \""name\"": \""MergeSkill\"",\n"",
++    ""          \""description\"": \""Merge results from cracking with OCR text\"",\n"",
++    ""          \""context\"": \""/document\"",\n"",
++    ""          \""insertPreTag\"": \"" \"",\n"",
++    ""          \""insertPostTag\"": \"" \"",\n"",
++    ""          \""inputs\"": [\n"",
++    ""            {\n"",
++    ""              \""name\"": \""text\"",\n"",
++    ""              \""source\"": \""/document/content\""\n"",
++    ""            },\n"",
++    ""            {\n"",
++    ""              \""name\"": \""itemsToInsert\"",\n"",
++    ""              \""source\"": \""/document/normalized_images/*/text\""\n"",
++    ""            },\n"",
++    ""            {\n"",
++    ""              \""name\"": \""offsets\"",\n"",
++    ""              \""source\"": \""/document/normalized_images/*/contentOffset\""\n"",
++    ""            }\n"",
++    ""          ],\n"",
++    ""          \""outputs\"": [\n"",
++    ""            {\n"",
++    ""              \""name\"": \""mergedText\"",\n"",
++    ""              \""targetName\"": \""merged_content\""\n"",
++    ""            }\n"",
++    ""          ]\n"",
+     ""        }\n"",
+     ""        \n"",
+     ""    ],\n"",
+        , 
+        --- a/Image-Processing/BFR_Sample_Rest.ipynb
+        +++ b/Image-Processing/BFR_Sample_Rest.ipynb
+        
+        @@ -266,36 +294,36 @@
+        
+             ""        \""objects\"": [\n"",
+     ""          {\n"",
+     ""            \""storageContainer\"": \""layout\"",\n"",
+-    ""            \""referenceKeyName\"": null,\n"",
++    ""            \""referenceKeyName\"": None,\n"",
+     ""            \""generatedKeyName\"": \""layoutKey\"",\n"",
+     ""            \""source\"": \""/document/normalized_images/*/layoutText\"",\n"",
+-    ""            \""sourceContext\"": null,\n"",
++    ""            \""sourceContext\"": None,\n"",
+     ""            \""inputs\"": []\n"",
+     ""          }\n"",
+     ""        ],\n"",
+     ""        \""files\"": [\n"",
+     ""          {\n"",
+     ""            \""storageContainer\"": \""slices\"",\n"",
+-    ""            \""referenceKeyName\"": null,\n"",
++    ""            \""referenceKeyName\"": None,\n"",
+     ""            \""generatedKeyName\"": \""slicesKey\"",\n"",
+     ""            \""source\"": \""/document/normalized_images/*/slices/*\"",\n"",
+-    ""            \""sourceContext\"": null,\n"",
++    ""            \""sourceContext\"": None,\n"",
+     ""            \""inputs\"": []\n"",
+     ""          },\n"",
+     ""          {\n"",
+     ""            \""storageContainer\"": \""images\"",\n"",
+-    ""            \""referenceKeyName\"": null,\n"",
++    ""            \""referenceKeyName\"": None,\n"",
+     ""            \""generatedKeyName\"": \""imageKey\"",\n"",
+     ""            \""source\"": \""/document/normalized_images/*\"",\n"",
+-    ""            \""sourceContext\"": null,\n"",
++    ""            \""sourceContext\"": None,\n"",
+     ""            \""inputs\"": []\n"",
+     ""          },\n"",
+     ""          {\n"",
+     ""            \""storageContainer\"": f'{know_store_container}',\n"",
+-    ""            \""referenceKeyName\"": null,\n"",
++    ""            \""referenceKeyName\"": None,\n"",
+     ""            \""generatedKeyName\"": \""originalKey\"",\n"",
+     ""            \""source\"": \""/document/normalized_images/*/original\"",\n"",
+-    ""            \""sourceContext\"": null,\n"",
++    ""            \""sourceContext\"": None,\n"",
+     ""            \""inputs\"": []\n"",
+     ""          }\n"",
+     ""        ]\n"",
+
+        ]"
+azure-search-python-samples,Azure-Samples,041fdf2765f3eb6339252928145c0a8e0c738ab8,https://github.com/Azure-Samples/azure-search-python-samples/commit/041fdf2765f3eb6339252928145c0a8e0c738ab8,Added Python Cognitive API tutorial example + updated readme file,Additive,,,"[
+        --- a/README.md
+        +++ b/README.md
+        
+        @@ -15,4 +15,8 @@
+        
+         
+ ## Quickstart-Jupyter-Notebook
+ 
+-This sample is a .ipynb file containing a Python3 notebook used in [Quickstart: Create and query an Azure Search index using a Jupyter Python notebook](https://docs.microsoft.com/azure/search/search-get-started-python). There are two placeholder values for an Azure Search service and admin API key. Replace them with valid values to create, load, and query an index on your own service.
+\ No newline at end of file
++This sample is a .ipynb file containing a Python3 notebook used in [Quickstart: Create and query an Azure Search index using a Jupyter Python notebook](https://docs.microsoft.com/azure/search/search-get-started-python). There are two placeholder values for an Azure Search service and admin API key. Replace them with valid values to create, load, and query an index on your own service.
++
++## Tutorial-AI-Enrichment-Jupyter-Notebook
++
++This sample is a .ipynb file containing a Python3 notebook used in [Tutorial: Python Tutorial: Call Cognitive Services APIs in an Azure Search indexing pipeline](https://docs.microsoft.com/azure/search/cognitive-search-tutorial-blob-python). There are three placeholder values to insert: an Azure Search service, an admin API key, and a connection string to a blob storage resource that you will create in the tutorial. Replace them with valid values to create an indexing pipeline that searches for and extracts text and text representations of images and scanned documents. This sample leverages cognitive skills from the Azure Cognitive Services API, such as entity recognition and language detection.
+\ No newline at end of file
+
+        , 
+        --- /dev/null
+        +++ b/Tutorial-AI-Enrichment-Jupyter-Notebook/PythonTutorial-AzureSearch-AIEnrichment.ipynb
+        
+        @@ -0,0 +1,317 @@
+        
+        +{
++ ""cells"": [
++  {
++   ""cell_type"": ""code"",
++   ""execution_count"": null,
++   ""metadata"": {},
++   ""outputs"": [],
++   ""source"": [
++    ""import json\n"",
++    ""import requests\n"",
++    ""from pprint import pprint""
++   ]
++  },
++  {
++   ""cell_type"": ""code"",
++   ""execution_count"": null,
++   ""metadata"": {},
++   ""outputs"": [],
++   ""source"": [
++    ""#Define the names for the data source, skillset, index and indexer\n"",
++    ""datasource_name=\""cogsrch-py-datasource\""\n"",
++    ""skillset_name=\""cogsrch-py-skillset\""\n"",
++    ""index_name=\""cogsrch-py-index\""\n"",
++    ""indexer_name=\""cogsrch-py-indexer\""\n""
++   ]
++  },
++  {
++   ""cell_type"": ""code"",
++   ""execution_count"": null,
++   ""metadata"": {},
++   ""outputs"": [],
++   ""source"": [
++    ""#Setup the endpoint\n"",
++    ""endpoint = 'https://<YOUR-SERVICE-NAME>.search.windows.net/'\n"",
++    ""headers = {'Content-Type': 'application/json',\n"",
++    ""        'api-key': '<YOUR-ADMIN-API-KEY>' }\n"",
++    ""params = {\n"",
++    ""    'api-version': '2019-05-06'\n"",
++    ""}""
++   ]
++  },
++  {
++   ""cell_type"": ""code"",
++   ""execution_count"": null,
++   ""metadata"": {},
++   ""outputs"": [],
++   ""source"": [
++    ""#Create a data source\n"",
++    ""datasourceConnectionString = \""<YOUR-BLOB-RESOURCE-CONNECTION-STRING>\""\n"",
++    ""datasource_payload = {\n"",
++    ""    \""name\"": datasource_name,\n"",
++    ""    \""description\"": \""Demo files to demonstrate cognitive search capabilities.\"",\n"",
++    ""    \""type\"": \""azureblob\"",\n"",
++    ""    \""credentials\"": {\n"",
++    ""    \""connectionString\"": datasourceConnectionString\n"",
++    ""   },\n"",
++    ""    \""container\"": {\n"",
++    ""     \""name\"": \""basic-demo-data-pr\""\n"",
++    ""   }\n"",
++    ""}\n"",
++    ""r = requests.put( endpoint + \""/datasources/\"" + datasource_name, data=json.dumps(datasource_payload), headers=headers, params=params )\n"",
++    ""pprint (r.json())""
++   ]
++  },
++  {
++   ""cell_type"": ""code"",
++   ""execution_count"": null,
++   ""metadata"": {},
++   ""outputs"": [],
++   ""source"": [
++    ""#Create a skillset\n"",
++    ""skillset_payload = {\n"",
++    ""  \""name\"": skillset_name,\n"",
++    ""  \""description\"":\n"",
++    ""  \""Extract entities, detect language and extract key-phrases\"",\n"",
++    ""  \""skills\"":\n"",
++    ""  [\n"",
++    ""    {\n"",
++    ""      \""@odata.type\"": \""#Microsoft.Skills.Text.EntityRecognitionSkill\"",\n"",
++    ""      \""categories\"": [ \""Organization\"" ],\n"",
++    ""      \""defaultLanguageCode\"": \""en\"",\n"",
++    ""      \""inputs\"": [\n"",
++    ""        {\n"",
++    ""          \""name\"": \""text\"", \""source\"": \""/document/content\""\n"",
++    ""        }\n"",
++    ""      ],\n"",
++    ""      \""outputs\"": [\n"",
++    ""        {\n"",
++    ""          \""name\"": \""organizations\"", \""targetName\"": \""organizations\""\n"",
++    ""        }\n"",
++    ""      ]\n"",
++    ""    },\n"",
++    ""    {\n"",
++    ""      \""@odata.type\"": \""#Microsoft.Skills.Text.LanguageDetectionSkill\"",\n"",
++    ""      \""inputs\"": [\n"",
++    ""        {\n"",
++    ""          \""name\"": \""text\"", \""source\"": \""/document/content\""\n"",
++    ""        }\n"",
++    ""      ],\n"",
++    ""      \""outputs\"": [\n"",
++    ""        {\n"",
++    ""          \""name\"": \""languageCode\"",\n"",
++    ""          \""targetName\"": \""languageCode\""\n"",
++    ""        }\n"",
++    ""      ]\n"",
++    ""    },\n"",
++    ""    {\n"",
++    ""      \""@odata.type\"": \""#Microsoft.Skills.Text.SplitSkill\"",\n"",
++    ""      \""textSplitMode\"" : \""pages\"",\n"",
++    ""      \""maximumPageLength\"": 4000,\n"",
++    ""      \""inputs\"": [\n"",
++    ""        {\n"",
++    ""          \""name\"": \""text\"",\n"",
++    ""          \""source\"": \""/document/content\""\n"",
++    ""        },\n"",
++    ""        {\n"",
++    ""          \""name\"": \""languageCode\"",\n"",
++    ""          \""source\"": \""/document/languageCode\""\n"",
++    ""        }\n"",
++    ""      ],\n"",
++    ""      \""outputs\"": [\n"",
++    ""        {\n"",
++    ""          \""name\"": \""textItems\"",\n"",
++    ""          \""targetName\"": \""pages\""\n"",
++    ""        }\n"",
++    ""      ]\n"",
++    ""    },\n"",
++    ""    {\n"",
++    ""      \""@odata.type\"": \""#Microsoft.Skills.Text.KeyPhraseExtractionSkill\"",\n"",
++    ""      \""context\"": \""/document/pages/*\"",\n"",
++    ""      \""inputs\"": [\n"",
++    ""        {\n"",
++    ""          \""name\"": \""text\"", \""source\"": \""/document/pages/*\""\n"",
++    ""        },\n"",
++    ""        {\n"",
++    ""          \""name\"":\""languageCode\"", \""source\"": \""/document/languageCode\""\n"",
++    ""        }\n"",
++    ""      ],\n"",
++    ""      \""outputs\"": [\n"",
++    ""        {\n"",
++    ""          \""name\"": \""keyPhrases\"",\n"",
++    ""          \""targetName\"": \""keyPhrases\""\n"",
++    ""        }\n"",
++    ""      ]\n"",
++    ""    }\n"",
++    ""  ]\n"",
++    ""}\n"",
++    ""\n"",
++    ""r = requests.put(endpoint + \""/skillsets/\"" + skillset_name, data=json.dumps(skillset_payload), headers=headers, params=params)\n"",
++    ""pprint(r.json())""
++   ]
++  },
++  {
++   ""cell_type"": ""code"",
++   ""execution_count"": null,
++   ""metadata"": {},
++   ""outputs"": [],
++   ""source"": [
++    ""#Create an index\n"",
++    ""index_payload = {\n"",
++    ""    \""name\"": index_name,\n"",
++    ""    \""fields\"": [\n"",
++    ""      {\n"",
++    ""        \""name\"": \""id\"",\n"",
++    ""        \""type\"": \""Edm.String\"",\n"",
++    ""        \""key\"": \""true\"",\n"",
++    ""        \""searchable\"": \""true\"",\n"",
++    ""        \""filterable\"": \""false\"",\n"",
++    ""        \""facetable\"": \""false\"",\n"",
++    ""        \""sortable\"": \""true\""\n"",
++    ""      },\n"",
++    ""      {\n"",
++    ""        \""name\"": \""content\"",\n"",
++    ""        \""type\"": \""Edm.String\"",\n"",
++    ""        \""sortable\"": \""false\"",\n"",
++    ""        \""searchable\"": \""true\"",\n"",
++    ""        \""filterable\"": \""false\"",\n"",
++    ""        \""facetable\"": \""false\""\n"",
++    ""      },\n"",
++    ""      {\n"",
++    ""        \""name\"": \""languageCode\"",\n"",
++    ""        \""type\"": \""Edm.String\"",\n"",
++    ""        \""searchable\"": \""true\"",\n"",
++    ""        \""filterable\"": \""false\"",\n"",
++    ""        \""facetable\"": \""false\""\n"",
++    ""      },\n"",
++    ""      {\n"",
++    ""        \""name\"": \""keyPhrases\"",\n"",
++    ""        \""type\"": \""Collection(Edm.String)\"",\n"",
++    ""        \""searchable\"": \""true\"",\n"",
++    ""        \""filterable\"": \""false\"",\n"",
++    ""        \""facetable\"": \""false\""\n"",
++    ""      },\n"",
++    ""      {\n"",
++    ""        \""name\"": \""organizations\"",\n"",
++    ""        \""type\"": \""Collection(Edm.String)\"",\n"",
++    ""        \""searchable\"": \""true\"",\n"",
++    ""        \""sortable\"": \""false\"",\n"",
++    ""        \""filterable\"": \""false\"",\n"",
++    ""        \""facetable\"": \""false\""\n"",
++    ""      }\n"",
++    ""   ]\n"",
++    ""}\n"",
++    ""\n"",
++    ""r = requests.put(endpoint + \""/indexes/\"" + index_name, data=json.dumps(index_payload), headers=headers, params=params)\n"",
++    ""pprint(r.json())""
++   ]
++  },
++  {
++   ""cell_type"": ""code"",
++   ""execution_count"": null,
++   ""metadata"": {},
++   ""outputs"": [],
++   ""source"": [
++    ""# Create an indexer\n"",
++    ""indexer_payload = {\n"",
++    ""    \""name\"": indexer_name,\n"",
++    ""    \""dataSourceName\"": datasource_name,\n"",
++    ""    \""targetIndexName\"": index_name,\n"",
++    ""    \""skillsetName\"": skillset_name,\n"",
++    ""    \""fieldMappings\"" : [\n"",
++    ""    {\n"",
++    ""      \""sourceFieldName\"" : \""metadata_storage_path\"",\n"",
++    ""      \""targetFieldName\"" : \""id\"",\n"",
++    ""      \""mappingFunction\"" :\n"",
++    ""        { \""name\"" : \""base64Encode\"" }\n"",
++    ""    },\n"",
++    ""    {\n"",
++    ""      \""sourceFieldName\"" : \""content\"",\n"",
++    ""      \""targetFieldName\"" : \""content\""\n"",
++    ""    }\n"",
++    ""  ],\n"",
++    ""   \""outputFieldMappings\"" :\n"",
++    ""  [\n"",
++    ""    {\n"",
++    ""      \""sourceFieldName\"" : \""/document/organizations\"",\n"",
++    ""      \""targetFieldName\"" : \""organizations\""\n"",
++    ""    },\n"",
++    ""    {\n"",
++    ""      \""sourceFieldName\"" : \""/document/pages/*/keyPhrases/*\"",\n"",
++    ""      \""targetFieldName\"" : \""keyPhrases\""\n"",
++    ""    },\n"",
++    ""    {\n"",
++    ""      \""sourceFieldName\"": \""/document/languageCode\"",\n"",
++    ""      \""targetFieldName\"": \""languageCode\""\n"",
++    ""    }\n"",
++    ""  ],\n"",
++    ""   \""parameters\"":\n"",
++    ""  {\n"",
++    ""    \""maxFailedItems\"":-1,\n"",
++    ""    \""maxFailedItemsPerBatch\"":-1,\n"",
++    ""    \""configuration\"":\n"",
++    ""    {\n"",
++    ""      \""dataToExtract\"": \""contentAndMetadata\"",\n"",
++    ""      \""imageAction\"": \""generateNormalizedImages\""\n"",
++    ""    }\n"",
++    ""  }\n"",
++    ""}\n"",
++    ""\n"",
++    ""r = requests.put(endpoint + \""/indexers/\"" + indexer_name, data=json.dumps(indexer_payload), headers=headers, params=params)\n"",
++    ""pprint(r.json())\n""
++   ]
++  },
++  {
++   ""cell_type"": ""code"",
++   ""execution_count"": null,
++   ""metadata"": {},
++   ""outputs"": [],
++   ""source"": [
++    ""#Query the index for all fields\n"",
++    ""r = requests.get(endpoint + \""/indexes/\"" + index_name, headers=headers,params=params)\n"",
++    ""print(json.dumps(r.json(), indent=1))""
++   ]
++  },
++  {
++   ""cell_type"": ""code"",
++   ""execution_count"": null,
++   ""metadata"": {},
++   ""outputs"": [],
++   ""source"": [
++    ""#Query the index to return the contents of organizations\n"",
++    ""#Note: Index creation may take time. If this step returns no data, wait a few minutes\n"",
++    ""#      and then try again\n"",
++    ""r = requests.get(endpoint + \""/indexes/\"" + index_name + \""/docs?&search=*&$select=organizations\"", headers=headers, params=params)\n"",
++    ""pprint(r.json())""
++   ]
++  },
++  {
++   ""cell_type"": ""code"",
++   ""execution_count"": null,
++   ""metadata"": {},
++   ""outputs"": [],
++   ""source"": []
++  }
++ ],
++ ""metadata"": {
++  ""kernelspec"": {
++   ""display_name"": ""Python 3"",
++   ""language"": ""python"",
++   ""name"": ""python3""
++  },
++  ""language_info"": {
++   ""codemirror_mode"": {
++    ""name"": ""ipython"",
++    ""version"": 3
++   },
++   ""file_extension"": "".py"",
++   ""mimetype"": ""text/x-python"",
++   ""name"": ""python"",
++   ""nbconvert_exporter"": ""python"",
++   ""pygments_lexer"": ""ipython3"",
++   ""version"": ""3.7.3""
++  }
++ },
++ ""nbformat"": 4,
++ ""nbformat_minor"": 2
++}
+
+        ]"
+azure-search-python-samples,Azure-Samples,e58b5c70079b61a3c20b46b93f359848cf2d1ccc,https://github.com/Azure-Samples/azure-search-python-samples/commit/e58b5c70079b61a3c20b46b93f359848cf2d1ccc,removed cell outputs from notebook,Preventive,,,"[
+        --- a/Image-Processing/BFR_Sample_Rest.ipynb
+        +++ b/Image-Processing/BFR_Sample_Rest.ipynb
+        
+        @@ -602,21 +602,9 @@
+        
+           },
+   {
+    ""cell_type"": ""code"",
+-   ""execution_count"": 1,
++   ""execution_count"": null,
+    ""metadata"": {},
+-   ""outputs"": [
+-    {
+-     ""ename"": ""NameError"",
+-     ""evalue"": ""name 'STORAGECONNSTRING' is not defined"",
+-     ""output_type"": ""error"",
+-     ""traceback"": [
+-      ""\u001b[1;31m---------------------------------------------------------------------------\u001b[0m"",
+-      ""\u001b[1;31mNameError\u001b[0m                                 Traceback (most recent call last)"",
+-      ""\u001b[1;32m<ipython-input-1-7c149f3fc288>\u001b[0m in \u001b[0;36m<module>\u001b[1;34m\u001b[0m\n\u001b[0;32m      3\u001b[0m \u001b[1;32mfrom\u001b[0m \u001b[0mazure\u001b[0m\u001b[1;33m.\u001b[0m\u001b[0mstorage\u001b[0m\u001b[1;33m.\u001b[0m\u001b[0mblob\u001b[0m \u001b[1;32mimport\u001b[0m \u001b[0mContainerClient\u001b[0m\u001b[1;33m\u001b[0m\u001b[1;33m\u001b[0m\u001b[0m\n\u001b[0;32m      4\u001b[0m \u001b[0mcount\u001b[0m \u001b[1;33m=\u001b[0m \u001b[1;36m0\u001b[0m\u001b[1;33m\u001b[0m\u001b[1;33m\u001b[0m\u001b[0m\n\u001b[1;32m----> 5\u001b[1;33m \u001b[0mcontainer\u001b[0m \u001b[1;33m=\u001b[0m \u001b[0mContainerClient\u001b[0m\u001b[1;33m.\u001b[0m\u001b[0mfrom_connection_string\u001b[0m\u001b[1;33m(\u001b[0m\u001b[0mconn_str\u001b[0m\u001b[1;33m=\u001b[0m\u001b[0mSTORAGECONNSTRING\u001b[0m\u001b[1;33m,\u001b[0m \u001b[0mcontainer_name\u001b[0m\u001b[1;33m=\u001b[0m\u001b[0mknow_store_container\u001b[0m\u001b[1;33m)\u001b[0m\u001b[1;33m\u001b[0m\u001b[1;33m\u001b[0m\u001b[0m\n\u001b[0m\u001b[0;32m      6\u001b[0m \u001b[0mblob_list\u001b[0m \u001b[1;33m=\u001b[0m \u001b[0mcontainer\u001b[0m\u001b[1;33m.\u001b[0m\u001b[0mlist_blobs\u001b[0m\u001b[1;33m(\u001b[0m\u001b[1;33m)\u001b[0m\u001b[1;33m\u001b[0m\u001b[1;33m\u001b[0m\u001b[0m\n\u001b[0;32m      7\u001b[0m \u001b[1;32mfor\u001b[0m \u001b[0mblob\u001b[0m \u001b[1;32min\u001b[0m \u001b[0mblob_list\u001b[0m\u001b[1;33m:\u001b[0m\u001b[1;33m\u001b[0m\u001b[1;33m\u001b[0m\u001b[0m\n"",
+-      ""\u001b[1;31mNameError\u001b[0m: name 'STORAGECONNSTRING' is not defined""
+-     ]
+-    }
+-   ],
++   ""outputs"": [],
+    ""source"": [
+     ""from IPython.display import Image\n"",
+     ""import base64\n"",
+
+        ]"
+azure-search-python-samples,Azure-Samples,a2d4365eba95c1ab72c70841088439d0cdce53d6,https://github.com/Azure-Samples/azure-search-python-samples/commit/a2d4365eba95c1ab72c70841088439d0cdce53d6,Updated readme to link to new v11 code,Perfective,,,
+azure-search-python-samples,Azure-Samples,d0eb94c7eabb236d70afb5263cc1fb482f89b02f,https://github.com/Azure-Samples/azure-search-python-samples/commit/d0eb94c7eabb236d70afb5263cc1fb482f89b02f,run black,Perfective,,,
+azure-search-python-samples,Azure-Samples,b763ef6551720481473d594eb4477974a3169b4a,https://github.com/Azure-Samples/azure-search-python-samples/commit/b763ef6551720481473d594eb4477974a3169b4a," Merge pull request #92 from HeidiSteen/main
+Fixed syntax errors",Corrective,,,
+azure-search-python-samples,Azure-Samples,1f116d8582c5b30853e9532a0f0ea2ad3cf59975,https://github.com/Azure-Samples/azure-search-python-samples/commit/1f116d8582c5b30853e9532a0f0ea2ad3cf59975,"ci: add Azure Static Web Apps workflow file
+on-behalf-of: @Azure opensource@microsoft.com",Additive,,,
+azure-search-python-samples,Azure-Samples,770ebce1e967c55f361d939030684eb4f95b8d33,https://github.com/Azure-Samples/azure-search-python-samples/commit/770ebce1e967c55f361d939030684eb4f95b8d33,"Merge pull request #132 from HeidiSteen/main
+More comments, explanations and updates to RAG tutorial",Perfective,,,
