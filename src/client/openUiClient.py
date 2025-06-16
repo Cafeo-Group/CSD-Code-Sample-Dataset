@@ -1,23 +1,3 @@
-# -*- coding: utf-8 -*-
-"""
-This module provides a client for interacting with an OpenAI-like API. 
-It includes functions to load environment variables, retrieve API details, 
-and interact with the API for tasks such as chatting with a model and fetching available models.
-
-Classes:
-    - OpenUiClient: A client for interacting with the API.
-
-Functions:
-    - chatWithModel(content: Optional[str], model: str, filePath: Optional[str]) -> Optional[requests.Response]: 
-      Sends a chat message to the specified model and retrieves the response.
-    - getAvailableApiModels() -> Optional[requests.Response]: 
-      Fetches the list of available models from the API.
-
-Usage:
-    Ensure the environment variables `API_URL` and `API_KEY` are set in the specified env file.
-    Use the provided functions to interact with the API.
-"""
-
 import os
 import requests
 from dotenv import load_dotenv
@@ -25,8 +5,8 @@ from typing import Optional
 
 class OpenUiClient:
     # Load environment variables from env file
-    env_path = r'c:\Users\vicme\OneDrive\Livros Unicamp\TCC\Implementacao\AutomatedPullRequestGenerator\src\client\env.txt'
-    load_dotenv(env_path)
+    load_dotenv()
+    
 
     def __init__(self, api_url: Optional[str] = None, api_key: Optional[str] = None):
         """
@@ -47,6 +27,8 @@ class OpenUiClient:
             str: The API base URL.
         """
         api_url = os.getenv("API_URL").strip('"')
+        if not api_url:
+            raise ValueError("API URL is not set in the environment variables.")
         return api_url
 
     def __getApiKey(self) -> str:
@@ -56,40 +38,51 @@ class OpenUiClient:
         Returns:
             str: The API key.
         """
-        return os.getenv("API_KEY").strip('"')
+        api_key = os.getenv("OPEN_WEB_UI_API_KEY").strip('"')
+        if not api_key:
+            raise ValueError("API key is not set in the environment variables.")
+        return api_key
 
-    def chatWithModel(self, content: Optional[str] = None, model: str = 'llama3.1:8b', filePath: Optional[str] = None) -> Optional[requests.Response]:
+    def chatWithModel(self, knowledge: Optional[str] = None, commit_data: Optional[str] = None, content: Optional[str] = None, model: str = 'llama3:8b') -> Optional[requests.Response]:
         """
         Sends a chat message to the specified model and retrieves the response.
 
         Args:
             content (Optional[str]): The message content to send to the model. If None, a default prompt is used.
             model (str): The model to interact with (default is 'llama3.1:8b').
-            filePath (Optional[str]): Path to a file containing the message content. If provided, the file content is used.
+            knowledge (str): PDF file path with knowledge to be used in the chat.
 
         Returns:
             Optional[requests.Response]: The API response object if successful, None otherwise.
         """
-        if filePath:
-            try:
-                with open(filePath, 'r', encoding='utf-8') as file:
-                    fileContent = file.read()
-            except Exception as e:
-                print(f"Error reading the file. Details: {e}")
-                return None
             
+        file_content = ""
+        if knowledge:
+            try:
+                with open(knowledge, 'r', encoding='utf-8') as file:
+                    file_content = file.read()
+            except FileNotFoundError:
+                print(f"File not found: {knowledge}")
+                return None
+
+        context_instructions = (
+            "You are an AI code assistant. Read and understand carefully guidelines about maintenance types and modification requests classification below.\n"
+            "Do not generate anything yet. Wait for further instructions after reading.\n\n"
+            "Guidelines:\n"
+        )
+
         if content is None:
             content = (
-                "You are an AI code assistant. Read and understand the following code diff carefully. Do not generate anything yet.\n"
+                "Now read and understand carefully the following commit data which consists of its message and its code content. Do not generate anything yet.\n"
                 "Wait for further instructions after reading.\n\n"
-                "Code diff:"
+                "Commit data:"
             )
 
         finalContent = (
-            "Now, based only on the code diff provided earlier, generate a single Pull Request title and a single body with the description.\n"
+            "Now, based only on the guidelines and commit data provided earlier, generate a single word classifications for the change shown in the commit data.\n"
             "Strictly follow the template below and provide only the completed result, with no extra text:\n\n"
-            "Title: <concise, imperative summary of the change>\n"
-            "Body: <clear, bullet-point or paragraph summary explaining the key changes, motivations, and impact>"
+            "Modification Request Classification: <either one of the folllowing keywords: correction, enhancement>\n"
+            "Maintenance Type: <either one of the folllowing keywords: corrective, adaptive, preventive, perfective or additive>\n"
         )
         
         headers = {
@@ -101,7 +94,9 @@ class OpenUiClient:
             'messages': [
                 {
                     'role': 'user',
-                    'content': f"{content} \n{fileContent} \n{finalContent}" if filePath else content
+                    'content': f"""{context_instructions} \n {file_content} 
+                    \n\n {content} \n {commit_data} 
+                    \n{finalContent}""" if knowledge else content
                 }
             ]
         }
