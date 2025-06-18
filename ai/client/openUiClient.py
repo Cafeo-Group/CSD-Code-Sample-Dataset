@@ -42,6 +42,37 @@ class OpenUiClient:
         if not api_key:
             raise ValueError("API key is not set in the environment variables.")
         return api_key
+ 
+    def simpleChatWithModel(self, content: Optional[str] = None, model: str = 'llama3:8b') -> Optional[requests.Response]:
+        """
+        Sends a simple chat message to the specified model and retrieves the response.
+
+        Args:
+            content (Optional[str]): The message content to send to the model. If None, a default prompt is used.
+            model (str): The model to interact with (default is 'llama3:8b').
+
+        Returns:
+            Optional[requests.Response]: The API response object if successful, None otherwise.
+        """
+        if content is None:
+            content = "Hello, what can you do for me? Please provide a brief introduction about your capabilities."
+
+        headers = {
+            'Authorization': f'Bearer {self.api_key}',
+            'Content-Type': 'application/json'
+        }
+        data = {
+            'model': model,
+            'messages': [{'role': 'user', 'content': content}]
+        }
+        
+        try:
+            response = requests.post(f'{self.api_url}/chat/completions', headers=headers, json=data)
+            response.raise_for_status()
+            return response
+        except requests.exceptions.RequestException as e:
+            print(f"Error performing the chat. Details: {e}")
+            return None
 
     def chatWithModel(self, knowledge: Optional[str] = None, commit_data: Optional[str] = None, content: Optional[str] = None, model: str = 'llama3:8b') -> Optional[requests.Response]:
         """
