@@ -79,11 +79,13 @@ class OpenUiClient:
             )
 
         finalContent = (
-            "Now, based only on the guidelines and commit data provided earlier, generate a single word classifications for the change shown in the commit data.\n"
-            "Strictly follow the template below and provide only the completed result, with no extra text:\n\n"
-            "Modification Request Classification: <either one of the folllowing keywords: correction, enhancement>\n"
-            "Maintenance Type: <either one of the folllowing keywords: corrective, adaptive, preventive, perfective or additive>\n"
+            "Based solely on the guidelines and commit data provided earlier, respond using ONLY the format below.\n"
+            "Do NOT include any explanations, comments, or extra text. Do NOT change the format. Do NOT skip any lines.\n"
+            "Use ONLY one of the allowed keywords listed in angle brackets <>. Follow the exact format below:\n\n"
+            "Modification Request Classification: <correction | enhancement>\n"
+            "Maintenance Type: <corrective | adaptive | preventive | perfective | additive>\n"
         )
+
         
         headers = {
             'Authorization': f'Bearer {self.api_key}',
@@ -103,8 +105,10 @@ class OpenUiClient:
         try:
             response = requests.post(f'{self.api_url}/chat/completions', headers=headers, json=data)
             response.raise_for_status()
+            if response.status_code != 200:
+                print(f"Chat failed with status code: {response.status_code}")
             return response
-        except requests.exceptions.RequestException as e:
+        except Exception as e:
             print(f"Error performing the chat. Details: {e}")
             return None
 
