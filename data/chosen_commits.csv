@@ -1,5 +1,5 @@
-repo_name,org_name,sha,link,message,opinion_1,opinion_2,opinion_3,hunks
-tut-spring-boot-kotlin,spring-guides,6bf4f5e34d7fed318eb0edcc8afb9f177c5448b9,https://github.com/spring-guides/tut-spring-boot-kotlin/commit/6bf4f5e34d7fed318eb0edcc8afb9f177c5448b9,Remove unneeded header,Preventive,,,"[
+repo_name,org_name,sha,link,message,opinion_1,what,why,files_changed,hunks
+tut-spring-boot-kotlin,spring-guides,6bf4f5e34d7fed318eb0edcc8afb9f177c5448b9,https://github.com/spring-guides/tut-spring-boot-kotlin/commit/6bf4f5e34d7fed318eb0edcc8afb9f177c5448b9,Remove unneeded header,Preventive,true,true,1,"[
         --- a/src/main/kotlin/blog/MarkdownConverter.kt
         +++ b/src/main/kotlin/blog/MarkdownConverter.kt
         
@@ -25,7 +25,7 @@ tut-spring-boot-kotlin,spring-guides,6bf4f5e34d7fed318eb0edcc8afb9f177c5448b9,ht
  import org.commonmark.ext.autolink.AutolinkExtension
 
         ]"
-tut-spring-boot-kotlin,spring-guides,e0990f9d1f7a2881ba154512662536d04a738fa4,https://github.com/spring-guides/tut-spring-boot-kotlin/commit/e0990f9d1f7a2881ba154512662536d04a738fa4,Update start.spring.io and change package,Adaptive,,,"[
+tut-spring-boot-kotlin,spring-guides,e0990f9d1f7a2881ba154512662536d04a738fa4,https://github.com/spring-guides/tut-spring-boot-kotlin/commit/e0990f9d1f7a2881ba154512662536d04a738fa4,Update start.spring.io and change package,Adaptive,true,false,17,"[
         --- a/README.adoc
         +++ b/README.adoc
         
@@ -1035,7 +1035,7 @@ tut-spring-boot-kotlin,spring-guides,e0990f9d1f7a2881ba154512662536d04a738fa4,ht
 +}
 
         ]"
-tut-spring-boot-kotlin,spring-guides,9a4d7411c9b0cb3b4885cb862bcec1ba5249069b,https://github.com/spring-guides/tut-spring-boot-kotlin/commit/9a4d7411c9b0cb3b4885cb862bcec1ba5249069b,Fix broken Spring Initializr command line support link,Corrective,,,"[
+tut-spring-boot-kotlin,spring-guides,9a4d7411c9b0cb3b4885cb862bcec1ba5249069b,https://github.com/spring-guides/tut-spring-boot-kotlin/commit/9a4d7411c9b0cb3b4885cb862bcec1ba5249069b,Fix broken Spring Initializr command line support link,Corrective,true,true,1,"[
         --- a/README.adoc
         +++ b/README.adoc
         
@@ -1052,7 +1052,7 @@ tut-spring-boot-kotlin,spring-guides,9a4d7411c9b0cb3b4885cb862bcec1ba5249069b,ht
 
         ]"
 tut-spring-boot-kotlin,spring-guides,3d4b305b04bb7ff064140b0b5c088585ae6d79fe,https://github.com/spring-guides/tut-spring-boot-kotlin/commit/3d4b305b04bb7ff064140b0b5c088585ae6d79fe,"Update README.adoc (#32)
-Obvious Fix. ""properties.title"" is not accessible on this step. It should be updated in the end of the guide when ""private val properties: BlogProperties"" is defined for HtmlController class.",Corrective,,,"[
+Obvious Fix. ""properties.title"" is not accessible on this step. It should be updated in the end of the guide when ""private val properties: BlogProperties"" is defined for HtmlController class.",Corrective,true,true,1,"[
         --- a/README.adoc
         +++ b/README.adoc
         
@@ -1069,7 +1069,7 @@ Obvious Fix. ""properties.title"" is not accessible on this step. It should be u
 
         ]"
 tut-spring-boot-kotlin,spring-guides,b8b31b2000f616a87f60ceacea688537d773aad2,https://github.com/spring-guides/tut-spring-boot-kotlin/commit/b8b31b2000f616a87f60ceacea688537d773aad2,"Update README.adoc
-typo fix",Corrective,,,"[
+typo fix",Corrective,true,true,1,"[
         --- a/README.adoc
         +++ b/README.adoc
         
@@ -1085,7 +1085,7 @@ typo fix",Corrective,,,"[
  [source,kotlin]
 
         ]"
-tut-spring-boot-kotlin,spring-guides,388c3958406b748f4a06d614a46d924133588819,https://github.com/spring-guides/tut-spring-boot-kotlin/commit/388c3958406b748f4a06d614a46d924133588819,Upgrade dependencies,Adaptive,,,"[
+tut-spring-boot-kotlin,spring-guides,388c3958406b748f4a06d614a46d924133588819,https://github.com/spring-guides/tut-spring-boot-kotlin/commit/388c3958406b748f4a06d614a46d924133588819,Upgrade dependencies,Adaptive,true,true,4,"[
         --- a/README.adoc
         +++ b/README.adoc
         
@@ -1262,7 +1262,7 @@ tut-spring-boot-kotlin,spring-guides,388c3958406b748f4a06d614a46d924133588819,ht
 
         ]"
 tut-spring-boot-kotlin,spring-guides,a25d4ef81458d7b0a1a05cc87bb9195b89404efb,https://github.com/spring-guides/tut-spring-boot-kotlin/commit/a25d4ef81458d7b0a1a05cc87bb9195b89404efb,"Fix images location
-",Corrective,,,"[
+",Corrective,true,false,1,"[
         --- a/README.adoc
         +++ b/README.adoc
         
@@ -1295,7 +1295,7 @@ tut-spring-boot-kotlin,spring-guides,a25d4ef81458d7b0a1a05cc87bb9195b89404efb,ht
  
 
         ]"
-tut-spring-boot-kotlin,spring-guides,4fc16001420797eef32ec69f33b898007f632806,https://github.com/spring-guides/tut-spring-boot-kotlin/commit/4fc16001420797eef32ec69f33b898007f632806,Clarify initializer settings and update image,Preventive,,,"[
+tut-spring-boot-kotlin,spring-guides,4fc16001420797eef32ec69f33b898007f632806,https://github.com/spring-guides/tut-spring-boot-kotlin/commit/4fc16001420797eef32ec69f33b898007f632806,Clarify initializer settings and update image,Preventive,true,false,2,"[
         --- a/README.adoc
         +++ b/README.adoc
         
@@ -1344,7 +1344,7 @@ These URLs were intentionally ignored.
 
 * http://maven.apache.org/POM/4.0.0
 * http://maven.apache.org/xsd/maven-4.0.0.xsd
-* http://www.w3.org/2001/XMLSchema-instance",Preventive,,,"[
+* http://www.w3.org/2001/XMLSchema-instance",Preventive,true,false,2,"[
         --- a/mvnw
         +++ b/mvnw
         
@@ -1375,7 +1375,7 @@ These URLs were intentionally ignored.
  @REM software distributed under the License is distributed on an
 
         ]"
-tut-spring-boot-kotlin,spring-guides,a71b0c1fb27bb68049efeee7514781372198fc56,https://github.com/spring-guides/tut-spring-boot-kotlin/commit/a71b0c1fb27bb68049efeee7514781372198fc56,Removed extra spaces around application.properties code snippet to maintain consistent formatting,Preventive,,,"[
+tut-spring-boot-kotlin,spring-guides,a71b0c1fb27bb68049efeee7514781372198fc56,https://github.com/spring-guides/tut-spring-boot-kotlin/commit/a71b0c1fb27bb68049efeee7514781372198fc56,Removed extra spaces around application.properties code snippet to maintain consistent formatting,Preventive,true,true,1,"[
         --- a/README.adoc
         +++ b/README.adoc
         
@@ -1397,7 +1397,7 @@ android-custom-lint-rules,googlesamples,499d2b30a38f85c6679786dc6804cf001074b564
 - Use LintUtils
 - Formatting
 
-Change-Id: Iab1a82f619e103cf6401f68c36704402f6c87252",Perfective,,,"[
+Change-Id: Iab1a82f619e103cf6401f68c36704402f6c87252",Perfective,true,true,6,"[
         --- a/README.md
         +++ b/README.md
         
@@ -1757,7 +1757,7 @@ Change-Id: Iab1a82f619e103cf6401f68c36704402f6c87252",Perfective,,,"[
                  ""<?xml version=\""1.0\"" encoding=\""utf-8\""?>\n"" +
 
         ]"
-android-custom-lint-rules,googlesamples,af20a35ea03ad10798626c330d9e4e22a1c637a9,https://github.com/googlesamples/android-custom-lint-rules/commit/af20a35ea03ad10798626c330d9e4e22a1c637a9,Added dependency descriptions to the README and a note in each build.gradle to reference the README.,Additive,,,"[
+android-custom-lint-rules,googlesamples,af20a35ea03ad10798626c330d9e4e22a1c637a9,https://github.com/googlesamples/android-custom-lint-rules/commit/af20a35ea03ad10798626c330d9e4e22a1c637a9,Added dependency descriptions to the README and a note in each build.gradle to reference the README.,Additive,true,true,3,"[
         --- a/README.md
         +++ b/README.md
         
@@ -1826,7 +1826,7 @@ android-custom-lint-rules,googlesamples,af20a35ea03ad10798626c330d9e4e22a1c637a9
 
         ]"
 android-custom-lint-rules,googlesamples,bfcb1f2f01460e2cb3a3aa5f1f36fa3d52eff069,https://github.com/googlesamples/android-custom-lint-rules/commit/bfcb1f2f01460e2cb3a3aa5f1f36fa3d52eff069,"Removes unused import.
-Change-Id: I6e90be2217be00e5c823f6d70bc0791cc583e266",Preventive,,,"[
+Change-Id: I6e90be2217be00e5c823f6d70bc0791cc583e266",Preventive,true,true,1,"[
         --- a/src/main/java/com/example/google/lint/MainActivityDetector.java
         +++ b/src/main/java/com/example/google/lint/MainActivityDetector.java
         
@@ -1841,7 +1841,7 @@ Change-Id: I6e90be2217be00e5c823f6d70bc0791cc583e266",Preventive,,,"[
  import java.util.EnumSet;
 
         ]"
-android-custom-lint-rules,googlesamples,12f29057b5d68c9169a5728597764fc009ad4589,https://github.com/googlesamples/android-custom-lint-rules/commit/12f29057b5d68c9169a5728597764fc009ad4589,Fix typos in docs,Corrective,,,"[
+android-custom-lint-rules,googlesamples,12f29057b5d68c9169a5728597764fc009ad4589,https://github.com/googlesamples/android-custom-lint-rules/commit/12f29057b5d68c9169a5728597764fc009ad4589,Fix typos in docs,Corrective,true,true,2,"[
         --- a/docs/api-guide.html
         +++ b/docs/api-guide.html
         
@@ -1874,7 +1874,7 @@ android-custom-lint-rules,googlesamples,12f29057b5d68c9169a5728597764fc009ad4589
     example, in Android, a check may only apply if the `minSdkVersion <
 
         ]"
-android-custom-lint-rules,googlesamples,9f855da4801e58ed6f78476e37b8318c5e15ea91,https://github.com/spring-guides/tut-spring-boot-kotlin/commit/aa4f2fafa4705be497ddb4c6f55b13db76fee4ee,Upgrade Maven build to Spring Boot 2.1.2 as well,Adaptive,,,"{
+android-custom-lint-rules,googlesamples,9f855da4801e58ed6f78476e37b8318c5e15ea91,https://github.com/spring-guides/tut-spring-boot-kotlin/commit/aa4f2fafa4705be497ddb4c6f55b13db76fee4ee,Upgrade Maven build to Spring Boot 2.1.2 as well,Adaptive,true,false,1,"{
                             ""name"": "".gitignore"",
                             ""content"": {
                                 ""current"": ""#built application files\n*.apk\n*.ap_\n\n# files for the dex VM\n*.dex\n\n# Java class files\n*.class\n\n# generated files\nbin/\ngen/\n\n# Local configuration file (sdk path, etc)\nlocal.properties\n\n# Windows thumbnail db\nThumbs.db\n\n# OSX files\n.DS_Store\n\n# Eclipse project files\n.classpath\n.project\n\n# Android Studio\n.idea\n*.iml\n\n#.idea/workspace.xml - remove # and delete .idea if it better suit your needs.\n.gradle\nbuild/\n"",
@@ -1927,16 +1927,16 @@ add your own local jar copy tasks anymore (or worse, dropping it in
 
 This CL moves the current sample into an android-studio-2 folder,
 and adds a new adnroid-studio-3 folder with a project showing the
-new project layout.",Adaptive,,,
+new project layout.",Adaptive,true,true,27,
 android-custom-lint-rules,googlesamples,ed5fc41bf6f040e56c4b4c729c9e575f89c2b3ff,https://github.com/googlesamples/android-custom-lint-rules/commit/ed5fc41bf6f040e56c4b4c729c9e575f89c2b3ff,"Merge pull request #85 from googlesamples/kts
-Update build files to KTS and version catalogs (and latest AGP)",Adaptive,,,
+Update build files to KTS and version catalogs (and latest AGP)",Adaptive,true,false,12,
 android-custom-lint-rules,googlesamples,95a20e4c3fd3b61ad23c8dd8c0a2e5ccafdc0282,https://github.com/googlesamples/android-custom-lint-rules/commit/95a20e4c3fd3b61ad23c8dd8c0a2e5ccafdc0282,"Update lint to latest versions of AGP.
 Also cleans up a few other things and updates the
-documentation snapshot.",Adaptive,,,
+documentation snapshot.",Adaptive,true,false,27,
 android-custom-lint-rules,googlesamples,07b0ddc1f429c9729ef3b401e826bec5757c84e2,https://github.com/googlesamples/android-custom-lint-rules/commit/07b0ddc1f429c9729ef3b401e826bec5757c84e,"Merge pull request #37 from tnorbye/main
-Add github pages to serve documentation",Additive,,,
-android-custom-lint-rules,googlesamples,5e5e6e8fa25c4f003d9b66bc9de92e7a0517bc88,https://github.com/googlesamples/android-custom-lint-rules/commit/5e5e6e8fa25c4f003d9b66bc9de92e7a0517bc88,Fix typo in changes.md,Corrective,,,
-aws-marketplace-serverless-saas-integration,aws-samples,b76fb7c3ef021558dbeb9a3b790aa114deb378df,https://github.com/aws-samples/aws-marketplace-serverless-saas-integration/commit/b76fb7c3ef021558dbeb9a3b790aa114deb378df,removed stack name dependency and replaced with unique ID segment from stack arn instead,Perfective,,,"[
+Add github pages to serve documentation",Additive,true,true,3,
+android-custom-lint-rules,googlesamples,5e5e6e8fa25c4f003d9b66bc9de92e7a0517bc88,https://github.com/googlesamples/android-custom-lint-rules/commit/5e5e6e8fa25c4f003d9b66bc9de92e7a0517bc88,Fix typo in changes.md,Corrective,true,true,1,
+aws-marketplace-serverless-saas-integration,aws-samples,b76fb7c3ef021558dbeb9a3b790aa114deb378df,https://github.com/aws-samples/aws-marketplace-serverless-saas-integration/commit/b76fb7c3ef021558dbeb9a3b790aa114deb378df,removed stack name dependency and replaced with unique ID segment from stack arn instead,Perfective,true,false,1,"[
         --- a/template.yaml
         +++ b/template.yaml
         
@@ -2004,7 +2004,7 @@ aws-marketplace-serverless-saas-integration,aws-samples,b76fb7c3ef021558dbeb9a3b
          HttpVersion: http2
 
         ]"
-aws-marketplace-serverless-saas-integration,aws-samples,67488b67f0e7c8413276e02e4ef48d322b70e0d4,https://github.com/aws-samples/aws-marketplace-serverless-saas-integration/commit/67488b67f0e7c8413276e02e4ef48d322b70e0d4,parameterized the sns topics account id and region,Additive,,,"[
+aws-marketplace-serverless-saas-integration,aws-samples,67488b67f0e7c8413276e02e4ef48d322b70e0d4,https://github.com/aws-samples/aws-marketplace-serverless-saas-integration/commit/67488b67f0e7c8413276e02e4ef48d322b70e0d4,parameterized the sns topics account id and region,Additive,true,false,1,"[
         --- a/template.yaml
         +++ b/template.yaml
         
@@ -2077,7 +2077,7 @@ aws-marketplace-serverless-saas-integration,aws-samples,67488b67f0e7c8413276e02e
    SupportSNSTopic:
 
         ]"
-aws-marketplace-serverless-saas-integration,aws-samples,b2de6bd851f7c55db8567d12c86c8b9c19d470dc,https://github.com/aws-samples/aws-marketplace-serverless-saas-integration/commit/b2de6bd851f7c55db8567d12c86c8b9c19d470dc,Update readme to cover approving SNS and adding CNAME record,Additive,,,"[
+aws-marketplace-serverless-saas-integration,aws-samples,b2de6bd851f7c55db8567d12c86c8b9c19d470dc,https://github.com/aws-samples/aws-marketplace-serverless-saas-integration/commit/b2de6bd851f7c55db8567d12c86c8b9c19d470dc,Update readme to cover approving SNS and adding CNAME record,Additive,true,true,1,"[
         --- a/README.md
         +++ b/README.md
         
@@ -2100,7 +2100,7 @@ aws-marketplace-serverless-saas-integration,aws-samples,b2de6bd851f7c55db8567d12
  
 
         ]"
-aws-marketplace-serverless-saas-integration,aws-samples,32e465a27b518a8bb04df4262ba4500fa34b987a,https://github.com/aws-samples/aws-marketplace-serverless-saas-integration/commit/32e465a27b518a8bb04df4262ba4500fa34b987a,removed sam package command and modified sam deploy to remove --template-file,Perfective,,,"[
+aws-marketplace-serverless-saas-integration,aws-samples,32e465a27b518a8bb04df4262ba4500fa34b987a,https://github.com/aws-samples/aws-marketplace-serverless-saas-integration/commit/32e465a27b518a8bb04df4262ba4500fa34b987a,removed sam package command and modified sam deploy to remove --template-file,Perfective,true,false,1,"[
         --- a/buildspec.yaml
         +++ b/buildspec.yaml
         
@@ -2118,7 +2118,7 @@ aws-marketplace-serverless-saas-integration,aws-samples,32e465a27b518a8bb04df426
  
 
         ]"
-aws-marketplace-serverless-saas-integration,aws-samples,c31ca403783ea5e360bb677d28fc2e35ee974851,https://github.com/aws-samples/aws-marketplace-serverless-saas-integration/commit/c31ca403783ea5e360bb677d28fc2e35ee974851,Parameter was added to control fulfilment page url update. Scoped down Customer Resource's Policy,Additive,,,"[
+aws-marketplace-serverless-saas-integration,aws-samples,c31ca403783ea5e360bb677d28fc2e35ee974851,https://github.com/aws-samples/aws-marketplace-serverless-saas-integration/commit/c31ca403783ea5e360bb677d28fc2e35ee974851,Parameter was added to control fulfilment page url update. Scoped down Customer Resource's Policy,Additive,true,false,1,"[
         --- a/template.yaml
         +++ b/template.yaml
         
@@ -2214,7 +2214,7 @@ aws-marketplace-serverless-saas-integration,aws-samples,c31ca403783ea5e360bb677d
      Value: 
 
         ]"
-aws-marketplace-serverless-saas-integration,aws-samples,45bce421453542e9eef6e57af8dd6d03cbf55883,https://github.com/aws-samples/aws-marketplace-serverless-saas-integration/commit/45bce421453542e9eef6e57af8dd6d03cbf55883,fixed numbering,Perfective,,,"[
+aws-marketplace-serverless-saas-integration,aws-samples,45bce421453542e9eef6e57af8dd6d03cbf55883,https://github.com/aws-samples/aws-marketplace-serverless-saas-integration/commit/45bce421453542e9eef6e57af8dd6d03cbf55883,fixed numbering,Perfective,false,false,1,"[
         --- a/README.md
         +++ b/README.md
         
@@ -2262,11 +2262,11 @@ aws-marketplace-serverless-saas-integration,aws-samples,45bce421453542e9eef6e57a
  
 
         ]"
-aws-marketplace-serverless-saas-integration,aws-samples,276cd9a481e26d023eb03720c1e9978f0c8cc56c,https://github.com/aws-samples/aws-marketplace-serverless-saas-integration/commit/276cd9a481e26d023eb03720c1e9978f0c8cc56c,Spelling updates,Corrective,,,
-aws-marketplace-serverless-saas-integration,aws-samples,e1905bf112a184a0941f1cc212e5d4105462a589,https://github.com/aws-samples/aws-marketplace-serverless-saas-integration/commit/e1905bf112a184a0941f1cc212e5d4105462a589,Fixing DDBWritePolicy SID Type for Issue #32 (#35),Corrective,,,
-aws-marketplace-serverless-saas-integration,aws-samples,9f0fc059a11641164984496c517555fb8674840e,https://github.com/aws-samples/aws-marketplace-serverless-saas-integration/commit/9f0fc059a11641164984496c517555fb8674840e,Lambda functions updated to node18,Adaptive,,,
-aws-marketplace-serverless-saas-integration,aws-samples,e66fd3be328fc0cac95737aacc37eeff0ac00658,https://github.com/aws-samples/aws-marketplace-serverless-saas-integration/commit/e66fd3be328fc0cac95737aacc37eeff0ac00658,"Adding wording that SES email must be in production mode, not sandbox mode",Corrective,,,
-azure-search-python-samples,Azure-Samples,c9473ba9a9072283f48782f82d6f34d0c66187de,https://github.com/Azure-Samples/azure-search-python-samples/commit/c9473ba9a9072283f48782f82d6f34d0c66187de,edits,Additive,,,"[
+aws-marketplace-serverless-saas-integration,aws-samples,276cd9a481e26d023eb03720c1e9978f0c8cc56c,https://github.com/aws-samples/aws-marketplace-serverless-saas-integration/commit/276cd9a481e26d023eb03720c1e9978f0c8cc56c,Spelling updates,Corrective,true,true,4,
+aws-marketplace-serverless-saas-integration,aws-samples,e1905bf112a184a0941f1cc212e5d4105462a589,https://github.com/aws-samples/aws-marketplace-serverless-saas-integration/commit/e1905bf112a184a0941f1cc212e5d4105462a589,Fixing DDBWritePolicy SID Type for Issue #32 (#35),Corrective,true,true,1,
+aws-marketplace-serverless-saas-integration,aws-samples,9f0fc059a11641164984496c517555fb8674840e,https://github.com/aws-samples/aws-marketplace-serverless-saas-integration/commit/9f0fc059a11641164984496c517555fb8674840e,Lambda functions updated to node18,Adaptive,true,false,4,
+aws-marketplace-serverless-saas-integration,aws-samples,e66fd3be328fc0cac95737aacc37eeff0ac00658,https://github.com/aws-samples/aws-marketplace-serverless-saas-integration/commit/e66fd3be328fc0cac95737aacc37eeff0ac00658,"Adding wording that SES email must be in production mode, not sandbox mode",Corrective,true,false,1,
+azure-search-python-samples,Azure-Samples,c9473ba9a9072283f48782f82d6f34d0c66187de,https://github.com/Azure-Samples/azure-search-python-samples/commit/c9473ba9a9072283f48782f82d6f34d0c66187de,edits,Additive,false,false,4,"[
         --- /dev/null
         +++ b/search-website/bulk-upload/.devcontainer/Dockerfile
         
@@ -2423,7 +2423,7 @@ azure-search-python-samples,Azure-Samples,c9473ba9a9072283f48782f82d6f34d0c66187
 \ No newline at end of file
 
         ]"
-azure-search-python-samples,Azure-Samples,60c948ac8334e35cee97e1ace8065b4226815202,https://github.com/Azure-Samples/azure-search-python-samples/commit/60c948ac8334e35cee97e1ace8065b4226815202,Commit made from VS Code Azure Static Web Apps,Preventive,,,"[
+azure-search-python-samples,Azure-Samples,60c948ac8334e35cee97e1ace8065b4226815202,https://github.com/Azure-Samples/azure-search-python-samples/commit/60c948ac8334e35cee97e1ace8065b4226815202,Commit made from VS Code Azure Static Web Apps,Preventive,false,false,1,"[
         --- a/search-website-functions-v4/README.md
         +++ b/search-website-functions-v4/README.md
         
@@ -2439,7 +2439,7 @@ azure-search-python-samples,Azure-Samples,60c948ac8334e35cee97e1ace8065b42268152
       * `cd \bulk-upload`  
 
         ]"
-azure-search-python-samples,Azure-Samples,8728dd278f41b55b2ad17b6b5878d0bba5ce8690,https://github.com/Azure-Samples/azure-search-python-samples/commit/8728dd278f41b55b2ad17b6b5878d0bba5ce8690,added the merge skill back in,Additive,,,"[
+azure-search-python-samples,Azure-Samples,8728dd278f41b55b2ad17b6b5878d0bba5ce8690,https://github.com/Azure-Samples/azure-search-python-samples/commit/8728dd278f41b55b2ad17b6b5878d0bba5ce8690,added the merge skill back in,Additive,false,false,1,"[
         --- a/Image-Processing/BFR_Sample_Rest.ipynb
         +++ b/Image-Processing/BFR_Sample_Rest.ipynb
         
@@ -2559,7 +2559,7 @@ azure-search-python-samples,Azure-Samples,8728dd278f41b55b2ad17b6b5878d0bba5ce86
      ""        ]\n"",
 
         ]"
-azure-search-python-samples,Azure-Samples,041fdf2765f3eb6339252928145c0a8e0c738ab8,https://github.com/Azure-Samples/azure-search-python-samples/commit/041fdf2765f3eb6339252928145c0a8e0c738ab8,Added Python Cognitive API tutorial example + updated readme file,Additive,,,"[
+azure-search-python-samples,Azure-Samples,041fdf2765f3eb6339252928145c0a8e0c738ab8,https://github.com/Azure-Samples/azure-search-python-samples/commit/041fdf2765f3eb6339252928145c0a8e0c738ab8,Added Python Cognitive API tutorial example + updated readme file,Additive,true,true,2,"[
         --- a/README.md
         +++ b/README.md
         
@@ -2902,7 +2902,7 @@ azure-search-python-samples,Azure-Samples,041fdf2765f3eb6339252928145c0a8e0c738a
 +}
 
         ]"
-azure-search-python-samples,Azure-Samples,e58b5c70079b61a3c20b46b93f359848cf2d1ccc,https://github.com/Azure-Samples/azure-search-python-samples/commit/e58b5c70079b61a3c20b46b93f359848cf2d1ccc,removed cell outputs from notebook,Preventive,,,"[
+azure-search-python-samples,Azure-Samples,e58b5c70079b61a3c20b46b93f359848cf2d1ccc,https://github.com/Azure-Samples/azure-search-python-samples/commit/e58b5c70079b61a3c20b46b93f359848cf2d1ccc,removed cell outputs from notebook,Preventive,true,false,1,"[
         --- a/Image-Processing/BFR_Sample_Rest.ipynb
         +++ b/Image-Processing/BFR_Sample_Rest.ipynb
         
@@ -2933,11 +2933,12 @@ azure-search-python-samples,Azure-Samples,e58b5c70079b61a3c20b46b93f359848cf2d1c
      ""import base64\n"",
 
         ]"
-azure-search-python-samples,Azure-Samples,a2d4365eba95c1ab72c70841088439d0cdce53d6,https://github.com/Azure-Samples/azure-search-python-samples/commit/a2d4365eba95c1ab72c70841088439d0cdce53d6,Updated readme to link to new v11 code,Perfective,,,
-azure-search-python-samples,Azure-Samples,d0eb94c7eabb236d70afb5263cc1fb482f89b02f,https://github.com/Azure-Samples/azure-search-python-samples/commit/d0eb94c7eabb236d70afb5263cc1fb482f89b02f,run black,Perfective,,,
+azure-search-python-samples,Azure-Samples,a2d4365eba95c1ab72c70841088439d0cdce53d6,https://github.com/Azure-Samples/azure-search-python-samples/commit/a2d4365eba95c1ab72c70841088439d0cdce53d6,Updated readme to link to new v11 code,Perfective,true,false,1,
+azure-search-python-samples,Azure-Samples,d0eb94c7eabb236d70afb5263cc1fb482f89b02f,https://github.com/Azure-Samples/azure-search-python-samples/commit/d0eb94c7eabb236d70afb5263cc1fb482f89b02f,"Merge pull request #66 from HeidiSteen/master
+Updates to Image-Processing sample (readme, extension bundle version)",Perfective,true,false,5,
 azure-search-python-samples,Azure-Samples,b763ef6551720481473d594eb4477974a3169b4a,https://github.com/Azure-Samples/azure-search-python-samples/commit/b763ef6551720481473d594eb4477974a3169b4a," Merge pull request #92 from HeidiSteen/main
-Fixed syntax errors",Corrective,,,
+Fixed syntax errors",Corrective,true,true,1,
 azure-search-python-samples,Azure-Samples,1f116d8582c5b30853e9532a0f0ea2ad3cf59975,https://github.com/Azure-Samples/azure-search-python-samples/commit/1f116d8582c5b30853e9532a0f0ea2ad3cf59975,"ci: add Azure Static Web Apps workflow file
-on-behalf-of: @Azure opensource@microsoft.com",Additive,,,
+on-behalf-of: @Azure opensource@microsoft.com",Additive,true,false,1,
 azure-search-python-samples,Azure-Samples,770ebce1e967c55f361d939030684eb4f95b8d33,https://github.com/Azure-Samples/azure-search-python-samples/commit/770ebce1e967c55f361d939030684eb4f95b8d33,"Merge pull request #132 from HeidiSteen/main
-More comments, explanations and updates to RAG tutorial",Perfective,,,
+More comments, explanations and updates to RAG tutorial",Perfective,true,true,1,

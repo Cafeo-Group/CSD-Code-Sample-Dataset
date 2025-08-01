@@ -1,0 +1,406 @@
+{
+    "llama3:8b": [
+        {
+            "sha": "6bf4f5e34d7fed318eb0edcc8afb9f177c5448b9",
+            "link": "https://github.com/spring-guides/tut-spring-boot-kotlin/commit/6bf4f5e34d7fed318eb0edcc8afb9f177c5448b9",
+            "response": "Modification Request Classification: <enhancement>\nMaintenance Type: <perfective>"
+        },
+        {
+            "sha": "e0990f9d1f7a2881ba154512662536d04a738fa4",
+            "link": "https://github.com/spring-guides/tut-spring-boot-kotlin/commit/e0990f9d1f7a2881ba154512662536d04a738fa4",
+            "response": "Modification Request Classification: <enhancement>\nMaintenance Type: <perfective>"
+        },
+        {
+            "sha": "9a4d7411c9b0cb3b4885cb862bcec1ba5249069b",
+            "link": "https://github.com/spring-guides/tut-spring-boot-kotlin/commit/9a4d7411c9b0cb3b4885cb862bcec1ba5249069b",
+            "response": "Modification Request Classification: <enhancement>\nMaintenance Type: <additive>"
+        },
+        {
+            "sha": "3d4b305b04bb7ff064140b0b5c088585ae6d79fe",
+            "link": "https://github.com/spring-guides/tut-spring-boot-kotlin/commit/3d4b305b04bb7ff064140b0b5c088585ae6d79fe",
+            "response": "Modification Request Classification: <enhancement>\nMaintenance Type: <additive>"
+        },
+        {
+            "sha": "b8b31b2000f616a87f60ceacea688537d773aad2",
+            "link": "https://github.com/spring-guides/tut-spring-boot-kotlin/commit/b8b31b2000f616a87f60ceacea688537d773aad2",
+            "response": "Modification Request Classification: <correction>\nMaintenance Type: <corrective>"
+        },
+        {
+            "sha": "388c3958406b748f4a06d614a46d924133588819",
+            "link": "https://github.com/spring-guides/tut-spring-boot-kotlin/commit/388c3958406b748f4a06d614a46d924133588819",
+            "response": "Modification Request Classification: <enhancement>\n\nMaintenance Type: <adaptive>"
+        },
+        {
+            "sha": "a25d4ef81458d7b0a1a05cc87bb9195b89404efb",
+            "link": "https://github.com/spring-guides/tut-spring-boot-kotlin/commit/a25d4ef81458d7b0a1a05cc87bb9195b89404efb",
+            "response": "Modification Request Classification: <correction>\nMaintenance Type: <corrective>"
+        },
+        {
+            "sha": "4fc16001420797eef32ec69f33b898007f632806",
+            "link": "https://github.com/spring-guides/tut-spring-boot-kotlin/commit/4fc16001420797eef32ec69f33b898007f632806",
+            "response": "Modification Request Classification: <enhancement>\nMaintenance Type: <adaptive>"
+        },
+        {
+            "sha": "afcffbae5ae185ebd921f3de3a04a42329d04e5a",
+            "link": "https://github.com/spring-guides/tut-spring-boot-kotlin/commit/afcffbae5ae185ebd921f3de3a04a42329d04e5a",
+            "response": "Modification Request Classification: <enhancement>\nMaintenance Type: <perfective>"
+        },
+        {
+            "sha": "a71b0c1fb27bb68049efeee7514781372198fc56",
+            "link": "https://github.com/spring-guides/tut-spring-boot-kotlin/commit/a71b0c1fb27bb68049efeee7514781372198fc56",
+            "response": "Modification Request Classification: correction\nMaintenance Type: corrective"
+        },
+        {
+            "sha": "499d2b30a38f85c6679786dc6804cf001074b564",
+            "link": "https://github.com/googlesamples/android-custom-lint-rules/commit/499d2b30a38f85c6679786dc6804cf001074b564",
+            "response": "Modification Request Classification: correction\nMaintenance Type: corrective"
+        },
+        {
+            "sha": "af20a35ea03ad10798626c330d9e4e22a1c637a9",
+            "link": "https://github.com/googlesamples/android-custom-lint-rules/commit/af20a35ea03ad10798626c330d9e4e22a1c637a9",
+            "response": "Modification Request Classification: enhancement\nMaintenance Type: adaptive"
+        },
+        {
+            "sha": "bfcb1f2f01460e2cb3a3aa5f1f36fa3d52eff069",
+            "link": "https://github.com/googlesamples/android-custom-lint-rules/commit/bfcb1f2f01460e2cb3a3aa5f1f36fa3d52eff069",
+            "response": "Modification Request Classification: correction\nMaintenance Type: corrective"
+        },
+        {
+            "sha": "12f29057b5d68c9169a5728597764fc009ad4589",
+            "link": "https://github.com/googlesamples/android-custom-lint-rules/commit/12f29057b5d68c9169a5728597764fc009ad4589",
+            "response": "Modification Request Classification: <correction>\nMaintenance Type: <corrective>"
+        },
+        {
+            "sha": "9f855da4801e58ed6f78476e37b8318c5e15ea91",
+            "link": "https://github.com/googlesamples/android-custom-lint-rules/commit/9f855da4801e58ed6f78476e37b8318c5e15ea91",
+            "response": "Modification Request Classification: correction\nMaintenance Type: corrective"
+        },
+        {
+            "sha": "e01536a9676fa5e2ac13d5315c71688a9b38314b",
+            "link": "https://github.com/googlesamples/android-custom-lint-rules/commit/e01536a9676fa5e2ac13d5315c71688a9b38314b",
+            "response": "Modification Request Classification: enhancement\nMaintenance Type: perfective"
+        },
+        {
+            "sha": "ed5fc41bf6f040e56c4b4c729c9e575f89c2b3ff",
+            "link": "https://github.com/googlesamples/android-custom-lint-rules/commit/ed5fc41bf6f040e56c4b4c729c9e575f89c2b3ff",
+            "response": "Modification Request Classification: enhancement\nMaintenance Type: perfective"
+        },
+        {
+            "sha": "95a20e4c3fd3b61ad23c8dd8c0a2e5ccafdc0282",
+            "link": "https://github.com/googlesamples/android-custom-lint-rules/commit/95a20e4c3fd3b61ad23c8dd8c0a2e5ccafdc0282",
+            "response": "Modification Request Classification: enhancement\nMaintenance Type: perfective"
+        },
+        {
+            "sha": "07b0ddc1f429c9729ef3b401e826bec5757c84e2",
+            "link": "https://github.com/googlesamples/android-custom-lint-rules/commit/07b0ddc1f429c9729ef3b401e826bec5757c84e2",
+            "response": "Modification Request Classification: enhancement\nMaintenance Type: adaptive"
+        },
+        {
+            "sha": "5e5e6e8fa25c4f003d9b66bc9de92e7a0517bc88",
+            "link": "https://github.com/googlesamples/android-custom-lint-rules/commit/5e5e6e8fa25c4f003d9b66bc9de92e7a0517bc88",
+            "response": "Modification Request Classification: <enhancement>\nMaintenance Type: <additive>"
+        },
+        {
+            "sha": "b76fb7c3ef021558dbeb9a3b790aa114deb378df",
+            "link": "https://github.com/aws-samples/aws-marketplace-serverless-saas-integration/commit/b76fb7c3ef021558dbeb9a3b790aa114deb378df",
+            "response": "Modification Request Classification: <enhancement>\nMaintenance Type: <perfective>"
+        },
+        {
+            "sha": "67488b67f0e7c8413276e02e4ef48d322b70e0d4",
+            "link": "https://github.com/aws-samples/aws-marketplace-serverless-saas-integration/commit/67488b67f0e7c8413276e02e4ef48d322b70e0d4",
+            "response": "Modification Request Classification: correction\nMaintenance Type: corrective"
+        },
+        {
+            "sha": "b2de6bd851f7c55db8567d12c86c8b9c19d470dc",
+            "link": "https://github.com/aws-samples/aws-marketplace-serverless-saas-integration/commit/b2de6bd851f7c55db8567d12c86c8b9c19d470dc",
+            "response": "Modification Request Classification: <enhancement>\nMaintenance Type: <additive>"
+        },
+        {
+            "sha": "32e465a27b518a8bb04df4262ba4500fa34b987a",
+            "link": "https://github.com/aws-samples/aws-marketplace-serverless-saas-integration/commit/32e465a27b518a8bb04df4262ba4500fa34b987a",
+            "response": "Modification Request Classification: <enhancement>\nMaintenance Type: <additive>"
+        },
+        {
+            "sha": "c31ca403783ea5e360bb677d28fc2e35ee974851",
+            "link": "https://github.com/aws-samples/aws-marketplace-serverless-saas-integration/commit/c31ca403783ea5e360bb677d28fc2e35ee974851",
+            "response": "Modification Request Classification: correction\nMaintenance Type: corrective"
+        },
+        {
+            "sha": "45bce421453542e9eef6e57af8dd6d03cbf55883",
+            "link": "https://github.com/aws-samples/aws-marketplace-serverless-saas-integration/commit/45bce421453542e9eef6e57af8dd6d03cbf55883",
+            "response": "Modification Request Classification: <enhancement>\nMaintenance Type: <additive>"
+        },
+        {
+            "sha": "276cd9a481e26d023eb03720c1e9978f0c8cc56c",
+            "link": "https://github.com/aws-samples/aws-marketplace-serverless-saas-integration/commit/276cd9a481e26d023eb03720c1e9978f0c8cc56c",
+            "response": "Modification Request Classification: correction\nMaintenance Type: corrective"
+        },
+        {
+            "sha": "e1905bf112a184a0941f1cc212e5d4105462a589",
+            "link": "https://github.com/aws-samples/aws-marketplace-serverless-saas-integration/commit/e1905bf112a184a0941f1cc212e5d4105462a589",
+            "response": "Modification Request Classification: correction\nMaintenance Type: corrective"
+        },
+        {
+            "sha": "9f0fc059a11641164984496c517555fb8674840e",
+            "link": "https://github.com/aws-samples/aws-marketplace-serverless-saas-integration/commit/9f0fc059a11641164984496c517555fb8674840e",
+            "response": "Modification Request Classification: <enhancement>\nMaintenance Type: <perfective>"
+        },
+        {
+            "sha": "e66fd3be328fc0cac95737aacc37eeff0ac00658",
+            "link": "https://github.com/aws-samples/aws-marketplace-serverless-saas-integration/commit/e66fd3be328fc0cac95737aacc37eeff0ac00658",
+            "response": "Modification Request Classification: <enhancement>\nMaintenance Type: <additive>"
+        },
+        {
+            "sha": "c9473ba9a9072283f48782f82d6f34d0c66187de",
+            "link": "https://github.com/Azure-Samples/azure-search-python-samples/commit/c9473ba9a9072283f48782f82d6f34d0c66187de",
+            "response": "Modification Request Classification: correction\nMaintenance Type: corrective"
+        },
+        {
+            "sha": "60c948ac8334e35cee97e1ace8065b4226815202",
+            "link": "https://github.com/Azure-Samples/azure-search-python-samples/commit/60c948ac8334e35cee97e1ace8065b4226815202",
+            "response": "Modification Request Classification: enhancement\nMaintenance Type: additive"
+        },
+        {
+            "sha": "8728dd278f41b55b2ad17b6b5878d0bba5ce8690",
+            "link": "https://github.com/Azure-Samples/azure-search-python-samples/commit/8728dd278f41b55b2ad17b6b5878d0bba5ce8690",
+            "response": "Modification Request Classification: correction\nMaintenance Type: corrective"
+        },
+        {
+            "sha": "041fdf2765f3eb6339252928145c0a8e0c738ab8",
+            "link": "https://github.com/Azure-Samples/azure-search-python-samples/commit/041fdf2765f3eb6339252928145c0a8e0c738ab8",
+            "response": "Modification Request Classification: <enhancement>\nMaintenance Type: <perfective>"
+        },
+        {
+            "sha": "e58b5c70079b61a3c20b46b93f359848cf2d1ccc",
+            "link": "https://github.com/Azure-Samples/azure-search-python-samples/commit/e58b5c70079b61a3c20b46b93f359848cf2d1ccc",
+            "response": "Modification Request Classification: correction\nMaintenance Type: corrective"
+        },
+        {
+            "sha": "a2d4365eba95c1ab72c70841088439d0cdce53d6",
+            "link": "https://github.com/Azure-Samples/azure-search-python-samples/commit/a2d4365eba95c1ab72c70841088439d0cdce53d6",
+            "response": "Modification Request Classification: correction\nMaintenance Type: corrective"
+        },
+        {
+            "sha": "d0eb94c7eabb236d70afb5263cc1fb482f89b02f",
+            "link": "https://github.com/Azure-Samples/azure-search-python-samples/commit/d0eb94c7eabb236d70afb5263cc1fb482f89b02f",
+            "response": "Modification Request Classification: enhancement\nMaintenance Type: perfective"
+        },
+        {
+            "sha": "b763ef6551720481473d594eb4477974a3169b4a",
+            "link": "https://github.com/Azure-Samples/azure-search-python-samples/commit/b763ef6551720481473d594eb4477974a3169b4a",
+            "response": "Modification Request Classification: <enhancement>\nMaintenance Type: <additive>"
+        },
+        {
+            "sha": "1f116d8582c5b30853e9532a0f0ea2ad3cf59975",
+            "link": "https://github.com/Azure-Samples/azure-search-python-samples/commit/1f116d8582c5b30853e9532a0f0ea2ad3cf59975",
+            "response": "Modification Request Classification: <enhancement>\nMaintenance Type: <adaptive>"
+        },
+        {
+            "sha": "770ebce1e967c55f361d939030684eb4f95b8d33",
+            "link": "https://github.com/Azure-Samples/azure-search-python-samples/commit/770ebce1e967c55f361d939030684eb4f95b8d33",
+            "response": "Modification Request Classification: enhancement\nMaintenance Type: perfective"
+        }
+    ],
+    "llama3.1:8b": [
+        {
+            "sha": "6bf4f5e34d7fed318eb0edcc8afb9f177c5448b9",
+            "link": "https://github.com/spring-guides/tut-spring-boot-kotlin/commit/6bf4f5e34d7fed318eb0edcc8afb9f177c5448b9",
+            "response": "Modification Request Classification: correction\nMaintenance Type: corrective"
+        },
+        {
+            "sha": "e0990f9d1f7a2881ba154512662536d04a738fa4",
+            "link": "https://github.com/spring-guides/tut-spring-boot-kotlin/commit/e0990f9d1f7a2881ba154512662536d04a738fa4",
+            "response": "Modification Request Classification: <enhancement>\nMaintenance Type: <additive>"
+        },
+        {
+            "sha": "9a4d7411c9b0cb3b4885cb862bcec1ba5249069b",
+            "link": "https://github.com/spring-guides/tut-spring-boot-kotlin/commit/9a4d7411c9b0cb3b4885cb862bcec1ba5249069b",
+            "response": "Modification Request Classification: <correction>\nMaintenance Type: <corrective>"
+        },
+        {
+            "sha": "3d4b305b04bb7ff064140b0b5c088585ae6d79fe",
+            "link": "https://github.com/spring-guides/tut-spring-boot-kotlin/commit/3d4b305b04bb7ff064140b0b5c088585ae6d79fe",
+            "response": "Modification Request Classification: <correction>\nMaintenance Type: <corrective>"
+        },
+        {
+            "sha": "b8b31b2000f616a87f60ceacea688537d773aad2",
+            "link": "https://github.com/spring-guides/tut-spring-boot-kotlin/commit/b8b31b2000f616a87f60ceacea688537d773aad2",
+            "response": "Modification Request Classification: correction\nMaintenance Type: corrective"
+        },
+        {
+            "sha": "388c3958406b748f4a06d614a46d924133588819",
+            "link": "https://github.com/spring-guides/tut-spring-boot-kotlin/commit/388c3958406b748f4a06d614a46d924133588819",
+            "response": "Modification Request Classification: <enhancement>\n\nMaintenance Type: <additive>"
+        },
+        {
+            "sha": "a25d4ef81458d7b0a1a05cc87bb9195b89404efb",
+            "link": "https://github.com/spring-guides/tut-spring-boot-kotlin/commit/a25d4ef81458d7b0a1a05cc87bb9195b89404efb",
+            "response": "Modification Request Classification: correction\nMaintenance Type: corrective"
+        },
+        {
+            "sha": "4fc16001420797eef32ec69f33b898007f632806",
+            "link": "https://github.com/spring-guides/tut-spring-boot-kotlin/commit/4fc16001420797eef32ec69f33b898007f632806",
+            "response": "Modification Request Classification: enhancement\nMaintenance Type: additive"
+        },
+        {
+            "sha": "afcffbae5ae185ebd921f3de3a04a42329d04e5a",
+            "link": "https://github.com/spring-guides/tut-spring-boot-kotlin/commit/afcffbae5ae185ebd921f3de3a04a42329d04e5a",
+            "response": "Modification Request Classification: <correction>\nMaintenance Type: <corrective>"
+        },
+        {
+            "sha": "a71b0c1fb27bb68049efeee7514781372198fc56",
+            "link": "https://github.com/spring-guides/tut-spring-boot-kotlin/commit/a71b0c1fb27bb68049efeee7514781372198fc56",
+            "response": "Modification Request Classification: <correction | enhancement>\nMaintenance Type: <perfective>"
+        },
+        {
+            "sha": "499d2b30a38f85c6679786dc6804cf001074b564",
+            "link": "https://github.com/googlesamples/android-custom-lint-rules/commit/499d2b30a38f85c6679786dc6804cf001074b564",
+            "response": "Modification Request Classification: <correction>\nMaintenance Type: <corrective>"
+        },
+        {
+            "sha": "af20a35ea03ad10798626c330d9e4e22a1c637a9",
+            "link": "https://github.com/googlesamples/android-custom-lint-rules/commit/af20a35ea03ad10798626c330d9e4e22a1c637a9",
+            "response": "Modification Request Classification: correction\nMaintenance Type: corrective"
+        },
+        {
+            "sha": "bfcb1f2f01460e2cb3a3aa5f1f36fa3d52eff069",
+            "link": "https://github.com/googlesamples/android-custom-lint-rules/commit/bfcb1f2f01460e2cb3a3aa5f1f36fa3d52eff069",
+            "response": "Modification Request Classification: <correction>\nMaintenance Type: <corrective>"
+        },
+        {
+            "sha": "12f29057b5d68c9169a5728597764fc009ad4589",
+            "link": "https://github.com/googlesamples/android-custom-lint-rules/commit/12f29057b5d68c9169a5728597764fc009ad4589",
+            "response": "Modification Request Classification: correction\nMaintenance Type: corrective"
+        },
+        {
+            "sha": "9f855da4801e58ed6f78476e37b8318c5e15ea91",
+            "link": "https://github.com/googlesamples/android-custom-lint-rules/commit/9f855da4801e58ed6f78476e37b8318c5e15ea91",
+            "response": "Modification Request Classification: <enhancement>\nMaintenance Type: <additive>"
+        },
+        {
+            "sha": "e01536a9676fa5e2ac13d5315c71688a9b38314b",
+            "link": "https://github.com/googlesamples/android-custom-lint-rules/commit/e01536a9676fa5e2ac13d5315c71688a9b38314b",
+            "response": "Modification Request Classification: <correction>\nMaintenance Type: <corrective>"
+        },
+        {
+            "sha": "ed5fc41bf6f040e56c4b4c729c9e575f89c2b3ff",
+            "link": "https://github.com/googlesamples/android-custom-lint-rules/commit/ed5fc41bf6f040e56c4b4c729c9e575f89c2b3ff",
+            "response": "Modification Request Classification: <enhancement>\nMaintenance Type: <perfective>"
+        },
+        {
+            "sha": "95a20e4c3fd3b61ad23c8dd8c0a2e5ccafdc0282",
+            "link": "https://github.com/googlesamples/android-custom-lint-rules/commit/95a20e4c3fd3b61ad23c8dd8c0a2e5ccafdc0282",
+            "response": "Modification Request Classification: <correction>\n\nMaintenance Type: <corrective>"
+        },
+        {
+            "sha": "07b0ddc1f429c9729ef3b401e826bec5757c84e2",
+            "link": "https://github.com/googlesamples/android-custom-lint-rules/commit/07b0ddc1f429c9729ef3b401e826bec5757c84e2",
+            "response": "Modification Request Classification: <correction>\nMaintenance Type: <correction>"
+        },
+        {
+            "sha": "5e5e6e8fa25c4f003d9b66bc9de92e7a0517bc88",
+            "link": "https://github.com/googlesamples/android-custom-lint-rules/commit/5e5e6e8fa25c4f003d9b66bc9de92e7a0517bc88",
+            "response": "Modification Request Classification: <correction>\nMaintenance Type: <corrective>"
+        },
+        {
+            "sha": "b76fb7c3ef021558dbeb9a3b790aa114deb378df",
+            "link": "https://github.com/aws-samples/aws-marketplace-serverless-saas-integration/commit/b76fb7c3ef021558dbeb9a3b790aa114deb378df",
+            "response": "Modification Request Classification: <enhancement>\nMaintenance Type: <additive>"
+        },
+        {
+            "sha": "67488b67f0e7c8413276e02e4ef48d322b70e0d4",
+            "link": "https://github.com/aws-samples/aws-marketplace-serverless-saas-integration/commit/67488b67f0e7c8413276e02e4ef48d322b70e0d4",
+            "response": "Modification Request Classification: <enhancement>\n\nMaintenance Type: <additive>"
+        },
+        {
+            "sha": "b2de6bd851f7c55db8567d12c86c8b9c19d470dc",
+            "link": "https://github.com/aws-samples/aws-marketplace-serverless-saas-integration/commit/b2de6bd851f7c55db8567d12c86c8b9c19d470dc",
+            "response": "Modification Request Classification: <enhancement>\nMaintenance Type: <additive>"
+        },
+        {
+            "sha": "32e465a27b518a8bb04df4262ba4500fa34b987a",
+            "link": "https://github.com/aws-samples/aws-marketplace-serverless-saas-integration/commit/32e465a27b518a8bb04df4262ba4500fa34b987a",
+            "response": "Modification Request Classification: correction\nMaintenance Type: corrective"
+        },
+        {
+            "sha": "c31ca403783ea5e360bb677d28fc2e35ee974851",
+            "link": "https://github.com/aws-samples/aws-marketplace-serverless-saas-integration/commit/c31ca403783ea5e360bb677d28fc2e35ee974851",
+            "response": "Modification Request Classification: correction\nMaintenance Type: corrective"
+        },
+        {
+            "sha": "45bce421453542e9eef6e57af8dd6d03cbf55883",
+            "link": "https://github.com/aws-samples/aws-marketplace-serverless-saas-integration/commit/45bce421453542e9eef6e57af8dd6d03cbf55883",
+            "response": "Modification Request Classification: <enhancement>\nMaintenance Type: <additive>"
+        },
+        {
+            "sha": "276cd9a481e26d023eb03720c1e9978f0c8cc56c",
+            "link": "https://github.com/aws-samples/aws-marketplace-serverless-saas-integration/commit/276cd9a481e26d023eb03720c1e9978f0c8cc56c",
+            "response": "Modification Request Classification: <enhancement>\nMaintenance Type: <additive>"
+        },
+        {
+            "sha": "e1905bf112a184a0941f1cc212e5d4105462a589",
+            "link": "https://github.com/aws-samples/aws-marketplace-serverless-saas-integration/commit/e1905bf112a184a0941f1cc212e5d4105462a589",
+            "response": "Modification Request Classification: correction\nMaintenance Type: corrective"
+        },
+        {
+            "sha": "9f0fc059a11641164984496c517555fb8674840e",
+            "link": "https://github.com/aws-samples/aws-marketplace-serverless-saas-integration/commit/9f0fc059a11641164984496c517555fb8674840e",
+            "response": "Modification Request Classification: <enhancement>\nMaintenance Type: <additive>"
+        },
+        {
+            "sha": "e66fd3be328fc0cac95737aacc37eeff0ac00658",
+            "link": "https://github.com/aws-samples/aws-marketplace-serverless-saas-integration/commit/e66fd3be328fc0cac95737aacc37eeff0ac00658",
+            "response": "Modification Request Classification: <correction>\nMaintenance Type: <corrective>"
+        },
+        {
+            "sha": "c9473ba9a9072283f48782f82d6f34d0c66187de",
+            "link": "https://github.com/Azure-Samples/azure-search-python-samples/commit/c9473ba9a9072283f48782f82d6f34d0c66187de",
+            "response": "Modification Request Classification: <enhancement>\nMaintenance Type: <perfective>"
+        },
+        {
+            "sha": "60c948ac8334e35cee97e1ace8065b4226815202",
+            "link": "https://github.com/Azure-Samples/azure-search-python-samples/commit/60c948ac8334e35cee97e1ace8065b4226815202",
+            "response": "Modification Request Classification: <enhancement>\nMaintenance Type: <additive>"
+        },
+        {
+            "sha": "8728dd278f41b55b2ad17b6b5878d0bba5ce8690",
+            "link": "https://github.com/Azure-Samples/azure-search-python-samples/commit/8728dd278f41b55b2ad17b6b5878d0bba5ce8690",
+            "response": "Modification Request Classification: <correction>\nMaintenance Type: <corrective>"
+        },
+        {
+            "sha": "041fdf2765f3eb6339252928145c0a8e0c738ab8",
+            "link": "https://github.com/Azure-Samples/azure-search-python-samples/commit/041fdf2765f3eb6339252928145c0a8e0c738ab8",
+            "response": "Modification Request Classification: <enhancement>\nMaintenance Type: <additive>"
+        },
+        {
+            "sha": "e58b5c70079b61a3c20b46b93f359848cf2d1ccc",
+            "link": "https://github.com/Azure-Samples/azure-search-python-samples/commit/e58b5c70079b61a3c20b46b93f359848cf2d1ccc",
+            "response": "Modification Request Classification: <correction> \nMaintenance Type: <corrective>"
+        },
+        {
+            "sha": "a2d4365eba95c1ab72c70841088439d0cdce53d6",
+            "link": "https://github.com/Azure-Samples/azure-search-python-samples/commit/a2d4365eba95c1ab72c70841088439d0cdce53d6",
+            "response": "Modification Request Classification: <enhancement>\nMaintenance Type: <additive>"
+        },
+        {
+            "sha": "d0eb94c7eabb236d70afb5263cc1fb482f89b02f",
+            "link": "https://github.com/Azure-Samples/azure-search-python-samples/commit/d0eb94c7eabb236d70afb5263cc1fb482f89b02f",
+            "response": "Modification Request Classification: <correction>\nMaintenance Type: <corrective>"
+        },
+        {
+            "sha": "b763ef6551720481473d594eb4477974a3169b4a",
+            "link": "https://github.com/Azure-Samples/azure-search-python-samples/commit/b763ef6551720481473d594eb4477974a3169b4a",
+            "response": "Modification Request Classification: correction\nMaintenance Type: corrective"
+        },
+        {
+            "sha": "1f116d8582c5b30853e9532a0f0ea2ad3cf59975",
+            "link": "https://github.com/Azure-Samples/azure-search-python-samples/commit/1f116d8582c5b30853e9532a0f0ea2ad3cf59975",
+            "response": "Modification Request Classification: <enhancement>\nMaintenance Type: <additive>"
+        },
+        {
+            "sha": "770ebce1e967c55f361d939030684eb4f95b8d33",
+            "link": "https://github.com/Azure-Samples/azure-search-python-samples/commit/770ebce1e967c55f361d939030684eb4f95b8d33",
+            "response": "Modification Request Classification: <enhancement>\n\nMaintenance Type: <additive>"
+        }
+    ]
+}
